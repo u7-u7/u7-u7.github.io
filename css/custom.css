@@ -223,27 +223,32 @@ background: rgba(255, 255, 255, 0.9);
 /* 首页文章卡片 */
 [data-theme="dark"]
   #recent-posts > .recent-post-item{
-    background:rgba(35, 35, 35, 50%);
+    background:rgba(35, 35, 35, 0.5);
   }
   /* 文章页面正文背景 */
+[data-theme="dark"]
   div#post{
-  background: rgba(35, 35, 35, 50%);
+  background: rgba(35, 35, 35, 0.5);
   }
   /* 分页页面 */
+[data-theme="dark"]
   div#page{
-  background: rgba(35, 35, 35, 50%);
+    background: rgba(35, 35, 35, 0.5);
   }
   /* 归档页面 */
+[data-theme="dark"]
   div#archive{
-  background: rgba(35, 35, 35, 50%);
+    background: rgba(35, 35, 35, 0.5);
   }
   /* 标签页面 */
+[data-theme="dark"]
   div#tag{
-  background: rgba(35, 35, 35, 50%);
+    background: rgba(35, 35, 35, 0.5);
   }
   /* 分类页面 */
+[data-theme="dark"]
   div#category{
-  background: rgba(35, 35, 35, 50%);
+    background: rgba(35, 35, 35, 0.5);
   }
 
   @media screen and (max-width: 768px) {
