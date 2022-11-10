@@ -294,3 +294,16 @@ background: rgba(255, 255, 255, 0.9);
     left: 0 !important;
     /* 鼠标悬停是左侧缩进归零，完全显示按钮 */
   }
+
+@font-face {
+  /* 為載入的字體取名字(隨意) */
+  font-family: 'YSHST';	
+  /* 字體文件地址(相對或者絕對路徑都可以) */
+  src: url(/fonts/HYTangMeiRen55W.woff2);
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
+}
