@@ -1,3 +1,10 @@
+
+/* 翻页按钮居中 */
+#pagination {
+  width: 100%;
+  margin: auto;
+}
+
 /* 页脚透明 */
 #footer{
   background: transparent!important;
