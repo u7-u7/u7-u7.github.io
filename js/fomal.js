@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.onscroll = percent;
 });
 // 页面百分比
+// 页面百分比
 function percent() {
 
   // 先让菜单栏消失
@@ -73,7 +74,8 @@ $.ajax({
   type: 'get',
   url: 'https://apis.map.qq.com/ws/location/v1/ip',
   data: {
-    key: '',  // 这里要写你的KEY!!!
+    //AW5BZ-OAKYS-UXYOR-6L3EK-PLMH5-MHFIT
+    key: 'AW5BZ-OAKYS-UXYOR-6L3EK-PLMH5-MHFIT',  // 这里要写你的KEY!!!
     output: 'jsonp',
   },
   dataType: 'jsonp',
@@ -1323,11 +1325,11 @@ var titleTime;
 document.addEventListener('visibilitychange', function () {
   if (document.hidden) {
     //离开当前页面时标签显示内容
-    document.title = '👀U7在这呐~';
+    document.title = '👻U7在这呐~';
     clearTimeout(titleTime);
   } else {
     //返回当前页面时标签显示内容
-    document.title = '🐖抓到CC啦～';
+    document.title = '💀抓到CC啦～';
     //两秒后变回正常标题
     titleTime = setTimeout(function () {
       document.title = OriginTitile;
