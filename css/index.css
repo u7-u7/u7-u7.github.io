@@ -7618,13 +7618,13 @@ button#go-up:hover #percent {
 }
 @keyframes huxi_light {
   0% {
-    box-shadow: 0px 0px 1px 1px #9ff2d2;
+    box-shadow: 0px 0px 1px 1px #36bafb;
   }
   50% {
-    box-shadow: 0px 0px 5px 5px #9ff2d2;
+    box-shadow: 0px 0px 5px 5px #36bafb;
   }
   100% {
-    box-shadow: 0px 0px 1px 1px #9ff2d2;
+    box-shadow: 0px 0px 1px 1px #36bafb;
   }
 }
 @keyframes huxi_dark {
