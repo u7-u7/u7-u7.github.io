@@ -2789,11 +2789,11 @@ var now = new Date();
 function createtime() {
   // 当前时间
   now.setTime(now.getTime() + 1000);
-  var start = new Date("08/01/2022 00:00:00"); // 旅行者1号开始计算的时间
+  var start = new Date("09/13/2022 00:00:00"); // 旅行者1号开始计算的时间
   var dis = Math.trunc(23400000000 + ((now - start) / 1000) * 17); // 距离=秒数*速度 记住转换毫秒
   var unit = (dis / 149600000).toFixed(6);  // 天文单位
   // 网站诞生时间
-  var grt = new Date("13/09/2022 00:00:00");
+  var grt = new Date("09/13/2022 00:00:00");
   var days = (now - grt) / 1e3 / 60 / 60 / 24,
     dnum = Math.floor(days),
     hours = (now - grt) / 1e3 / 60 / 60 - 24 * dnum,
@@ -2808,8 +2808,8 @@ function createtime() {
   let currentTimeHtml = "";
   (currentTimeHtml =
     hnum < 18 && hnum >= 9
-      ? `<a class='boardsign' href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>👮浙ICP备⚠️2023007023号🚓</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</div>`
-      : `<a class='boardsign' href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>🚔浙ICP备⚠️2023007023号🚨</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</div>`),
+      ? `<img class='boardsign' src='https://u7img.oss-cn-hangzhou.aliyuncs.com/202303221745079.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>👮浙ICP备⚠️2023007023号🚓</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`
+      : `<img class='boardsign' src='https://u7img.oss-cn-hangzhou.aliyuncs.com/202303221745079.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>🚔浙ICP备⚠️2023007023号🚨</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`),
     document.getElementById("workboard") &&
     (document.getElementById("workboard").innerHTML = currentTimeHtml);
 }
@@ -2817,6 +2817,36 @@ function createtime() {
 setInterval(() => {
   createtime();
 }, 1000);
+
+// var now = new Date();
+// function createtime() {
+//   now.setTime(now.getTime() + 1e3);
+//   var e = new Date("09/13/2022 00:00:00"),
+//     t = Math.trunc(234e8 + ((now - e) / 1e3) * 17),
+//     a = (t / 1496e5).toFixed(6),
+//     n = new Date("09/13/2022 00:00:00"),
+//     s = (now - n) / 1e3 / 60 / 60 / 24,
+//     o = Math.floor(s),
+//     r = (now - n) / 1e3 / 60 / 60 - 24 * o,
+//     i = Math.floor(r);
+//   1 == String(i).length && (i = "0" + i);
+//   var l = (now - n) / 1e3 / 60 - 1440 * o - 60 * i,
+//     b = Math.floor(l);
+//   1 == String(b).length && (b = "0" + b);
+//   var d = (now - n) / 1e3 - 86400 * o - 3600 * i - 60 * b,
+//     c = Math.round(d);
+//   1 == String(c).length && (c = "0" + c);
+//   let g = "";
+//   (g =
+//     i < 18 && i >= 9
+//       ? `<img class='boardsign' src='https://img.shields.io/badge/F小屋-上班摸鱼中-6adea8?style=social&logo=cakephp' title='距离月入25k也就还差一个大佬带我~'><span class='textTip'> <br> <b>本站居然运行了 ${o} 天</span><span id='runtime'> ${i} 小时 ${b} 分 ${c} 秒 </b></span> <i id="heartbeat" class='fas fa-heartbeat' style='color:red'></i> <br> <b>旅行者 1 号当前距离地球 ${t} 千米，约为 ${a} 个天文单位 🚀</b> <br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></b> `
+//       : `<img class='boardsign' src='https://img.shields.io/badge/F小屋-打烊休息啦-6adea8?style=social&logo=coffeescript' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br> <b>本站居然运行了 ${o} 天</span><span id='runtime'> ${i} 小时 ${b} 分 ${c} 秒 </b></span> <i id="heartbeat" class='fas fa-heartbeat' style='color:red'></i> <br> <b>旅行者 1 号当前距离地球 ${t} 千米，约为 ${a} 个天文单位 🚀</b> <br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></b> `),
+//     document.getElementById("workboard") &&
+//       (document.getElementById("workboard").innerHTML = g);
+// }
+// setInterval(() => {
+//   createtime();
+// }, 1e3);
 
 /*页脚计时器 end */
 
