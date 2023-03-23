@@ -6464,43 +6464,43 @@ blockquote.pullquote.right {
 /* 字体引入 */
 @font-face {
   font-family: YSHST;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/优设好身体.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E4%BC%98%E8%AE%BE%E5%A5%BD%E8%BA%AB%E4%BD%93.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: MiSans;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/MiSans.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/MiSans.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: HYTMR;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/HYTangMeiRen55W.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/HYTangMeiRen55W.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: LXGW;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/霞鹜文楷.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: TTQHB;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/甜甜圈海报字体.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E7%94%9C%E7%94%9C%E5%9C%88%E6%B5%B7%E6%8A%A5%E5%AD%97%E4%BD%93.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: Consolas_1;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/Consolas.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/Consolas.woff2);
   font-display: swap;
 }
 
 @font-face {
   font-family: ZhuZiAWan;
-  src: url(https://data-static.netdun.net/Fomalhaut/fonts/ZhuZiAWan2.woff2);
+  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/ZhuZiAYuanJWD.woff2);
   font-display: swap;
 }
 
