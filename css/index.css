@@ -1367,7 +1367,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: var(--global-font), -apple-system, 'Quicksand', 'Nimbus Roman No9 L', 'PingFang SC', 'Hiragino Sans GB', 'Noto Serif SC', 'Microsoft Yahei', 'WenQuanYi Micro Hei', 'ST Heiti', sans-serif;;
+  font-family: YSHST,var(--global-font), -apple-system, 'Quicksand', 'Nimbus Roman No9 L', 'PingFang SC', 'Hiragino Sans GB', 'Noto Serif SC', 'Microsoft Yahei', 'WenQuanYi Micro Hei', 'ST Heiti', sans-serif;;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -1671,7 +1671,7 @@ figure.highlight pre .javascript .function {
 #article-container pre,
 #article-container code {
   font-size: 14.5px;
-  font-family: Consolas_1, var(--global-font), "Microsoft YaHei", Menlo, "PingFang SC", "Microsoft JhengHei", sans-serif !important;
+  font-family: Consolas, var(--global-font), "Microsoft YaHei", Menlo, "PingFang SC", "Microsoft JhengHei", sans-serif !important;
 }
 #article-container code {
   padding: 2px 4px;
@@ -6464,44 +6464,86 @@ blockquote.pullquote.right {
 /* 字体引入 */
 @font-face {
   font-family: YSHST;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E4%BC%98%E8%AE%BE%E5%A5%BD%E8%BA%AB%E4%BD%93.woff2);
+  src: url(/fonts/优设好身体.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: MiSans;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/MiSans.woff2);
+  src: url(/fonts/MiSans.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: HYTMR;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/HYTangMeiRen55W.woff2);
+  src: url(/fonts/HYTangMeiRen55W.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: LXGW;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E9%9C%9E%E9%B9%9C%E6%96%87%E6%A5%B7.woff2);
+  src: url(/fonts/霞鹜文楷.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: TTQHB;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/%E7%94%9C%E7%94%9C%E5%9C%88%E6%B5%B7%E6%8A%A5%E5%AD%97%E4%BD%93.woff2);
+  src: url(/fonts/甜甜圈海报字体.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: Consolas_1;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/Consolas.woff2);
+  src: url(/fonts/Consolas.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 @font-face {
   font-family: ZhuZiAWan;
-  src: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/ZhuZiAYuanJWD.woff2);
+  src: url(/fonts/ZhuZiAYuanJWD.woff2);
   font-display: swap;
+  /* 定義加粗樣式(加粗多少) */
+  font-weight: normal;
+  /* 定義字體樣式(斜體/非斜體) */
+  font-style: normal;
+  /* 定義顯示樣式 */
+  font-display: block;
 }
 
 /* 特定部件字体调用 */
