@@ -3020,7 +3020,7 @@ function setUniverse() {
 
 // 雪花开关
 if (localStorage.getItem("snow") == undefined) {
-  localStorage.setItem("snow", "none");
+  localStorage.setItem("snow", "block");
 }
 document.getElementById("snow").style.display = localStorage.getItem("snow");
 function setSnow() {
@@ -3209,7 +3209,7 @@ if (localStorage.getItem("blogbg") != undefined) {
 } else {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/wallhaven-zypmoj.jpg);
-    --darkmode-bg:url(https://u7img.oss-cn-hangzhou.aliyuncs.com/wallhaven-28qzgy.png);
+    --darkmode-bg:url(https://u7img.oss-cn-hangzhou.aliyuncs.com/202303240840531.jpg);
     --mobileday-bg: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/wallhaven-wq9glp.webp);
     --mobilenight-bg: url(https://u7img.oss-cn-hangzhou.aliyuncs.com/wallhaven-6o8ekw.webp);
   }`;
