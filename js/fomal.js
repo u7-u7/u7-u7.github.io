@@ -2955,7 +2955,7 @@ function clearItem() {
 
 // 设置字体
 if (localStorage.getItem("font") == undefined) {
-  localStorage.setItem("font", "ZhuZiAWan");
+  localStorage.setItem("font", "HYTMR");
 }
 setFont(localStorage.getItem("font"));
 function setFont(n) {
