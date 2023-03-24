@@ -133,6 +133,8 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
+    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -140,8 +142,6 @@
     <category term="Hive" scheme="https://u7u7.top/tags/Hive/"/>
     
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
-    
-    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
