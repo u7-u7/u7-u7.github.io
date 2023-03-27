@@ -20,9 +20,9 @@
       
         <tags>
             
-            <tag> Vue </tag>
-            
             <tag> 项目 </tag>
+            
+            <tag> Vue </tag>
             
         </tags>
       
@@ -136,6 +136,8 @@
       
         <tags>
             
+            <tag> 大数据 </tag>
+            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -143,8 +145,6 @@
             <tag> Hive </tag>
             
             <tag> SQL </tag>
-            
-            <tag> 大数据 </tag>
             
         </tags>
       
