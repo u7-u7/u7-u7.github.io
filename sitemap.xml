@@ -31,7 +31,7 @@
   <url>
     <loc>https://u7u7.top/posts/adf5c49.html</loc>
     
-    <lastmod>2023-03-11</lastmod>
+    <lastmod>2023-03-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -173,15 +173,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/box/animation/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/box/nav/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
@@ -192,6 +183,24 @@
   
   <url>
     <loc>https://u7u7.top/life/games/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/box/animation/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/life/music/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -227,15 +236,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/life/music/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/personal/love/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/social/fcircle/index.html</loc>
+    <loc>https://u7u7.top/social/link/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -263,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/social/link/index.html</loc>
+    <loc>https://u7u7.top/social/fcircle/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -376,13 +376,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
-    <lastmod>2023-03-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/tags/Scala/</loc>
     <lastmod>2023-03-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -404,7 +397,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/SQL/</loc>
+    <loc>https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2023-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -418,7 +411,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/Vue/</loc>
+    <loc>https://u7u7.top/tags/SQL/</loc>
     <lastmod>2023-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -426,6 +419,13 @@
   
   <url>
     <loc>https://u7u7.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2023-03-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Vue/</loc>
     <lastmod>2023-03-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
