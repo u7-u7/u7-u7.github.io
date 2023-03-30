@@ -173,24 +173,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/box/animation/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/life/games/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/box/gallery/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
@@ -209,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/life/movies/index.html</loc>
+    <loc>https://u7u7.top/box/animation/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -218,16 +200,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/life/music/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/site/census/index.html</loc>
+    <loc>https://u7u7.top/life/games/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -237,6 +210,15 @@
   
   <url>
     <loc>https://u7u7.top/personal/about/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/life/music/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -255,6 +237,24 @@
   
   <url>
     <loc>https://u7u7.top/personal/love/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/life/movies/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/site/census/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -420,13 +420,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/Vue/</loc>
-    <lastmod>2023-03-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2023-03-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -435,6 +428,13 @@
   
   <url>
     <loc>https://u7u7.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2023-03-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Vue/</loc>
     <lastmod>2023-03-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
