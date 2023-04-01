@@ -20,8 +20,6 @@
       
         <tags>
             
-            <tag> 月笔记 </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -31,6 +29,8 @@
             <tag> SQL </tag>
             
             <tag> 大数据 </tag>
+            
+            <tag> 月笔记 </tag>
             
             <tag> Vue </tag>
             
@@ -57,8 +57,6 @@
       
         <tags>
             
-            <tag> 月笔记 </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -68,6 +66,8 @@
             <tag> SQL </tag>
             
             <tag> 大数据 </tag>
+            
+            <tag> 月笔记 </tag>
             
         </tags>
       
@@ -144,6 +144,8 @@
       
         <tags>
             
+            <tag> 月笔记 </tag>
+            
             <tag> Maven </tag>
             
             <tag> Git </tag>
@@ -157,8 +159,6 @@
             <tag> MybatPlus </tag>
             
             <tag> Spring </tag>
-            
-            <tag> 月笔记 </tag>
             
         </tags>
       
@@ -266,13 +266,13 @@
       
         <tags>
             
-            <tag> 月笔记 </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
             
             <tag> Hive </tag>
+            
+            <tag> 月笔记 </tag>
             
         </tags>
       
@@ -297,13 +297,13 @@
       
         <tags>
             
-            <tag> 月笔记 </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
             
             <tag> SQL </tag>
+            
+            <tag> 月笔记 </tag>
             
         </tags>
       
@@ -328,9 +328,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -486,9 +486,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       

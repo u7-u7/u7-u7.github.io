@@ -33,8 +33,6 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -44,6 +42,8 @@
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
     
     <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
     
@@ -66,8 +66,6 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -77,6 +75,8 @@
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
     
     <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -141,6 +141,8 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Maven" scheme="https://u7u7.top/tags/Maven/"/>
     
     <category term="Git" scheme="https://u7u7.top/tags/Git/"/>
@@ -154,8 +156,6 @@
     <category term="MybatPlus" scheme="https://u7u7.top/tags/MybatPlus/"/>
     
     <category term="Spring" scheme="https://u7u7.top/tags/Spring/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -247,13 +247,13 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
     <category term="Hive" scheme="https://u7u7.top/tags/Hive/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -274,13 +274,13 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -301,9 +301,9 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
-    
     <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
   </entry>
   
@@ -435,9 +435,9 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
-    
     <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
   </entry>
   
