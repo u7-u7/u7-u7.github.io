@@ -33,6 +33,8 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -42,8 +44,6 @@
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
     
     <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -64,6 +64,8 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -73,8 +75,6 @@
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
     
     <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
     
@@ -97,6 +97,8 @@
     <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
@@ -106,8 +108,6 @@
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
     
     <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -172,8 +172,6 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Maven" scheme="https://u7u7.top/tags/Maven/"/>
     
     <category term="Git" scheme="https://u7u7.top/tags/Git/"/>
@@ -187,6 +185,8 @@
     <category term="MybatPlus" scheme="https://u7u7.top/tags/MybatPlus/"/>
     
     <category term="Spring" scheme="https://u7u7.top/tags/Spring/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -278,13 +278,13 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
     <category term="Hive" scheme="https://u7u7.top/tags/Hive/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -305,13 +305,13 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
     <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
-    
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -332,9 +332,9 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -362,27 +362,6 @@
   </entry>
   
   <entry>
-    <title>GZ-07 综合分析</title>
-    <link href="https://u7u7.top/posts/dashuju.html"/>
-    <id>https://u7u7.top/posts/dashuju.html</id>
-    <published>2023-03-10T12:17:25.000Z</published>
-    <updated>2023-03-10T12:20:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>#7月综合分析</p><h2 id="如何解决Job运行效率低的问题">如何解决Job运行效率低的问题</h2><p>在模块B中出现某些Job运行时间较长，你认为可能是哪些情况造成？有什么相应的处理办法吗？将内容编写至对应报告中。</p><ol><li>可能是程序中出现了较多的网络IO操作，如远程调用，RPC等，会造成程序运行时间较长；</li><li>可能是spark程序中存在较多的计算任务，如计算量大的排序、递归，或者数据量较大，程序处理过程比较复杂，会造成程序运行时间较长；</li><li>可能是spark集群的配置问题，比如内存、cpu等不足或者不合理，会影响运行效率；</li><li>可能是spark应用程序使用的较低版本，造成程序性能较低；</li></ol><p>相应的处理办法：</p><ol><li>尽可能减少网络IO操作，尝试本地化调用；</li><li>提升程序性能，优化算法和架构；</li><li>合理配置spark集群，保证资源充足；</li><li>更新spark应用程序使用的版本，保证性能。</li></ol><p>##对于数据挖掘模块中的用户推荐有什么好的建议</p><p>在模块C中使用基于用户的推荐系统思路对用户的相似性进行计算，从而为每个用户推荐商品，你认为可以从哪些方面再进行优化？这种推荐策略对业务的发展会起到什么样的作用？将内容编写至对应报告中。</p><p>一、基于用户的推荐系统优化方面：<br>1、引入更多的用户行为数据，比如用户的购买趋势、搜索习惯、浏览历史、点赞记录等，这些数据可以更加精准的找到用户的相似性，从而提高推荐精度。<br>2、结合上下文信息，比如用户当前的位置、设备类型、时间等，这些信息可以更加准确的给出推荐内容。<br>3、采用互信息算法，可以找到用户未来可能会感兴趣的内容，而不仅仅是基于历史行为的内容。 二、基于用户的推荐系统对业务发展的作用：<br>1、提高用户对产品的兴趣，让用户更容易发现有价值的内容，从而提高用户的忠诚度，降低用户流失率；<br>2、提升用户体验，更加精准的把用户想要看到的内容推荐给用户，让用户能够在利用有限的时间里，找到最有价值的内容；<br>3、提升商业价值，可以更加精准的把产品推荐给有需求的用户，从而提高广告的投放效率，节省成本，提高收益。</p><h2 id="数仓中Hive内外表对比">数仓中Hive内外表对比</h2><p>Hive内外表之间的主要区别是数据存储方式不同。<br>Hive内表将数据存储在HDFS中，而Hive外表将数据存储在外部存储系统中，如HBase、Amazon S3等。<br>Hive内表不支持对数据进行更新和删除操作，而Hive外表可以支持对数据进行更新和删除操作。 Hive内表访问速度快，而Hive外表访问速度较慢。</p><h2 id="对于分组排序的理解">对于分组排序的理解</h2><p>请问Hive SQL有哪三种分组排序，他们各自的特点是什么。将内容编写至对应报告中。</p><p>Hive SQL有三种分组排序：<br>1.排序分组：这是Hive SQL中最常用的分组排序。它按照定义的字段进行排序，然后将它们分组。 2.分组分组：这种排序首先将记录分组，然后再按照定义的字段进行排序。<br>3.Hash分组：这种排序将记录分为多组，每组都有自己的哈希值。每组中的记录按照定义的字段进行排序。<br>总之，这三种分组排序都是按照定义的字段进行排序，但是排序的顺序不同。排序分组将记录按照定义的字段进行排序，然后再分组；分组分组则将记录先分组，然后再按照定义的字段进行排序；最后，Hash分组将记录分为多组，每组都有自己的哈希值，并且每组中的记录按照定义的字段进行排序。</p><h2 id="UDF-UDAF-UDTF的区别">UDF/UDAF/UDTF的区别</h2><p>UDF（User Defined Function）是用户定义函数，是一种在Hive SQL中添加自定义函数的方式，可以将复杂的逻辑封装为函数，以便在SQL语句中使用，从而提高SQL处理效率。<br>UDAF（User Defined Aggregate Function）是用户定义聚合函数，是一种在Hive SQL中添加自定义聚合函数的方式，可以对多行数据进行聚合操作，从而得到更好的结果。<br>UDTF（User Defined Table Function）是用户定义表函数，是一种在Hive SQL中添加自定义表函数的方式，可以根据输入的参数生成多行输出，从而实现对Hive表的转换、拆分和聚合等操作。</p>]]></content>
-    
-    
-    <summary type="html">大数据7月样题——电商综合分析</summary>
-    
-    
-    
-    <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
-    
-    
-    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
     <title>瑞吉外卖优化</title>
     <link href="https://u7u7.top/posts/ea7374cf.html"/>
     <id>https://u7u7.top/posts/ea7374cf.html</id>
@@ -400,6 +379,27 @@
     
     
     <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GZ-07 综合分析</title>
+    <link href="https://u7u7.top/posts/dashuju.html"/>
+    <id>https://u7u7.top/posts/dashuju.html</id>
+    <published>2023-03-10T12:17:25.000Z</published>
+    <updated>2023-03-10T12:20:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>#7月综合分析</p><h2 id="如何解决Job运行效率低的问题">如何解决Job运行效率低的问题</h2><p>在模块B中出现某些Job运行时间较长，你认为可能是哪些情况造成？有什么相应的处理办法吗？将内容编写至对应报告中。</p><ol><li>可能是程序中出现了较多的网络IO操作，如远程调用，RPC等，会造成程序运行时间较长；</li><li>可能是spark程序中存在较多的计算任务，如计算量大的排序、递归，或者数据量较大，程序处理过程比较复杂，会造成程序运行时间较长；</li><li>可能是spark集群的配置问题，比如内存、cpu等不足或者不合理，会影响运行效率；</li><li>可能是spark应用程序使用的较低版本，造成程序性能较低；</li></ol><p>相应的处理办法：</p><ol><li>尽可能减少网络IO操作，尝试本地化调用；</li><li>提升程序性能，优化算法和架构；</li><li>合理配置spark集群，保证资源充足；</li><li>更新spark应用程序使用的版本，保证性能。</li></ol><p>##对于数据挖掘模块中的用户推荐有什么好的建议</p><p>在模块C中使用基于用户的推荐系统思路对用户的相似性进行计算，从而为每个用户推荐商品，你认为可以从哪些方面再进行优化？这种推荐策略对业务的发展会起到什么样的作用？将内容编写至对应报告中。</p><p>一、基于用户的推荐系统优化方面：<br>1、引入更多的用户行为数据，比如用户的购买趋势、搜索习惯、浏览历史、点赞记录等，这些数据可以更加精准的找到用户的相似性，从而提高推荐精度。<br>2、结合上下文信息，比如用户当前的位置、设备类型、时间等，这些信息可以更加准确的给出推荐内容。<br>3、采用互信息算法，可以找到用户未来可能会感兴趣的内容，而不仅仅是基于历史行为的内容。 二、基于用户的推荐系统对业务发展的作用：<br>1、提高用户对产品的兴趣，让用户更容易发现有价值的内容，从而提高用户的忠诚度，降低用户流失率；<br>2、提升用户体验，更加精准的把用户想要看到的内容推荐给用户，让用户能够在利用有限的时间里，找到最有价值的内容；<br>3、提升商业价值，可以更加精准的把产品推荐给有需求的用户，从而提高广告的投放效率，节省成本，提高收益。</p><h2 id="数仓中Hive内外表对比">数仓中Hive内外表对比</h2><p>Hive内外表之间的主要区别是数据存储方式不同。<br>Hive内表将数据存储在HDFS中，而Hive外表将数据存储在外部存储系统中，如HBase、Amazon S3等。<br>Hive内表不支持对数据进行更新和删除操作，而Hive外表可以支持对数据进行更新和删除操作。 Hive内表访问速度快，而Hive外表访问速度较慢。</p><h2 id="对于分组排序的理解">对于分组排序的理解</h2><p>请问Hive SQL有哪三种分组排序，他们各自的特点是什么。将内容编写至对应报告中。</p><p>Hive SQL有三种分组排序：<br>1.排序分组：这是Hive SQL中最常用的分组排序。它按照定义的字段进行排序，然后将它们分组。 2.分组分组：这种排序首先将记录分组，然后再按照定义的字段进行排序。<br>3.Hash分组：这种排序将记录分为多组，每组都有自己的哈希值。每组中的记录按照定义的字段进行排序。<br>总之，这三种分组排序都是按照定义的字段进行排序，但是排序的顺序不同。排序分组将记录按照定义的字段进行排序，然后再分组；分组分组则将记录先分组，然后再按照定义的字段进行排序；最后，Hash分组将记录分为多组，每组都有自己的哈希值，并且每组中的记录按照定义的字段进行排序。</p><h2 id="UDF-UDAF-UDTF的区别">UDF/UDAF/UDTF的区别</h2><p>UDF（User Defined Function）是用户定义函数，是一种在Hive SQL中添加自定义函数的方式，可以将复杂的逻辑封装为函数，以便在SQL语句中使用，从而提高SQL处理效率。<br>UDAF（User Defined Aggregate Function）是用户定义聚合函数，是一种在Hive SQL中添加自定义聚合函数的方式，可以对多行数据进行聚合操作，从而得到更好的结果。<br>UDTF（User Defined Table Function）是用户定义表函数，是一种在Hive SQL中添加自定义表函数的方式，可以根据输入的参数生成多行输出，从而实现对Hive表的转换、拆分和聚合等操作。</p>]]></content>
+    
+    
+    <summary type="html">大数据7月样题——电商综合分析</summary>
+    
+    
+    
+    <category term="大数据训练" scheme="https://u7u7.top/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%AD%E7%BB%83/"/>
+    
+    
+    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
   </entry>
   
@@ -466,9 +466,9 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
-    
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
+    
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
