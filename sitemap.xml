@@ -227,24 +227,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/personal/about/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/personal/bb/index.html</loc>
-    
-    <lastmod>2023-03-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/life/games/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
@@ -263,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/personal/love/index.html</loc>
+    <loc>https://u7u7.top/life/movies/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -272,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/site/census/index.html</loc>
+    <loc>https://u7u7.top/personal/about/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
@@ -290,7 +272,25 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/life/movies/index.html</loc>
+    <loc>https://u7u7.top/personal/bb/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/personal/love/index.html</loc>
+    
+    <lastmod>2023-03-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/site/census/index.html</loc>
     
     <lastmod>2023-03-06</lastmod>
     
