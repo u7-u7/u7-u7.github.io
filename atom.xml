@@ -56,9 +56,9 @@
     
     <category term="C++" scheme="https://u7u7.top/tags/C/"/>
     
-    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
-    
     <category term="算法" scheme="https://u7u7.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
     
   </entry>
   
@@ -102,11 +102,11 @@
     
     <category term="C++" scheme="https://u7u7.top/tags/C/"/>
     
-    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
+    <category term="算法" scheme="https://u7u7.top/tags/%E7%AE%97%E6%B3%95/"/>
     
     <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
     
-    <category term="算法" scheme="https://u7u7.top/tags/%E7%AE%97%E6%B3%95/"/>
+    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
   </entry>
   
@@ -156,13 +156,13 @@
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
+    <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
     
     <category term="AI" scheme="https://u7u7.top/tags/AI/"/>
     
@@ -214,13 +214,13 @@
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
     
-    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
+    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
+    <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
-    <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
+    <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
     
   </entry>
   
@@ -355,9 +355,9 @@
     <category term="前后端项目" scheme="https://u7u7.top/categories/%E5%89%8D%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE/"/>
     
     
-    <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
-    
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
+    
+    <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
     
     <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
     
@@ -518,6 +518,8 @@
     <category term="工作室月笔记" scheme="https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E5%AE%A4%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     
+    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
+    
     <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
     <category term="Maven" scheme="https://u7u7.top/tags/Maven/"/>
@@ -527,8 +529,6 @@
     <category term="SSM框架" scheme="https://u7u7.top/tags/SSM%E6%A1%86%E6%9E%B6/"/>
     
     <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
-    
-    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
     <category term="MybatPlus" scheme="https://u7u7.top/tags/MybatPlus/"/>
     
