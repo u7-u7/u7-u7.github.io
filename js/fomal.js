@@ -2808,8 +2808,8 @@ function createtime() {
   let currentTimeHtml = "";
   (currentTimeHtml =
     hnum < 18 && hnum >= 9
-      ? `<img class='boardsign' src='https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/202303221745079.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>👮浙ICP备⚠️2023007023号🚓</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`
-      : `<img class='boardsign' src='https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/202303221745079.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>🚔浙ICP备⚠️2023007023号🚨</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`),
+      ? `<img class='boardsign' src='https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogCoverImg/web下标.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>👮浙ICP备⚠️2023007023号🚓</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`
+      : `<img class='boardsign' src='https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogCoverImg/web下标.svg' title='下班了就该开开心心的玩耍，嘿嘿~'><span class='textTip'> <br><a class='boardsign' style="font-size:15px;font-weight:bold" href="https://beian.miit.gov.cn/#/Integrated/recordQuery" title='浙ICP备-2023007023号'>🚔浙ICP备⚠️2023007023号🚨</a><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀<br> <b><font size=2px>可能是这个时代太坏了,感情泛滥,语言没有重量,随便说出口的喜欢与爱，配不上一颗赤诚的❤️‍🔥</font></div>`),
     document.getElementById("workboard") &&
     (document.getElementById("workboard").innerHTML = currentTimeHtml);
 }
@@ -3209,7 +3209,7 @@ if (localStorage.getItem("blogbg") != undefined) {
 } else {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-zypmoj.jpg);
-    --darkmode-bg:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/202303240840531.jpg);
+    --darkmode-bg:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-3lo9v3.webp.jpg);
     --mobileday-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-wq9glp.webp);
     --mobilenight-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-6o8ekw.webp);
   }`;
