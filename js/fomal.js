@@ -3209,7 +3209,7 @@ if (localStorage.getItem("blogbg") != undefined) {
 } else {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-zypmoj.jpg);
-    --darkmode-bg:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-3lo9v3.webp.jpg);
+    --darkmode-bg:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-3lo9v3.webp);
     --mobileday-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-wq9glp.webp);
     --mobilenight-bg: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-6o8ekw.webp);
   }`;
