@@ -386,8 +386,7 @@ template {
   -ms-animation: titleScale 1s;
   animation: titleScale 1s;
 }
-canvas:not(#ribbon-canvas),
-#web_bg {
+canvas:not(#ribbon-canvas) {
   -webkit-animation: to_show 4s;
   -moz-animation: to_show 4s;
   -o-animation: to_show 4s;
@@ -1394,16 +1393,6 @@ body {
 }
 input::placeholder {
   color: var(--font-color);
-}
-#web_bg {
-  position: fixed;
-  z-index: -999;
-  width: 100%;
-  height: 100%;
-  background-attachment: local;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 h1,
 h2,
@@ -3277,10 +3266,6 @@ figure.highlight pre .javascript .function {
 }
 #footer {
   position: relative;
-  background-color: #49b1f5;
-  background-attachment: scroll;
-  background-position: bottom;
-  background-size: cover;
 }
 #footer:before {
   position: absolute;
@@ -3383,22 +3368,11 @@ figure.highlight pre .javascript .function {
 #page-header {
   position: relative;
   width: 100%;
-  background-color: #49b1f5;
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
   -o-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s;
-}
-#page-header:not(.not-top-img):before {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--mark-bg);
-  content: '';
 }
 #page-header.full_page {
   height: 100vh;
@@ -4611,6 +4585,221 @@ figure.highlight pre .javascript .function {
 @media screen and (max-width: 768px) {
   .fancybox__toolbar__column.is-middle {
     display: none;
+  }
+}
+#web-bg {
+  position: fixed;
+  z-index: -999;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+#web-bg #default-bg,
+#web-bg #dark-bg,
+#web-bg #mobile-bg,
+#web-bg #mobile-dark-bg {
+  position: fixed;
+  background-attachment: local !important;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  width: 100%;
+  height: 100%;
+}
+#web-bg #dark-bg::before,
+#web-bg #mobile-dark-bg::before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  content: '';
+}
+@media screen and (min-width: 900px) {
+  #web-bg #default-bg {
+    -webkit-animation: web-bg-show 0.3s linear 1 forwards;
+    -moz-animation: web-bg-show 0.3s linear 1 forwards;
+    -o-animation: web-bg-show 0.3s linear 1 forwards;
+    -ms-animation: web-bg-show 0.3s linear 1 forwards;
+    animation: web-bg-show 0.3s linear 1 forwards;
+  }
+  #web-bg #dark-bg {
+    -webkit-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -moz-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -o-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -ms-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+  }
+  #web-bg #mobile-bg {
+    display: none;
+  }
+  #web-bg #mobile-dark-bg {
+    display: none;
+  }
+  [data-theme="dark"] #web-bg #default-bg {
+    -webkit-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -moz-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -o-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -ms-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+  }
+  [data-theme="dark"] #web-bg #dark-bg {
+    -webkit-animation: web-bg-show 0.3s linear 1 forwards;
+    -moz-animation: web-bg-show 0.3s linear 1 forwards;
+    -o-animation: web-bg-show 0.3s linear 1 forwards;
+    -ms-animation: web-bg-show 0.3s linear 1 forwards;
+    animation: web-bg-show 0.3s linear 1 forwards;
+  }
+}
+@media screen and (max-width: 900px) {
+  #web-bg #default-bg {
+    display: none;
+  }
+  #web-bg #dark-bg {
+    display: none;
+  }
+  #web-bg #mobile-bg {
+    -webkit-animation: web-bg-show 0.3s linear 1 forwards;
+    -moz-animation: web-bg-show 0.3s linear 1 forwards;
+    -o-animation: web-bg-show 0.3s linear 1 forwards;
+    -ms-animation: web-bg-show 0.3s linear 1 forwards;
+    animation: web-bg-show 0.3s linear 1 forwards;
+  }
+  #web-bg #mobile-dark-bg {
+    -webkit-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -moz-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -o-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -ms-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+  }
+  [data-theme="dark"] #web-bg #mobile-bg {
+    -webkit-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -moz-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -o-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    -ms-animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+    animation: web-bg-hidden 0.3s linear 1 0.1s forwards;
+  }
+  [data-theme="dark"] #web-bg #mobile-dark-bg {
+    -webkit-animation: web-bg-show 0.3s linear 1 forwards;
+    -moz-animation: web-bg-show 0.3s linear 1 forwards;
+    -o-animation: web-bg-show 0.3s linear 1 forwards;
+    -ms-animation: web-bg-show 0.3s linear 1 forwards;
+    animation: web-bg-show 0.3s linear 1 forwards;
+  }
+}
+@-moz-keyframes web-bg-show {
+  0% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@-webkit-keyframes web-bg-show {
+  0% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@-o-keyframes web-bg-show {
+  0% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes web-bg-show {
+  0% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    z-index: -998;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+}
+@-moz-keyframes web-bg-hidden {
+  0% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 100%);
+  }
+  100% {
+    z-index: -999;
+    display: none;
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@-webkit-keyframes web-bg-hidden {
+  0% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 100%);
+  }
+  100% {
+    z-index: -999;
+    display: none;
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@-o-keyframes web-bg-hidden {
+  0% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 100%);
+  }
+  100% {
+    z-index: -999;
+    display: none;
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes web-bg-hidden {
+  0% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 0);
+  }
+  99% {
+    z-index: -999;
+    display: block;
+    clip-path: inset(0 0 0 100%);
+  }
+  100% {
+    z-index: -999;
+    display: none;
+    clip-path: inset(0 0 0 100%);
   }
 }
 .container .btn-center {
@@ -5970,13 +6159,6 @@ blockquote.pullquote.right {
   --timeline-bg: #1f1f1f;
   --zoom-bg: #121212;
   --mark-bg: rgba(0,0,0,0.6);
-}
-[data-theme='dark'] #web_bg:before {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-  content: '';
 }
 [data-theme='dark'] .container code {
   background: #2c2c2c;
