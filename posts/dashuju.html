@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>GZ-07 综合分析 | U7's Blog🍋</title><meta name="author" content="U7's Blog🍋"><meta name="copyright" content="U7's Blog🍋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="大数据7月样题——电商综合分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GZ-07 综合分析">
+<meta property="og:url" content="https://u7u7.top/posts/dashuju.html">
+<meta property="og:site_name" content="U7&#39;s Blog🍋">
+<meta property="og:description" content="大数据7月样题——电商综合分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp">
+<meta property="article:published_time" content="2023-03-10T12:17:25.000Z">
+<meta property="article:modified_time" content="2023-04-06T00:20:37.000Z">
+<meta property="article:author" content="U7&#39;s Blog🍋">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GZ-07 综合分析",
+  "url": "https://u7u7.top/posts/dashuju.html",
+  "image": "https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp",
+  "datePublished": "2023-03-10T12:17:25.000Z",
+  "dateModified": "2023-04-06T00:20:37.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "U7's Blog🍋",
+      "url": "https://u7u7.top"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/faviconU7.ico"><link rel="canonical" href="https://u7u7.top/posts/dashuju.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GZ-07 综合分析',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web-bg"><div id="default-bg" style="background:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-zypmoj.jpg);;"></div><div id="dark-bg" style="background:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-3lo9v3.webp);;"></div><div id="mobile-bg" style="background:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-gpgwde.webp);;"></div><div id="mobile-dark-bg" style="background:url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-7pkv19.webp);;"></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">U7's Blog🍋</span></a><a class="nav-page-title" href="/"><span class="site-name">GZ-07 综合分析</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div></div></nav><div id="post-info"><h1 class="post-title">GZ-07 综合分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-10T12:17:25.000Z" title="发表于 2023-03-10 20:17:25">2023-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-06T00:20:37.000Z" title="更新于 2023-04-06 08:20:37">2023-04-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E4%BD%9C%E6%9C%88%E6%80%BB%E7%BB%93/">工作月总结</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="7月综合分析"><a href="#7月综合分析" class="headerlink" title="7月综合分析"></a>7月综合分析</h1><h2 id="如何解决Job运行效率低的问题"><a href="#如何解决Job运行效率低的问题" class="headerlink" title="如何解决Job运行效率低的问题"></a>如何解决Job运行效率低的问题</h2><p>在模块B中出现某些Job运行时间较长，你认为可能是哪些情况造成？有什么相应的处理办法吗？将内容编写至对应报告中。</p>
+<ol>
+<li>可能是程序中出现了较多的网络IO操作，如远程调用，RPC等，会造成程序运行时间较长；</li>
+<li>可能是spark程序中存在较多的计算任务，如计算量大的排序、递归，或者数据量较大，程序处理过程比较复杂，会造成程序运行时间较长；</li>
+<li>可能是spark集群的配置问题，比如内存、cpu等不足或者不合理，会影响运行效率；</li>
+<li>可能是spark应用程序使用的较低版本，造成程序性能较低； </li>
+</ol>
+<p>相应的处理办法： </p>
+<ol>
+<li>尽可能减少网络IO操作，尝试本地化调用； </li>
+<li>提升程序性能，优化算法和架构；</li>
+<li>合理配置spark集群，保证资源充足； </li>
+<li>更新spark应用程序使用的版本，保证性能。</li>
+</ol>
+<h2 id="对于数据挖掘模块中的用户推荐有什么好的建议"><a href="#对于数据挖掘模块中的用户推荐有什么好的建议" class="headerlink" title="对于数据挖掘模块中的用户推荐有什么好的建议"></a>对于数据挖掘模块中的用户推荐有什么好的建议</h2><p>在模块C中使用基于用户的推荐系统思路对用户的相似性进行计算，从而为每个用户推荐商品，你认为可以从哪些方面再进行优化？这种推荐策略对业务的发展会起到什么样的作用？将内容编写至对应报告中。</p>
+<p>一、基于用户的推荐系统优化方面：<br>1、引入更多的用户行为数据，比如用户的购买趋势、搜索习惯、浏览历史、点赞记录等，这些数据可以更加精准的找到用户的相似性，从而提高推荐精度。<br>2、结合上下文信息，比如用户当前的位置、设备类型、时间等，这些信息可以更加准确的给出推荐内容。<br>3、采用互信息算法，可以找到用户未来可能会感兴趣的内容，而不仅仅是基于历史行为的内容。 二、基于用户的推荐系统对业务发展的作用：<br>1、提高用户对产品的兴趣，让用户更容易发现有价值的内容，从而提高用户的忠诚度，降低用户流失率；<br>2、提升用户体验，更加精准的把用户想要看到的内容推荐给用户，让用户能够在利用有限的时间里，找到最有价值的内容；<br>3、提升商业价值，可以更加精准的把产品推荐给有需求的用户，从而提高广告的投放效率，节省成本，提高收益。</p>
+<h2 id="数仓中Hive内外表对比"><a href="#数仓中Hive内外表对比" class="headerlink" title="数仓中Hive内外表对比"></a>数仓中Hive内外表对比</h2><p>Hive内外表之间的主要区别是数据存储方式不同。<br>Hive内表将数据存储在HDFS中，而Hive外表将数据存储在外部存储系统中，如HBase、Amazon S3等。<br>Hive内表不支持对数据进行更新和删除操作，而Hive外表可以支持对数据进行更新和删除操作。 Hive内表访问速度快，而Hive外表访问速度较慢。 </p>
+<h2 id="对于分组排序的理解"><a href="#对于分组排序的理解" class="headerlink" title="对于分组排序的理解"></a>对于分组排序的理解</h2><p>请问Hive SQL有哪三种分组排序，他们各自的特点是什么。将内容编写至对应报告中。</p>
+<p>Hive SQL有三种分组排序：<br>1.排序分组：这是Hive SQL中最常用的分组排序。它按照定义的字段进行排序，然后将它们分组。 2.分组分组：这种排序首先将记录分组，然后再按照定义的字段进行排序。<br>3.Hash分组：这种排序将记录分为多组，每组都有自己的哈希值。每组中的记录按照定义的字段进行排序。<br>总之，这三种分组排序都是按照定义的字段进行排序，但是排序的顺序不同。排序分组将记录按照定义的字段进行排序，然后再分组；分组分组则将记录先分组，然后再按照定义的字段进行排序；最后，Hash分组将记录分为多组，每组都有自己的哈希值，并且每组中的记录按照定义的字段进行排序。</p>
+<h2 id="UDF-UDAF-UDTF的区别"><a href="#UDF-UDAF-UDTF的区别" class="headerlink" title="UDF/UDAF/UDTF的区别"></a>UDF/UDAF/UDTF的区别</h2><p>UDF（User Defined Function）是用户定义函数，是一种在Hive SQL中添加自定义函数的方式，可以将复杂的逻辑封装为函数，以便在SQL语句中使用，从而提高SQL处理效率。<br>UDAF（User Defined Aggregate Function）是用户定义聚合函数，是一种在Hive SQL中添加自定义聚合函数的方式，可以对多行数据进行聚合操作，从而得到更好的结果。<br>UDTF（User Defined Table Function）是用户定义表函数，是一种在Hive SQL中添加自定义表函数的方式，可以根据输入的参数生成多行输出，从而实现对Hive表的转换、拆分和聚合等操作。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://u7u7.top">U7's Blog🍋</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://u7u7.top/posts/dashuju.html">https://u7u7.top/posts/dashuju.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://u7u7.top" target="_blank">U7's Blog🍋</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><a class="post-meta__tags" href="/tags/%E6%80%BB%E7%BB%93/">总结</a></div><div class="post-share"><div class="social-share" data-image="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/ea7374cf.html" title="瑞吉外卖优化"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-6oe337.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">瑞吉外卖优化</div></div><div class="info-2"><div class="info-item-1">11.3 优化前git linux Redis1.头：日期、所学内容出处【黑马程序员2022新版SSM框架教程_Spring+SpringMVC+Maven高级+SpringBoot+MyBatisPlus企业实用开发技术】 https://www.bilibili.com/video/BV1Fi4y1S7ix?p=31&amp;share_source=copy_web&amp;vd_source=c8ae4150b2286ee39a13a79bbe12b843 2.所学内容概述Git命令git在之前学过一遍，做博客的时候也应用过，已经很熟悉了。记下命令吧 本地仓库的操作     命令 作用     git status 查看文件状态   git add 将文件修改加入暂存区   git reset 将暂存区的文件取消暂存或者切换版本   git commit 将暂存区的文件修改提交到版本库   git log 查看日志     远程仓库操作     命令 作用     git remote 查看远程仓库   git remote add 添加远程仓库   git clone ...</div></div></div></a><a class="pagination-related" href="/posts/23biji02.html" title="大数据24年2月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-v97pzl.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">大数据24年2月笔记</div></div><div class="info-2"><div class="info-item-1">Day11 重写学习日期: 2.15-2.16所学内容概述day11任务因为很久没有使用scala对数据处理，这两天打算用之前老师学习的数据和题目使用一下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869package subject4import org.apache.spark.sql.SparkSessionobject dataGet &#123;  def main(args: Array[String]): Unit = &#123;    val spark: SparkSession = SparkSession.builder().master(&quot;local[*]&quot;).appName(&quot;dataGet4&quot;)      .enableHiveSupport()      .config(&quot;hive.exec....</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/posts/dashuju2.html" title="24年大数据应用省赛总结"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-572k81.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-27</div><div class="info-item-2">24年大数据应用省赛总结</div></div><div class="info-2"><div class="info-item-1">离线模块总结离线抽取 ​        一共11道题目，难点就一题，其他的几个都是可以用同一个方法解决的，先封装一个方法把mysql表抽取并设置临时表，然后写一个mysql统一到hive的方法，参数为sparkSession，ods表名还有增量字段名即可，基本都是根据modified_time抽取增量数据，要注意的点是有些表是没有数据的，所以对于没数据的表就直接全量抽取即可。如果直接使用封装的增量抽取方法会导致没有数据进去，因为max的时候取值是NULL，而NULL是比普通的字符型要大的，会导致where的时候数据无法进入。然后就是一个coupon_use表，这个比较难，ods表还是有数据的，要根据三个时间字段取最大值进行增量抽取，这题简单说一些解题思路吧，首先你会发现ods表内三个时间字段get_time、used_time、pay_time 中的pay_time和used_time会有null值，之前说过NULL值是最大的，所以按照平常的greatest(max())，取出来是NULL，所以select取值的时候一定要where设置时间字段不为null where pay_t...</div></div></div></a><a class="pagination-related" href="/posts/23biji02.html" title="大数据24年2月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-v97pzl.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-01</div><div class="info-item-2">大数据24年2月笔记</div></div><div class="info-2"><div class="info-item-1">Day11 重写学习日期: 2.15-2.16所学内容概述day11任务因为很久没有使用scala对数据处理，这两天打算用之前老师学习的数据和题目使用一下 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869package subject4import org.apache.spark.sql.SparkSessionobject dataGet &#123;  def main(args: Array[String]): Unit = &#123;    val spark: SparkSession = SparkSession.builder().master(&quot;local[*]&quot;).appName(&quot;dataGet4&quot;)      .enableHiveSupport()      .config(&quot;hive.exec....</div></div></div></a><a class="pagination-related" href="/posts/23biji03.html" title="大数据24年3月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-9mvd9k.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-31</div><div class="info-item-2">大数据24年3月笔记</div></div><div class="info-2"><div class="info-item-1">DSL代码风格使用学习日期: 3.2所学内容概述看小白学苑的解法，发现DSL是能解决很多sql语句繁琐需要写字段名的代码。学习了spark的sql方法 sparksql常用方法withColumn自己使用一般只用到两种用法  添加列 修改列  1withColumn(&quot;列名&quot;,&quot;数据&quot;) 如上如果列名存在，则是对该列修改。如果列名不存在，则是添加新列 drop使用过一次，删除一列 1drop(&quot;etl_date&quot;) lit创建一个常量列 如下lit代表数据为常量结合withColumn使用 1withColumn(&quot;etl_date&quot;,lit(&quot;20230302&quot;)) colcol中选中为列的数据,如下col内的字段表示该列 oerate_time列 1withColumn(&quot;operate_time&quot;, coalesce(col(&quot;operate_time&quot;), col(&quot;create_time&quot;))) coalesce...</div></div></div></a><a class="pagination-related" href="/posts/23biji04.html" title="大数据24年4月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-1ko2rv.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-05</div><div class="info-item-2">大数据24年4月笔记</div></div><div class="info-2"><div class="info-item-1">模版学习日期:所学内容概述BUG日总结  分栏标签外挂 12345678&#123;% tabs 分栏%&#125;&lt;!-- tab test1@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&lt;!-- tab test2@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&#123;% endtabs %&#125; 四合服务器测试学习日期: 4.3所学内容概述四合服务器测试 使用基本的spark测试是否能连接到服务器, 使用spark提交代码是否能连接到hive以及mysql BUGIDEA直接跑出现现在的报错，因为四合服务器似乎有两个ip地址，一个局域一个直连，我看里面他配的hosts映射是局域的，刚开始自己在自己电脑配置的是直连的，报了如下的错误，然后把自己电脑映射全改成服务器局域的，还是报错，打包放到服务器用spark提交，是好的，也不知道什么问题，因...</div></div></div></a><a class="pagination-related" href="/posts/23biji05.html" title="中软杯24年5月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-573239.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-04</div><div class="info-item-2">中软杯24年5月笔记</div></div><div class="info-2"><div class="info-item-1">模版学习日期:所学内容概述BUG日总结  12345678&#123;% tabs 分栏%&#125;&lt;!-- tab BUG1@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&lt;!-- tab BUG2@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&#123;% endtabs %&#125; csv导入DM8学习日期: 5.4所学内容概述今天试着把csv文件读取到dm8数据库中，所实现的步骤如下:  连接dm8数据库并尝试读取库中的表  首先要导入连接数据库的依赖  123456&lt;!--    连接dm8的依赖--&gt;&lt;dependency&gt;    &lt;groupId&gt;com.dameng&lt;/groupId&gt;    &lt;artifactId&gt;Dm8JdbcDriver18&lt;/artifactI...</div></div></div></a><a class="pagination-related" href="/posts/23biji06.html" title="中软杯24年6月笔记"><img class="cover" src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-oxyjvl.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-01</div><div class="info-item-2">中软杯24年6月笔记</div></div><div class="info-2"><div class="info-item-1">模版学习日期:项目任务BUG日总结  12345678&#123;% tabs 分栏%&#125;&lt;!-- tab BUG1@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&lt;!-- tab BUG2@fas fa-bomb --&gt;Any content (support inline tags too).&lt;!-- endtab --&gt;&#123;% endtabs %&#125; Py综合推荐指标算法学习日期: 6.1项目任务综合指标计算​        默认推荐指标数，因为还没想好需要推荐的字段，有哪些，所以就先把结合和景区有关的所有字段找出进行加权处理，算出一个比较合适的rating推荐指标系数，将该系数存放到spot表中 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/chengguo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">U7's Blog🍋</div><div class="author-info-description">u7 and cc is now 🍭🍭🍭</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">42</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">39</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7%E6%9C%88%E7%BB%BC%E5%90%88%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">7月综合分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Job%E8%BF%90%E8%A1%8C%E6%95%88%E7%8E%87%E4%BD%8E%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">如何解决Job运行效率低的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E6%8E%A8%E8%8D%90%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E7%9A%84%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.2.</span> <span class="toc-text">对于数据挖掘模块中的用户推荐有什么好的建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E4%BB%93%E4%B8%ADHive%E5%86%85%E5%A4%96%E8%A1%A8%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.</span> <span class="toc-text">数仓中Hive内外表对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E5%88%86%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">1.4.</span> <span class="toc-text">对于分组排序的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDF-UDAF-UDTF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.</span> <span class="toc-text">UDF&#x2F;UDAF&#x2F;UDTF的区别</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/ESByMyself.html" title="ES随心记"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/wallhaven-rqde2q.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ES随心记"/></a><div class="content"><a class="title" href="/posts/ESByMyself.html" title="ES随心记">ES随心记</a><time datetime="2025-08-25T03:00:25.000Z" title="发表于 2025-08-25 11:00:25">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/MQByMyself.html" title="MQ个人理解"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/wallhaven-qr2p97.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MQ个人理解"/></a><div class="content"><a class="title" href="/posts/MQByMyself.html" title="MQ个人理解">MQ个人理解</a><time datetime="2025-08-25T01:00:25.000Z" title="发表于 2025-08-25 09:00:25">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/MQHigh.html" title="MQ高级"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/wallhaven-rd9ly1.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MQ高级"/></a><div class="content"><a class="title" href="/posts/MQHigh.html" title="MQ高级">MQ高级</a><time datetime="2025-08-24T04:00:25.000Z" title="发表于 2025-08-24 12:00:25">2025-08-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/MQLow.html" title="MQ基础"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/wallhaven-p92923.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MQ基础"/></a><div class="content"><a class="title" href="/posts/MQLow.html" title="MQ基础">MQ基础</a><time datetime="2025-08-24T03:00:25.000Z" title="发表于 2025-08-24 11:00:25">2025-08-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/goc02.html" title="GoC国赛特训(二)"><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-7p9vq3.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GoC国赛特训(二)"/></a><div class="content"><a class="title" href="/posts/goc02.html" title="GoC国赛特训(二)">GoC国赛特训(二)</a><time datetime="2025-08-23T14:49:34.165Z" title="发表于 2025-08-23 22:49:34">2025-08-23</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/wallhaven-pk6y2p.webp);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 By U7's Blog🍋</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>
