@@ -37,9 +37,9 @@
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="ES" scheme="https://u7u7.top/tags/ES/"/>
-    
     <category term="个人理解" scheme="https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/"/>
+    
+    <category term="ES" scheme="https://u7u7.top/tags/ES/"/>
     
   </entry>
   
@@ -64,9 +64,9 @@
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="个人理解" scheme="https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/"/>
-    
     <category term="MQ" scheme="https://u7u7.top/tags/MQ/"/>
+    
+    <category term="个人理解" scheme="https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/"/>
     
   </entry>
   
@@ -305,9 +305,9 @@
     <category term="算法" scheme="https://u7u7.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
-    
     <category term="C++" scheme="https://u7u7.top/tags/C/"/>
+    
+    <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
     <category term="Python" scheme="https://u7u7.top/tags/Python/"/>
     
@@ -495,13 +495,13 @@
     
     <category term="Vue" scheme="https://u7u7.top/tags/Vue/"/>
     
-    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-    <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
-    
     <category term="Scala" scheme="https://u7u7.top/tags/Scala/"/>
     
     <category term="Spark" scheme="https://u7u7.top/tags/Spark/"/>
+    
+    <category term="SQL" scheme="https://u7u7.top/tags/SQL/"/>
+    
+    <category term="大数据" scheme="https://u7u7.top/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
     
     <category term="月笔记" scheme="https://u7u7.top/tags/%E6%9C%88%E7%AC%94%E8%AE%B0/"/>
     
