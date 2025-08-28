@@ -7706,7 +7706,7 @@ input#pic-link {
 
 /* heo 加载动画头像 */
 .loading-img {
-  background: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/chengguo.jpg)
+  background: url(https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blogbackground/avatar.webp)
     no-repeat center center;
   background-size: cover;
 }
