@@ -6,7 +6,7 @@
   <link href="https://u7u7.top/atom.xml" rel="self"/>
   
   <link href="https://u7u7.top/"/>
-  <updated>2025-09-15T09:08:06.831Z</updated>
+  <updated>2025-09-15T10:35:46.701Z</updated>
   <id>https://u7u7.top/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://u7u7.top/posts/jucMyself.html"/>
     <id>https://u7u7.top/posts/jucMyself.html</id>
     <published>2025-09-15T09:00:38.000Z</published>
-    <updated>2025-09-15T09:08:06.831Z</updated>
+    <updated>2025-09-15T10:35:46.701Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="进程、线程和协程">进程、线程和协程</h1><p>进程是操作系统进行资源分配的一个基本单位，像启动一个springboot项目，操作系统会为它创建一个进程，这个进程会单独占用一部分系统资源。而在进程中可以创建多个线程，也就是刚刚的springboot项目，假设我们cpu是8核的，一个cpu核心可以执行一个线程。那我就可以创建八个线程，每个线程会通过指令去通过CPU执行指令。协程是jdk19后面才有的，也叫虚拟线程。它更加的轻量化，它是用户态的一个资源分配的基本单位，一个线程内部可以有多个协程，在JVM中进行创建和销毁。还有个共享变量的问题，进程之间不共享全局变量，线程之间能共享进程的<strong>堆和方法区</strong>资源，每个线程有自己的<strong>程序计数器</strong>、<strong>虚拟机栈和本地方法栈</strong>，协程能共享线程和进程的共享变量。</p><p><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/20250915170630999.png" alt="image.png"></p><ul><li><p>进程是操作系统进行资源分配的基本单位。比如我们启动一个 Java 程序（双击 jar 包或用<code>java</code>命令运行），操作系统会为它创建一个进程，这个进程会独占一部分系统资源 —— 比如独立的内存空间（堆、方法区等）、文件描述符、CPU 时间片配额等。可以理解为 “一个正在运行的程序实例”。</p></li><li><p>线程是进程内的执行单元，也是操作系统调度的基本单位。一个进程至少有一个线程（主线程），也可以创建多个线程，这些线程共享该进程的所有资源（比如内存、文件句柄），但每个线程有自己独立的执行路径（比如虚拟机栈、程序计数器）。可以理解为 “进程内的一个任务执行者”。</p></li><li><p>协程是用户态的轻量级 “执行单元”，由程序（而非操作系统）自身管理调度。一个线程内部可以有多个协程，java中是由JVM进行创建和销毁的。</p></li></ul><p>再从资源占用和开销来看，差异很明显：</p><ul><li><p>进程的资源是 “独立且厚重的”：每个进程有自己独立的内存空间，互不干扰，所以创建、销毁进程时，操作系统需要分配 / 回收大量资源（比如内存、IO 句柄），开销很大，启动速度慢。</p></li><li><p>线程的资源是 “共享且轻量的”：线程共享所属进程的内存和资源，自己只需要少量私有资源（比如栈空间、程序计数器），所以创建、销毁线程的开销小得多，启动速度快（通常比进程快 10-100 倍）。</p></li></ul><h1 id="并发、并行和串行">并发、并行和串行</h1><p>并发就是在操作系统中，安装了多个程序，并发就是同一个时间段在宏观上多个程序同时运行。但是单核CPU，一个时刻只能执行一个程序，所以在微观上这些程序是切换交替运行的，那么并行就是比如4个程序运行在一个4核心的cpu操作系统中，他们是可以同时执行。串行就是当一个程序执行完了，再去执行下一个程序。</p><h1 id="单核CPU如何处理多线程">单核CPU如何处理多线程</h1><p>通过时间片，之前说过一个核心只能处理一个线程。有时候我们其实观察到，比如安装虚拟机的时候只分配了一个核心，但是我们可能会部署mysql、redis、jar包，这明显不是单线程。在宏观上我们认为他们是同时执行的。但是其实在微观上并不是，依然是切换执行。它使用了时间片轮转算法，比如每一个时间片是1ms，实际是由操作系统内核设定，第一个时间片用来执行mysql程序了，1ms到了，切换到redis，依然给他1ms，1ms又到了，切换到jar。当然实际上并不是按照顺序来决定切换哪个线程的（调度算法）。这就涉及到几个问题，首先是频繁切换线程，肯定会消耗CPU资源。第二在每个线程切换的时候会涉及到线程上下文切换，CPU寄存器和程序计数器的内容会先保存，再切换，再恢复，极其消耗资源。所以单核CPU处理多线程瓶颈很大。</p><h1 id="创建线程的方式">创建线程的方式</h1><p>创建线程的方式是有三种，第一种继承Thread类，并重写run方法。第二种实现runnable接口，重写run方法。第三种是实现callable接口，这个接口可以抛异常和返回值，我们要先重写它的call方法。并将实例对象传到futureTask获取返回值，再将futureTask传入Thread构造器创建线程。</p><h1 id="start和run区别">start和run区别</h1><p>start在被线程执行的时候会调用本地方法，这里是由C++或者C写的，它会帮我们调度操作系统创建新的线程，操作系统会给新线程分配资源(程序计数器，虚拟机栈)，把该线程状态改成就绪，等待cpu分配时间片，再通过JVM回调到Thread中的run方法，再执行run方法中的逻辑。所以我们线程也可以直接调用run方法。但是还是有区别的，首先是start方法是启动线程，而run方法只是执行线程中重写run方法的逻辑，它会被当前所在线程调用。第二start方法是异步的，当程序执行start方法，不会等待执行完毕，程序计数器会直接执行下一行字节码，而run方法是同步的需要等待线程执行完毕。start方法会创建一个新的线程，run方法只是执行了逻辑并不会创建新线程。</p><h1 id="Double-checked-locking">Double-checked locking</h1><p>懒惰实例化，目的：即使在多线程的环境下也只实例化一次，两次判断INSTANCE成员变量。当类没被实例化的时候，线程A和线程B都进入了第一次if判断，synchronized加锁了，只有一个线程能拿到，实例化了对象。其他等待锁的线程，拿到锁执行的时候，if判断发现已经实例化了，跳出返回。此时被实例化以后，其他线程再来实例化的时候都发现被实例化了，在拿锁之前就返回了。提高了效率和安全性。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> <span class="type">Singleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="literal">null</span>;<span class="comment">//volatile 禁用指令重排，防止初始化没完全</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 实例没创建，才会进入内部的 synchronized代码块</span></span><br><span class="line">        <span class="keyword">if</span> (INSTANCE == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="comment">// 也许有其它线程已经创建实例，所以再判断一次</span></span><br><span class="line">                <span class="keyword">if</span> (INSTANCE == <span class="literal">null</span>) &#123;</span><br><span class="line">                    INSTANCE = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="CAS">CAS</h1><p>好处：比起synchronized锁，能防止线程阻塞，涉及到线程的上下文切换，因为线程阻塞休眠，会保留阻塞前的状态，等待唤醒，再加载阻塞前的状态。提升效率！</p><h1 id="synchronized优化">synchronized优化</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="进程、线程和协程">进程、线程和协程</h1><p>进程是操作系统进行资源分配的一个基本单位，像启动一个springboot项目，操作系统会为它创建一个进程，这个进程会单独占用一部分系统资源。而在进程中可以创建多个线程，也就是刚刚的springboot项目，假设我们cpu是8核的，一个cpu核心可以执行一个线程。那我就可以创建八个线程，每个线程会通过指令去通过CPU执行指令。协程是jdk19后面才有的，也叫虚拟线程。它更加的轻量化，它是用户态的一个资源分配的基本单位，一个线程内部可以有多个协程，在JVM中进行创建和销毁。还有个共享变量的问题，进程之间不共享全局变量，线程之间能共享进程的<strong>堆和方法区</strong>资源，每个线程有自己的<strong>程序计数器</strong>、<strong>虚拟机栈和本地方法栈</strong>，协程能共享线程和进程的共享变量。</p><p><img src="https://u7imgblog.oss-cn-hangzhou.aliyuncs.com/blognoteImg/20250915170630999.png" alt="image.png"></p><ul><li><p>进程是操作系统进行资源分配的基本单位。比如我们启动一个 Java 程序（双击 jar 包或用<code>java</code>命令运行），操作系统会为它创建一个进程，这个进程会独占一部分系统资源 —— 比如独立的内存空间（堆、方法区等）、文件描述符、CPU 时间片配额等。可以理解为 “一个正在运行的程序实例”。</p></li><li><p>线程是进程内的执行单元，也是操作系统调度的基本单位。一个进程至少有一个线程（主线程），也可以创建多个线程，这些线程共享该进程的所有资源（比如内存、文件句柄），但每个线程有自己独立的执行路径（比如虚拟机栈、程序计数器）。可以理解为 “进程内的一个任务执行者”。</p></li><li><p>协程是用户态的轻量级 “执行单元”，由程序（而非操作系统）自身管理调度。一个线程内部可以有多个协程，java中是由JVM进行创建和销毁的。</p></li></ul><p>再从资源占用和开销来看，差异很明显：</p><ul><li><p>进程的资源是 “独立且厚重的”：每个进程有自己独立的内存空间，互不干扰，所以创建、销毁进程时，操作系统需要分配 / 回收大量资源（比如内存、IO 句柄），开销很大，启动速度慢。</p></li><li><p>线程的资源是 “共享且轻量的”：线程共享所属进程的内存和资源，自己只需要少量私有资源（比如栈空间、程序计数器），所以创建、销毁线程的开销小得多，启动速度快（通常比进程快 10-100 倍）。</p></li></ul><h1 id="并发、并行和串行">并发、并行和串行</h1><p>并发就是在操作系统中，安装了多个程序，并发就是同一个时间段在宏观上多个程序同时运行。但是单核CPU，一个时刻只能执行一个程序，所以在微观上这些程序是切换交替运行的，那么并行就是比如4个程序运行在一个4核心的cpu操作系统中，他们是可以同时执行。串行就是当一个程序执行完了，再去执行下一个程序。</p><h1 id="单核CPU如何处理多线程">单核CPU如何处理多线程</h1><p>通过时间片，之前说过一个核心只能处理一个线程。有时候我们其实观察到，比如安装虚拟机的时候只分配了一个核心，但是我们可能会部署mysql、redis、jar包，这明显不是单线程。在宏观上我们认为他们是同时执行的。但是其实在微观上并不是，依然是切换执行。它使用了时间片轮转算法，比如每一个时间片是1ms，实际是由操作系统内核设定，第一个时间片用来执行mysql程序了，1ms到了，切换到redis，依然给他1ms，1ms又到了，切换到jar。当然实际上并不是按照顺序来决定切换哪个线程的（调度算法）。这就涉及到几个问题，首先是频繁切换线程，肯定会消耗CPU资源。第二在每个线程切换的时候会涉及到线程上下文切换，CPU寄存器和程序计数器的内容会先保存，再切换，再恢复，极其消耗资源。所以单核CPU处理多线程瓶颈很大。</p><h1 id="创建线程的方式">创建线程的方式</h1><p>创建线程的方式是有三种，第一种继承Thread类，并重写run方法。第二种实现runnable接口，重写run方法。第三种是实现callable接口，这个接口可以抛异常和返回值，我们要先重写它的call方法。并将实例对象传到futureTask获取返回值，再将futureTask传入Thread构造器创建线程。</p><h1 id="start和run区别">start和run区别</h1><p>start在被线程执行的时候会调用本地方法，这里是由C++或者C写的，它会帮我们调度操作系统创建新的线程，操作系统会给新线程分配资源(程序计数器，虚拟机栈)，把该线程状态改成就绪，等待cpu分配时间片，再通过JVM回调到Thread中的run方法，再执行run方法中的逻辑。所以我们线程也可以直接调用run方法。但是还是有区别的，首先是start方法是启动线程，而run方法只是执行线程中重写run方法的逻辑，它会被当前所在线程调用。第二start方法是异步的，当程序执行start方法，不会等待执行完毕，程序计数器会直接执行下一行字节码，而run方法是同步的需要等待线程执行完毕。start方法会创建一个新的线程，run方法只是执行了逻辑并不会创建新线程。</p><h1 id="sleep">sleep</h1><p><code>sleep</code>会让对应的线程暂停指定时间（期间不参与 CPU 调度，主动释放资源），这个特性虽然不常用，但在 Web 服务器中常配合<code>while(true)</code>死循环，目的是让主线程保持存活（防止 JVM 退出），同时不占用 CPU 资源，让 CPU 可以专注调度 Tomcat 的工作线程处理请求。在 Spring Boot 内嵌 Tomcat 的源码中，我观察到启动后主线程会进入一个每 10 秒<code>sleep</code>一次的死循环，这正是为了实现上述效果 —— 主线程 “休息” 时，CPU 会优先处理请求相关的线程。</p><h1 id="join">join</h1><p>这里有两种用法，第一种假设创建了一个线程t1。我在主线程先启动t1线程,t1.start——t1.join.后面才是主线程的代码。我们知道如果没有join，正常会由线程调度器给t1和主线程分配时间片，决定执行谁一会再执行另一个线程一会。但是<strong>在主线程</strong>加了t1.join，主线程就会等待t1执行完毕，再执行主线程的代码。<br>第二join方法中可以添加一个long参数，当添加了long参数，依旧拿刚刚的情况举例子，表示主线程愿意等待t1的时间，我<strong>个人</strong>这么理解的，假如设置的1s。如果t1执行的时间一共会是5s，那么一秒过后，主线程就不等了，线程执行顺序就有线程调度器来分配时间片决定了。如果t1执行的时间小于1s，那么t1执行完以后主线程执行。就和不添加long参数一样了。</p><h1 id="Double-checked-locking">Double-checked locking</h1><p>懒惰实例化，目的：即使在多线程的环境下也只实例化一次，两次判断INSTANCE成员变量。当类没被实例化的时候，线程A和线程B都进入了第一次if判断，synchronized加锁了，只有一个线程能拿到，实例化了对象。其他等待锁的线程，拿到锁执行的时候，if判断发现已经实例化了，跳出返回。此时被实例化以后，其他线程再来实例化的时候都发现被实例化了，在拿锁之前就返回了。提高了效率和安全性。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> <span class="type">Singleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="literal">null</span>;<span class="comment">//volatile 禁用指令重排，防止初始化没完全</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 实例没创建，才会进入内部的 synchronized代码块</span></span><br><span class="line">        <span class="keyword">if</span> (INSTANCE == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">                <span class="comment">// 也许有其它线程已经创建实例，所以再判断一次</span></span><br><span class="line">                <span class="keyword">if</span> (INSTANCE == <span class="literal">null</span>) &#123;</span><br><span class="line">                    INSTANCE = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="CAS">CAS</h1><p>好处：比起synchronized锁，能防止线程阻塞，涉及到线程的上下文切换，因为线程阻塞休眠，会保留阻塞前的状态，等待唤醒，再加载阻塞前的状态。提升效率！</p><h1 id="synchronized优化">synchronized优化</h1>]]></content>
     
     
     <summary type="html">多线程、线程池、锁机制理解</summary>
@@ -35,9 +35,9 @@
     
     <category term="个人理解" scheme="https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/"/>
     
-    <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
-    
     <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
     
   </entry>
   
@@ -300,9 +300,9 @@
     
     <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
     
-    <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
-    
     <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
     
     <category term="调优" scheme="https://u7u7.top/tags/%E8%B0%83%E4%BC%98/"/>
     
@@ -327,9 +327,9 @@
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
-    
     <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
+    
+    <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
     
     <category term="Redis" scheme="https://u7u7.top/tags/Redis/"/>
     
@@ -360,9 +360,9 @@
     
     <category term="Java" scheme="https://u7u7.top/tags/Java/"/>
     
-    <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
-    
     <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
+    
+    <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
     
     <category term="Redis" scheme="https://u7u7.top/tags/Redis/"/>
     
