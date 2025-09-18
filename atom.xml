@@ -56,9 +56,9 @@
     
     <category term="个人理解" scheme="https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/"/>
     
-    <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
     <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
+    
+    <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
@@ -346,9 +346,9 @@
     
     <category term="项目" scheme="https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/"/>
     
-    <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
     <category term="JUC" scheme="https://u7u7.top/tags/JUC/"/>
+    
+    <category term="多线程" scheme="https://u7u7.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
     <category term="调优" scheme="https://u7u7.top/tags/%E8%B0%83%E4%BC%98/"/>
     
@@ -377,13 +377,13 @@
     
     <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
     
+    <category term="Mysql" scheme="https://u7u7.top/tags/Mysql/"/>
+    
     <category term="Redis" scheme="https://u7u7.top/tags/Redis/"/>
     
     <category term="Mybatis-plus" scheme="https://u7u7.top/tags/Mybatis-plus/"/>
     
     <category term="Mybatis" scheme="https://u7u7.top/tags/Mybatis/"/>
-    
-    <category term="Mysql" scheme="https://u7u7.top/tags/Mysql/"/>
     
   </entry>
   
@@ -410,13 +410,13 @@
     
     <category term="SpringBoot" scheme="https://u7u7.top/tags/SpringBoot/"/>
     
+    <category term="Mysql" scheme="https://u7u7.top/tags/Mysql/"/>
+    
     <category term="Redis" scheme="https://u7u7.top/tags/Redis/"/>
     
     <category term="Mybatis-plus" scheme="https://u7u7.top/tags/Mybatis-plus/"/>
     
     <category term="Mybatis" scheme="https://u7u7.top/tags/Mybatis/"/>
-    
-    <category term="Mysql" scheme="https://u7u7.top/tags/Mysql/"/>
     
   </entry>
   
