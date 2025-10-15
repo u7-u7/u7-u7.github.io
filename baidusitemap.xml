@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://u7u7.top/posts/changjingBG.html</loc>
+    <lastmod>2025-10-15</lastmod>
+  </url>
+  <url>
+    <loc>https://u7u7.top/posts/SpringBG.html</loc>
+    <lastmod>2025-10-15</lastmod>
+  </url>
+  <url>
     <loc>https://u7u7.top/posts/RedisBG.html</loc>
-    <lastmod>2025-10-08</lastmod>
+    <lastmod>2025-10-15</lastmod>
   </url>
   <url>
-    <loc>https://u7u7.top/posts/jianli.html</loc>
-    <lastmod>2025-10-08</lastmod>
-  </url>
-  <url>
-    <loc>https://u7u7.top/posts/0.html</loc>
-    <lastmod>2025-10-08</lastmod>
-  </url>
-  <url>
-    <loc>https://u7u7.top/posts/mysqlBG.html</loc>
-    <lastmod>2025-10-08</lastmod>
+    <loc>https://u7u7.top/posts/jvmMyself.html</loc>
+    <lastmod>2025-10-15</lastmod>
   </url>
   <url>
     <loc>https://u7u7.top/posts/jucMyself.html</loc>
-    <lastmod>2025-10-04</lastmod>
-  </url>
-  <url>
-    <loc>https://u7u7.top/posts/MongoDB.html</loc>
-    <lastmod>2025-10-02</lastmod>
-  </url>
-  <url>
-    <loc>https://u7u7.top/posts/MQProblem.html</loc>
-    <lastmod>2025-10-02</lastmod>
+    <lastmod>2025-10-15</lastmod>
   </url>
   <url>
     <loc>https://u7u7.top/posts/ms.html</loc>
+    <lastmod>2025-10-14</lastmod>
+  </url>
+  <url>
+    <loc>https://u7u7.top/posts/jianli.html</loc>
+    <lastmod>2025-10-14</lastmod>
+  </url>
+  <url>
+    <loc>https://u7u7.top/posts/mysqlBG.html</loc>
+    <lastmod>2025-10-14</lastmod>
+  </url>
+  <url>
+    <loc>https://u7u7.top/posts/MQProblem.html</loc>
+    <lastmod>2025-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://u7u7.top/posts/MongoDB.html</loc>
     <lastmod>2025-10-02</lastmod>
   </url>
   <url>
@@ -55,10 +63,6 @@
   <url>
     <loc>https://u7u7.top/posts/myIdea.html</loc>
     <lastmod>2025-09-28</lastmod>
-  </url>
-  <url>
-    <loc>https://u7u7.top/posts/jvmMyself.html</loc>
-    <lastmod>2025-09-18</lastmod>
   </url>
   <url>
     <loc>https://u7u7.top/posts/leetcodeSF.html</loc>
