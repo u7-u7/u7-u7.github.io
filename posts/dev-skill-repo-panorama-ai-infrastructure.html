@@ -1,0 +1,676 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><div id="myscoll"></div><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>dev-skill：一个可公开分享的 DIY Agent Skills 工具箱 | U7's Blog🍋</title><meta name="keywords" content="AI,Claude Code,Skill,Workflow,Codex,DevSkill"><meta name="author" content="U7's Blog🍋"><meta name="copyright" content="U7's Blog🍋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="介绍个人维护的开源 dev-skill 项目：12 个可组合的 Agent Skills、跨客户端安全同步方式，以及从需求到审查的工程化工作流。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dev-skill：一个可公开分享的 DIY Agent Skills 工具箱">
+<meta property="og:url" content="https://u7u7.top/posts/dev-skill-repo-panorama-ai-infrastructure.html">
+<meta property="og:site_name" content="U7&#39;s Blog🍋">
+<meta property="og:description" content="介绍个人维护的开源 dev-skill 项目：12 个可组合的 Agent Skills、跨客户端安全同步方式，以及从需求到审查的工程化工作流。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.u7u7.top/blognoteImg/20260604192621606.png">
+<meta property="article:published_time" content="2026-07-31T12:30:00.000Z">
+<meta property="article:modified_time" content="2026-08-04T16:00:00.000Z">
+<meta property="article:author" content="U7&#39;s Blog🍋">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Claude Code">
+<meta property="article:tag" content="Skill">
+<meta property="article:tag" content="Workflow">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="DevSkill">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.u7u7.top/blognoteImg/20260604192621606.png"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://u7u7.top/posts/dev-skill-repo-panorama-ai-infrastructure"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'dev-skill：一个可公开分享的 DIY Agent Skills 工具箱',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-08-05 00:00:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn1.tianli0.top/npm/element-ui@2.15.6/packages/theme-chalk/lib/index.css"><style id="themeColor"></style><style id="rightSide"></style><style id="transPercent"></style><style id="blurNum"></style><style id="settingStyle"></style><span id="fps"></span><style id="defineBg"></style><style id="menu_shadow"></style><script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="U7's Blog🍋" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/avatar.webp" onerror="onerror=null;src='/assets/r1.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">76</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">U7's Blog🍋</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div><center id="name-container"><a id="page-name" href="javascript:scrollToTop()">PAGE_NAME</a></center><div id="nav-right"><div id="search-button"><a class="search faa-parent animated-hover" title="检索站内任何你想要的信息"><svg class="faa-tada icon" style="height:24px;width:24px;fill:currentColor;position:relative;top:6px" aria-hidden="true"><use xlink:href="#icon-valentine_-search-love-find-heart"></use></svg><span> 搜索</span></a></div><a class="meihua faa-parent animated-hover" onclick="toggleWinbox()" title="美化设置-自定义你的风格" id="meihua-button"><svg class="faa-tada icon" style="height:26px;width:26px;fill:currentColor;position:relative;top:8px" aria-hidden="true"><use xlink:href="#icon-tupian1"></use></svg></a><a class="sun_moon faa-parent animated-hover" onclick="switchNightMode()" title="浅色和深色模式转换" id="nightmode-button"><svg class="faa-tada" style="height:25px;width:25px;fill:currentColor;position:relative;top:7px" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon">       </use></svg></a><div id="toggle-menu"><a><i class="fas fa-bars fa-fw"></i></a></div></div></div></nav><div id="post-info"><h1 class="post-title">dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><svg class="meta_icon post-meta-icon" style="width:30px;height:30px;position:relative;top:10px"><use xlink:href="#icon-rili"></use></svg><span class="post-meta-label">发表于 </span><time class="post-meta-date-created" datetime="2026-07-31T12:30:00.000Z" title="发表于 2026-07-31 20:30:00">2026-07-31</time><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-gengxin1"></use></svg><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-04T16:00:00.000Z" title="更新于 2026-08-05 00:00:00">2026-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-biaoqian"></use></svg><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:8px"><use xlink:href="#icon-charuword"></use></svg><span class="post-meta-label">字数总计:</span><span class="word-count">3306</span><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:20px;height:20px;position:relative;top:5px"><use xlink:href="#icon-shizhong"></use></svg><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="dev-skill：一个可公开分享的 DIY Agent Skills 工具箱"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:5px"><use xlink:href="#icon-eye"></use></svg><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="dev-skill：一个可公开分享的-DIY-Agent-Skills-工具箱">dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</h1>
+<blockquote>
+<p>项目地址：<a target="_blank" rel="noopener" href="https://gitee.com/u7u7-sjh/dev-skill">Gitee · dev-skill</a></p>
+</blockquote>
+<p>我做这个项目的出发点很朴素：把自己在需求分析、开发、审查和测试里反复使用的方法，整理成能被 AI 工具识别、安装和组合调用的 Skill。</p>
+<p>dev-skill 是一个个人维护、可以公开分享的轻量仓库。它不是提示词大杂烩，也不试图包装成万能的“AI 操作系统”；更像一个 DIY Agent Skills 工具箱：每个 Skill 有明确职责，既可以单独使用，也可以沿着一条研发工作流协作。</p>
+<p>仓库源码、安装说明和每个 Skill 的具体约束，都以 <a target="_blank" rel="noopener" href="https://gitee.com/u7u7-sjh/dev-skill">Gitee 仓库</a> 为准。</p>
+<hr>
+<h2 id="一、它想解决什么问题">一、它想解决什么问题</h2>
+<p>很多 AI Coding 的经验最初都很零散：</p>
+<ul>
+<li>某个好用的提示词只留在聊天记录里；</li>
+<li>同一套规则要在不同客户端重复配置；</li>
+<li>需求、实现、审查之间缺少连续上下文；</li>
+<li>工作流跑顺后，下一次又得从头解释一遍。</li>
+</ul>
+<p>dev-skill 想做的，是把这些一次性的经验变成可复用、可安装、可迭代的能力单元。你可以把它理解为：</p>
+<blockquote>
+<p>把“我平时怎么让 AI 帮我做研发”沉淀成一套能继续演进的项目资产。</p>
+</blockquote>
+<p>它更适合希望把个人工作流整理清楚的开发者；仓库刻意不包含组织专用集成、私有凭据或生产数据，文档示例也使用中性命名，方便阅读和分享。</p>
+<hr>
+<h2 id="二、一张图看懂项目结构">二、一张图看懂项目结构</h2>
+<p>dev-skill 目前不是一个庞大的平台，而是一套围绕研发过程组织起来的 12 个 Skill。它们大致分成四层：先把需求想清楚，再把工程上下文找全，然后进入实现，最后用审查和测试把风险收住。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  flowchart TB
+    subgraph DEV[&quot;Development：把需求变成可执行开发任务&quot;]
+        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清目标、约束和方案选择&quot;]
+        SCANNER[&quot;app-scanner&lt;br&#x2F;&gt;扫描多应用工作区，提取业务能力&quot;]
+        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;产出 requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]
+        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;结对实现、修复、重构和验证&quot;]
+    end
+
+    subgraph REVIEW[&quot;Review：把改动变成可放心交付的结果&quot;]
+        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;审查单一作者最终态变更&quot;]
+        CODE[&quot;code-review&lt;br&#x2F;&gt;检查质量、安全、性能和架构风险&quot;]
+        TEST[&quot;integration-test&lt;br&#x2F;&gt;按风险生成集成测试用例&quot;]
+        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总代码审查、影响面和测试设计&quot;]
+        TEAM[&quot;team-cr&lt;br&#x2F;&gt;准备多人 CR 会议讨论清单&quot;]
+    end
+
+    subgraph VIS[&quot;Visualization：把复杂信息画清楚&quot;]
+        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;生成流程图、架构图、时序图、路线图&quot;]
+    end
+
+    subgraph PLATFORM[&quot;Platform：管理工作环境和使用统计&quot;]
+        WORKTREE[&quot;git-worktree&lt;br&#x2F;&gt;管理并行开发 worktree&quot;]
+        TRACKER[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用统计&quot;]
+    end
+
+    BRAIN --&gt; SDD
+    SCANNER --&gt; SDD
+    SDD --&gt; PAIR
+    PAIR --&gt; AUTHOR
+    AUTHOR --&gt; CODE
+    AUTHOR --&gt; TEST
+    CODE --&gt; FULL
+    TEST --&gt; FULL
+    FULL --&gt; TEAM
+    DIAGRAM -. &quot;可插入任意阶段&quot; .-&gt; SDD
+    WORKTREE -. &quot;隔离分支环境&quot; .-&gt; PAIR
+    TRACKER -. &quot;记录每次 Skill 调用&quot; .-&gt; BRAIN
+  </pre></div>
+<p>这张图可以先当成项目地图：Development 负责把“我要做什么”变成“我知道怎么做”；Review 负责把“做完了”变成“风险可解释”；Visualization 和 Platform 则是横向能力，一个负责表达复杂关系，一个负责让工具链可维护。</p>
+<hr>
+<h2 id="三、12-个-Skill-分别做什么">三、12 个 Skill 分别做什么</h2>
+<p>为了让读者不用跳到仓库里翻目录，下面按真实仓库中的 Skill 逐个说明。</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>Skill</th>
+<th>适合什么时候用</th>
+<th>主要产物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Development</td>
+<td><code>brainstorming</code></td>
+<td>需求还不够清楚，或者有多个方案需要取舍</td>
+<td>经确认的目标、边界和设计方向</td>
+</tr>
+<tr>
+<td>Development</td>
+<td><code>app-scanner</code></td>
+<td>工作区里有多个前后端应用，需要先摸清业务能力和依赖关系</td>
+<td>应用能力清单、API / 数据模型 / 外部依赖概览</td>
+</tr>
+<tr>
+<td>Development</td>
+<td><code>sdd-dev-workflow</code></td>
+<td>已有原始需求、PRD 或想法，需要整理成可开发任务</td>
+<td><code>requirements.md</code>、<code>design.md</code>、<code>plan.md</code>、<code>tasks.md</code></td>
+</tr>
+<tr>
+<td>Development</td>
+<td><code>ai-pair-programmer</code></td>
+<td>已经明确要写代码、改 bug、重构或补测试</td>
+<td>符合项目风格的代码改动和验证结果</td>
+</tr>
+<tr>
+<td>Review</td>
+<td><code>author-final-review</code></td>
+<td>想审查某个作者在一个范围内的最终代码状态</td>
+<td>面向 Bug 和风险的最终态审查结果</td>
+</tr>
+<tr>
+<td>Review</td>
+<td><code>code-review</code></td>
+<td>需要系统检查代码质量、安全、性能、架构和兼容性</td>
+<td>结构化代码审查报告</td>
+</tr>
+<tr>
+<td>Review</td>
+<td><code>integration-test</code></td>
+<td>Java Dubbo 变更需要补集成测试设计</td>
+<td>P0 / P1 测试用例、入参、预期输出和覆盖追溯</td>
+</tr>
+<tr>
+<td>Review</td>
+<td><code>full-review</code></td>
+<td>希望一次性拿到审查、影响面和测试设计的完整报告</td>
+<td>完整审查报告与风险覆盖结果</td>
+</tr>
+<tr>
+<td>Review</td>
+<td><code>team-cr</code></td>
+<td>多人、多模块改动要开集体 CR</td>
+<td>按风险等级和模块分组的会议讨论清单</td>
+</tr>
+<tr>
+<td>Visualization</td>
+<td><code>diagram-creation</code></td>
+<td>文字讲不清流程、架构、时序或学习路线</td>
+<td>Mermaid、PlantUML 等图表源码</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td><code>git-worktree</code></td>
+<td>多分支并行开发，或者需要隔离工作目录</td>
+<td>标准化 worktree 目录和迁移建议</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td><code>skill-usage-tracker</code></td>
+<td>执行技能前记录使用，或查看本地统计</td>
+<td>写入 <code>~/usage_stats.json</code> 的技能使用数据</td>
+</tr>
+</tbody>
+</table>
+<p>每个 Skill 都放在 <code>skills/&lt;分类&gt;/&lt;skill 名&gt;/</code> 下，以 <code>SKILL.md</code> 说明触发条件、输入输出和执行边界；需要时还会携带脚本、参考资料或模板。这样的结构让“能力说明”和“实际工具”留在同一个可追溯的位置。</p>
+<hr>
+<h2 id="四、开发中哪些环节可以用到这些-Skill">四、开发中哪些环节可以用到这些 Skill</h2>
+<p>光看 Skill 名字还不够直观，我们换成一个真实开发例子：<strong>给订单系统增加“优惠券抵扣”能力</strong>。</p>
+<p>这类需求通常不会直接进入编码。它会经历需求澄清、影响面扫描、方案拆解、代码实现、测试设计、代码审查和团队评审几个阶段。dev-skill 的价值，就是把这些阶段拆开，每一步用合适的 Skill 接住。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  flowchart TD
+    START[&quot;需求例子&lt;br&#x2F;&gt;订单系统支持优惠券抵扣&quot;]
+
+    subgraph PHASE1[&quot;阶段 1：想清楚要做什么&quot;]
+        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清优惠券规则、边界和验收口径&quot;]
+        OUT1[&quot;产物&lt;br&#x2F;&gt;哪些券可用、如何叠加、异常怎么处理&quot;]
+    end
+
+    subgraph PHASE2[&quot;阶段 2：找到会被影响的代码&quot;]
+        SCAN[&quot;app-scanner&lt;br&#x2F;&gt;多应用场景下扫描订单、营销、支付等应用&quot;]
+        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;结合真实代码证据整理方案&quot;]
+        OUT2[&quot;产物&lt;br&#x2F;&gt;requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]
+    end
+
+    subgraph PHASE3[&quot;阶段 3：隔离环境并开始实现&quot;]
+        WT[&quot;git-worktree&lt;br&#x2F;&gt;为优惠券需求创建独立工作区&quot;]
+        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;修改接口、领域逻辑、测试和配置&quot;]
+        OUT3[&quot;产物&lt;br&#x2F;&gt;可运行的代码改动与验证结果&quot;]
+    end
+
+    subgraph PHASE4[&quot;阶段 4：把风险收住&quot;]
+        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;先审查本次作者最终态变更&quot;]
+        CODE[&quot;code-review&lt;br&#x2F;&gt;检查兼容性、金额计算、安全和性能风险&quot;]
+        TEST[&quot;integration-test&lt;br&#x2F;&gt;生成 P0 &#x2F; P1 集成测试用例&quot;]
+        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总审查结论、影响面和测试覆盖&quot;]
+    end
+
+    subgraph PHASE5[&quot;阶段 5：准备协作交付&quot;]
+        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;画调用链、状态流转或优惠券计算流程&quot;]
+        TEAM[&quot;team-cr&lt;br&#x2F;&gt;整理多人 CR 会议讨论清单&quot;]
+        TRACK[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用，沉淀本地统计&quot;]
+    end
+
+    START --&gt; BRAIN --&gt; OUT1 --&gt; SCAN --&gt; SDD --&gt; OUT2
+    OUT2 --&gt; WT --&gt; PAIR --&gt; OUT3
+    OUT3 --&gt; AUTHOR --&gt; CODE --&gt; TEST --&gt; FULL
+    FULL --&gt; DIAGRAM --&gt; TEAM
+    BRAIN -. &quot;每次调用前记录&quot; .-&gt; TRACK
+    PAIR -. &quot;每次调用前记录&quot; .-&gt; TRACK
+    FULL -. &quot;每次调用前记录&quot; .-&gt; TRACK
+
+    classDef demand fill:#34495E,stroke:#2C3E50,color:#FFFFFF,stroke-width:2px
+    classDef discover fill:#E3F2FD,stroke:#1976D2,color:#0D47A1,stroke-width:2px
+    classDef build fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20,stroke-width:2px
+    classDef review fill:#FFF3E0,stroke:#F57C00,color:#E65100,stroke-width:2px
+    classDef collab fill:#F3E5F5,stroke:#8E24AA,color:#4A148C,stroke-width:2px
+    classDef output fill:#FAFAFA,stroke:#757575,color:#212121,stroke-width:1px
+
+    class START demand
+    class BRAIN,SCAN,SDD discover
+    class WT,PAIR build
+    class AUTHOR,CODE,TEST,FULL review
+    class DIAGRAM,TEAM,TRACK collab
+    class OUT1,OUT2,OUT3 output
+  </pre></div>
+<p>这张图背后的使用方式可以再翻译成大白话：</p>
+<table>
+<thead>
+<tr>
+<th>开发环节</th>
+<th>可以用的 Skill</th>
+<th>它帮你解决什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求刚来</td>
+<td><code>brainstorming</code></td>
+<td>不急着写代码，先问清规则、边界、验收标准</td>
+</tr>
+<tr>
+<td>需求涉及多个应用</td>
+<td><code>app-scanner</code></td>
+<td>找出订单、营销、支付等应用分别负责什么</td>
+</tr>
+<tr>
+<td>准备进入开发</td>
+<td><code>sdd-dev-workflow</code></td>
+<td>把需求、代码证据、技术方案和任务拆分整理出来</td>
+</tr>
+<tr>
+<td>多分支并行</td>
+<td><code>git-worktree</code></td>
+<td>给当前需求隔离一个干净工作区</td>
+</tr>
+<tr>
+<td>正式编码</td>
+<td><code>ai-pair-programmer</code></td>
+<td>在明确授权后改代码、补测试、跑验证</td>
+</tr>
+<tr>
+<td>自查或交付前</td>
+<td><code>author-final-review</code>、<code>code-review</code></td>
+<td>找出最终态代码里的 Bug、兼容性和架构风险</td>
+</tr>
+<tr>
+<td>测试设计</td>
+<td><code>integration-test</code></td>
+<td>根据风险点生成优先级测试用例</td>
+</tr>
+<tr>
+<td>汇总交付</td>
+<td><code>full-review</code></td>
+<td>把审查、影响面、测试覆盖整理成完整报告</td>
+</tr>
+<tr>
+<td>讲给别人听</td>
+<td><code>diagram-creation</code>、<code>team-cr</code></td>
+<td>画流程图，准备集体 CR 的重点讨论项</td>
+</tr>
+</tbody>
+</table>
+<p>这里有一个我很看重的边界：<strong>实现不是自动越权发生的。</strong> 前面的 Skill 负责弄清需求、建立事实和产出方案；只有用户明确授权后，才进入代码修改与验证。</p>
+<p>对开发者来说，这比“让 AI 一次性写完”更可控：每一步都有对应的上下文、检查点和产物。</p>
+<hr>
+<h2 id="五、如何安装并开始体验">五、如何安装并开始体验</h2>
+<p>项目通过 profile 管理默认安装清单。macOS / Linux 用户在仓库根目录依次执行：</p>
+<pre><code>make audit-skills
+make install-dry-run
+make install
+</code></pre>
+<ul>
+<li>make audit-skills：检查 Skill 数量、重名和职责重叠；</li>
+<li>make install-dry-run：预览同步计划，不修改任何文件；</li>
+<li>make install：正式同步 config/profiles/diy.skills 中定义的 Skill。</li>
+</ul>
+<p>Windows PowerShell 5.1+ 可执行：</p>
+<pre><code>powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 preview
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 install
+</code></pre>
+<p>安装器会检查每个 Skill 的 <a target="_blank" rel="noopener" href="http://SKILL.md">SKILL.md</a>、补齐其 depends_on 依赖，并只处理当前机器上实际检测到的 Cursor、Claude Code 与 Codex 客户端。未安装的客户端会被安全跳过。</p>
+<hr>
+<h2 id="六、为什么更新能保持一致">六、为什么更新能保持一致</h2>
+<p>仓库只维护一份 Skill 源码，客户端通过链接引用它：</p>
+<ul>
+<li>macOS / Linux 使用软链接；</li>
+<li>Windows 使用 Junction；</li>
+<li>修改仓库内的 Skill 后，已链接的客户端可以直接读到新版本。</li>
+</ul>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  flowchart LR
+    A[&quot;skills&#x2F;&lt;分类&gt;&#x2F;&lt;skill&gt;&lt;br&#x2F;&gt;唯一源码&quot;] --&gt; B[&quot;安装器&quot;]
+    C[&quot;config&#x2F;profiles&#x2F;diy.skills&lt;br&#x2F;&gt;默认安装清单&quot;] --&gt; B
+    B --&gt; D[&quot;Cursor&quot;]
+    B --&gt; E[&quot;Claude Code&quot;]
+    B --&gt; F[&quot;Codex&quot;]
+  </pre></div>
+<p>这避免了把同一份内容复制到多个工具目录后逐渐失控的问题。安装时若遇到同名冲突，也可以选择跳过、重命名或确认后覆盖；卸载只会移除该仓库创建的链接，不会删除 Skill 源码。</p>
+<hr>
+<h2 id="七、给想深入的人：它如何治理自己">七、给想深入的人：它如何治理自己</h2>
+<p>一个 Skill 仓库能否长期维护，不只取决于写了多少能力，还取决于有没有把质量和边界放进流程。</p>
+<ul>
+<li>scripts/audit-skills 用于审计数量、重名与功能重叠；</li>
+<li>skill-usage-tracker 将本地使用统计写入 ~/usage_stats.json，可配合看板查看；</li>
+<li>任何 Skill 执行前都要先记录使用，避免统计只靠人工回忆；</li>
+<li>强制覆盖和删除源码属于高风险操作，推荐先使用 dry-run 核对影响范围。</li>
+</ul>
+<p>我目前采用的安全同步顺序很简单：</p>
+<pre><code>审计 → dry-run → 处理冲突 → 安装 → 检查链接
+</code></pre>
+<p>这套流程不复杂，但能让工具箱在持续增加 Skill 时，仍保持来源清晰、更新可控、问题可回退。</p>
+<hr>
+<h2 id="八、从哪里开始">八、从哪里开始</h2>
+<p>如果你第一次打开这个项目，建议这样浏览：</p>
+<ol>
+<li>先读 <a target="_blank" rel="noopener" href="https://gitee.com/u7u7-sjh/dev-skill">README</a>，了解项目定位和安装方式；</li>
+<li>再看 skills/README.md，了解不同 Skill 的职责；</li>
+<li>选一个真实场景，再阅读对应 Skill 的 <a target="_blank" rel="noopener" href="http://SKILL.md">SKILL.md</a>。</li>
+</ol>
+<p>这篇文章讲的是项目本身；如果你想先理解 Skill 为什么不只是“提示词补丁”，可以继续读：</p>
+<ul>
+<li><a href="/posts/skill-literacy-dev-skill-workflow.html">Skill扫盲：从提示词补丁到AI工作流，我如何用dev-skill把经验沉淀成能力系统</a></li>
+<li><a href="/posts/superpowers-guide-coding-agent-workflow.html">Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent</a></li>
+</ul>
+<p>也欢迎直接从 <a target="_blank" rel="noopener" href="https://gitee.com/u7u7-sjh/dev-skill">dev-skill Gitee 仓库</a> 开始，按自己的工作流挑一个 Skill 试用。</p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://u7u7.top/posts/dev-skill-repo-panorama-ai-infrastructure.html">https://u7u7.top/posts/dev-skill-repo-panorama-ai-infrastructure.html</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>U7's Blog🍋</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2026-07-31</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2026-08-05</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>AI</a><a class="post-meta__tags" href="/tags/Claude-Code/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>Claude Code</a><a class="post-meta__tags" href="/tags/Skill/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>Skill</a><a class="post-meta__tags" href="/tags/Workflow/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>Workflow</a><a class="post-meta__tags" href="/tags/Codex/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>Codex</a><a class="post-meta__tags" href="/tags/DevSkill/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>DevSkill</a></div></div><link rel="stylesheet" href="/css/coin.css" media="defer" onload="this.media='all'"/><div class="post-reward"><button class="tip-button reward-button"><span class="tip-button__text">投喂作者</span><div class="coin-wrapper"><div class="coin"><div class="coin__middle"></div><div class="coin__back"></div><div class="coin__front"></div></div></div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></button></div><audio id="coinAudio" src="https://npm.elemecdn.com/akilar-candyassets@1.0.36/audio/aowu.m4a"></audio><script defer="defer" src="/js/coin.js"></script><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/superpowers-guide-coding-agent-workflow.html"><img class="prev-cover" src="https://img.u7u7.top/blognoteImg/20260604192613716.png" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent</div></div></a></div><div class="next-post pull-right"><a href="/posts/work-daily-2026-07.html"><img class="next-cover" src="https://img.u7u7.top/blognoteImg/20260604192613716.png" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2026年07月工作日报</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/skill-literacy-dev-skill-workflow.html" title="Skill扫盲：从提示词补丁到AI工作流，我如何用dev-skill把经验沉淀成能力系统"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192607886.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-06-09</div><div class="title">Skill扫盲：从提示词补丁到AI工作流，我如何用dev-skill把经验沉淀成能力系统</div></div></a></div><div><a href="/posts/superpowers-guide-coding-agent-workflow.html" title="Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192613716.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-07-31</div><div class="title">Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent</div></div></a></div><div><a href="/posts/claude-code-agent-team-collaboration-record.html" title="Claude Code Agent Team协作全记录：3个AI如何串起需求、开发与审查闭环"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192545011.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-06-05</div><div class="title">Claude Code Agent Team协作全记录：3个AI如何串起需求、开发与审查闭环</div></div></a></div><div><a href="/posts/claude-code-harness-rag-skill-memory.html" title="Claude Code Harness深度分析：从RAG、Skill、Memory到企业Agent落地"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192534325.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-06-04</div><div class="title">Claude Code Harness深度分析：从RAG、Skill、Memory到企业Agent落地</div></div></a></div><div><a href="/posts/ai-learning-blueprint-h1.html" title="AI Learning Blueprint(H1)：从 AI Coding 到 AI Workflow，我在 AI 小组这半年做了什么"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192151390.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-06-04</div><div class="title">AI Learning Blueprint(H1)：从 AI Coding 到 AI Workflow，我在 AI 小组这半年做了什么</div></div></a></div><div><a href="/posts/jira-trace-agent-harness-review.html" title="JIRA与Trace分析自动化复盘：从Airbag到NVWA的Agent Harness优化"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192551978.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-06-12</div><div class="title">JIRA与Trace分析自动化复盘：从Airbag到NVWA的Agent Harness优化</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><svg class="meta_icon" style="width:22px;height:22px;position:relative;top:5px"><use xlink:href="#icon-mulu1"></use></svg><span style="font-weight:bold">目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dev-skill%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%85%AC%E5%BC%80%E5%88%86%E4%BA%AB%E7%9A%84-DIY-Agent-Skills-%E5%B7%A5%E5%85%B7%E7%AE%B1"><span class="toc-text">dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%83%E6%83%B3%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="toc-text">一、它想解决什么问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%80%E5%BC%A0%E5%9B%BE%E7%9C%8B%E6%87%82%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">二、一张图看懂项目结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%8112-%E4%B8%AA-Skill-%E5%88%86%E5%88%AB%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-text">三、12 个 Skill 分别做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%BC%80%E5%8F%91%E4%B8%AD%E5%93%AA%E4%BA%9B%E7%8E%AF%E8%8A%82%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%88%B0%E8%BF%99%E4%BA%9B-Skill"><span class="toc-text">四、开发中哪些环节可以用到这些 Skill</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E5%B9%B6%E5%BC%80%E5%A7%8B%E4%BD%93%E9%AA%8C"><span class="toc-text">五、如何安装并开始体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9B%B4%E6%96%B0%E8%83%BD%E4%BF%9D%E6%8C%81%E4%B8%80%E8%87%B4"><span class="toc-text">六、为什么更新能保持一致</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%BB%99%E6%83%B3%E6%B7%B1%E5%85%A5%E7%9A%84%E4%BA%BA%EF%BC%9A%E5%AE%83%E5%A6%82%E4%BD%95%E6%B2%BB%E7%90%86%E8%87%AA%E5%B7%B1"><span class="toc-text">七、给想深入的人：它如何治理自己</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B"><span class="toc-text">八、从哪里开始</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">格言🧬</p><div class="bg-ad"><div>再看看那个光点，它就在这里，这是家园，这是我们 —— 你所爱的每一个人，你认识的一个人，你听说过的每一个人，曾经有过的每一个人，都在它上面度过他们的一生✨</div><div class="btn-xz-box"><a class="btn-xz" target="_blank" rel="noopener" href="https://stellarium.org/">点击开启星辰之旅</a></div></div></div><div class="t-t-r"><p class="ft-t t-l-t">猜你想看💡</p><ul class="ft-links"><li><a href="/comments/">留点什么</a><a href="/archives/">文章归档</a></li><li><a href="/categories/">文章分类</a><a href="/tags/">文章标签</a></li><li><a href="/box/Gallery/">我的画廊</a><a href="/personal/bb/">我的唠叨</a></li><li><a href="/site/time/">建设进程</a><a href="/site/census/">网站统计</a></li></ul></div></div></div><div class="ft-item-2"><p class="ft-t">推荐友链⌛</p><div class="ft-img-group"><div class="img-group-item"></div></div></div></div><div class="copyright"><span><b>&copy;2022-2026</b></span><span><b>&nbsp;&nbsp;By U7's Blog🍋</b></span></div><div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://icp.gov.moe/?keyword=20230913" style="margin-inline:5px" title="本站已加入萌ICP豪华套餐，萌ICP备20230913号"><img src="https://img.u7u7.top/blogbackground/20230913.svg" alt=""/></a></p></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="share" type="button" title="右键模式" onclick="changeMouseMode()"><i class="fas fa-mouse"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog right_side"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button class="share" type="button" title="分享链接" onclick="share()"><i class="fas fa-share-nodes"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i><span id="percent">0<span>%</span></span></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div class="js-pjax" id="rightMenu"><div class="rightMenu-group rightMenu-small"><a class="rightMenu-item" href="javascript:window.history.back();"><i class="fa fa-arrow-left"></i></a><a class="rightMenu-item" href="javascript:window.history.forward();"><i class="fa fa-arrow-right"></i></a><a class="rightMenu-item" href="javascript:window.location.reload();"><i class="fa fa-refresh"></i></a><a class="rightMenu-item" href="javascript:rmf.scrollToTop();"><i class="fa fa-arrow-up"></i></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-text"><a class="rightMenu-item" href="javascript:rmf.copySelect();"><i class="fa fa-copy"></i><span>复制</span></a><a class="rightMenu-item" href="javascript:window.open(&quot;https://www.baidu.com/s?wd=&quot;+window.getSelection().toString());window.location.reload();"><i class="fa fa-search"></i><span>百度搜索</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-too"><a class="rightMenu-item" href="javascript:window.open(window.getSelection().toString());window.location.reload();"><i class="fa fa-link"></i><span>转到链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-paste"><a class="rightMenu-item" href="javascript:rmf.paste()"><i class="fa fa-copy"></i><span>粘贴</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-post"><a class="rightMenu-item" href="#post-comment"><i class="fas fa-comment"></i><span>空降评论</span></a><a class="rightMenu-item" href="javascript:rmf.copyWordsLink()"><i class="fa fa-link"></i><span>复制本文地址</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-to"><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>新窗口打开</span></a><a class="rightMenu-item" id="menu-too" href="javascript:rmf.open()"><i class="fa fa-link"></i><span>转到链接</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-img"><a class="rightMenu-item" href="javascript:rmf.saveAs()"><i class="fa fa-download"></i><span>保存图片</span></a><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>在新窗口打开</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制图片链接</span></a></div><div class="rightMenu-group rightMenu-line"><a class="rightMenu-item" href="javascript:randomPost()"><i class="fa fa-paper-plane"></i><span>随便逛逛</span></a><a class="rightMenu-item" href="javascript:switchNightMode();"><i class="fa fa-moon"></i><span>昼夜切换</span></a><a class="rightMenu-item" href="javascript:rmf.switchReadMode();"><i class="fa fa-book"></i><span>阅读模式</span></a><a class="rightMenu-item" href="/personal/about/"><i class="fa fa-info-circle"></i><span>关于博客</span></a><a class="rightMenu-item" href="javascript:toggleWinbox();"><i class="fas fa-cog"></i><span>美化设置</span></a><a class="rightMenu-item" href="javascript:rmf.fullScreen();"><i class="fas fa-expand"></i><span>切换全屏</span></a><a class="rightMenu-item" href="javascript:window.print();"><i class="fa-solid fa-print"></i><span>打印页面</span></a></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())
+setTimeout(function(){preloader.endLoading();}, 5000);
+document.getElementById('loading-box').addEventListener('click',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: '',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: '',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.staticfile.org/twikoo/1.6.8/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script async src="https://cdn1.tianli0.top/npm/vue@2.6.14/dist/vue.min.js"></script><script async src="https://cdn1.tianli0.top/npm/element-ui@2.15.6/lib/index.js"></script><script async src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script async src="//npm.elemecdn.com/pace-js@1.2.4/pace.min.js"></script><script defer src="https://cdn1.tianli0.top/gh/nextapps-de/winbox/dist/winbox.bundle.min.js"></script><script async src="//at.alicdn.com/t/c/font_3586335_hsivh70x0fm.js"></script><script async src="//at.alicdn.com/t/c/font_3636804_gr02jmjr3y9.js"></script><script async src="//at.alicdn.com/t/c/font_3612150_kfv55xn3u2g.js"></script><script async src="https://cdn.wpon.cn/2022-sucai/Gold-ingot.js"></script><canvas id="universe"></canvas><canvas id="snow"></canvas><script defer src="/js/fomal.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show","#web_bg",".js-pjax","#bibi","body > title","#app","#tag-echarts","#posts-echart","#categories-echarts"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/学习笔记/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍡 U7の学习笔记 (22)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/杂项/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 U7のLife&Work杂项 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/项目/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 U7の项目笔记 (7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/工作月总结/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍨 U7の工作月总结 (12)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/算法/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍟 U7の算法学习笔记 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/面试/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍥 U7の面试 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://u7u7.top/categories/" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #e9e9e9;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: var(--text-bg-hover)}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5g7ew7.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">面试题集</a><div class="blog-slider__text">常见面试题梳理</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5y7ro7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-18</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">面经记录</a><div class="blog-slider__text">群友、牛客、抖音等同学的面经分享——只有问题、记录在其他文件中，方便回头自己拷打自己</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/wallhaven-rd9ly1.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-15</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">MQ八股</a><div class="blog-slider__text">各种MQ的相关八股</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/20250728154351340.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-08-08</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">微服务SpringCloudAlibaba</a><div class="blog-slider__text">梳理的微服务重要知识点！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-g7vgkd.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">优探社交购云平台</a><div class="blog-slider__text">学习项目从0-1</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/20260604192557825.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-08-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt="">Markdown语法与外挂标签写法汇总</a><div class="blog-slider__text">🥧本文汇总Markdown格式以及外挂标签在网页端的渲染效果，可作为文档进行查询</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('gitZone');
+      var item_html = '<div class="recent-post-item" id="gitcalendarBar" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 320px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('gitZone') && (location.pathname ==='/site/census/'|| '/site/census/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("/api?null",['#d9e0df', '#c6e0dc', '#a8dcd4', '#9adcd2', '#89ded1', '#77e0d0', '#5fdecb', '#47dcc6', '#39dcc3', '#1fdabe', '#00dab9'],'null')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>

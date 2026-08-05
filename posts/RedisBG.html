@@ -1,0 +1,543 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><div id="myscoll"></div><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Redis八股 | U7's Blog🍋</title><meta name="keywords" content="八股文"><meta name="author" content="U7's Blog🍋"><meta name="copyright" content="U7's Blog🍋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Redis相关面试题以及底层实现原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis八股">
+<meta property="og:url" content="https://u7u7.top/posts/RedisBG.html">
+<meta property="og:site_name" content="U7&#39;s Blog🍋">
+<meta property="og:description" content="Redis相关面试题以及底层实现原理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.u7u7.top/blogbackground/wallhaven-gw7myq.webp">
+<meta property="article:published_time" content="2025-10-08T13:31:18.000Z">
+<meta property="article:modified_time" content="2026-03-16T09:20:38.000Z">
+<meta property="article:author" content="U7&#39;s Blog🍋">
+<meta property="article:tag" content="八股文">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.u7u7.top/blogbackground/wallhaven-gw7myq.webp"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://u7u7.top/posts/RedisBG"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Redis八股',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-16 17:20:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn1.tianli0.top/npm/element-ui@2.15.6/packages/theme-chalk/lib/index.css"><style id="themeColor"></style><style id="rightSide"></style><style id="transPercent"></style><style id="blurNum"></style><style id="settingStyle"></style><span id="fps"></span><style id="defineBg"></style><style id="menu_shadow"></style><script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="U7's Blog🍋" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/avatar.webp" onerror="onerror=null;src='/assets/r1.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">76</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">U7's Blog🍋</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div><center id="name-container"><a id="page-name" href="javascript:scrollToTop()">PAGE_NAME</a></center><div id="nav-right"><div id="search-button"><a class="search faa-parent animated-hover" title="检索站内任何你想要的信息"><svg class="faa-tada icon" style="height:24px;width:24px;fill:currentColor;position:relative;top:6px" aria-hidden="true"><use xlink:href="#icon-valentine_-search-love-find-heart"></use></svg><span> 搜索</span></a></div><a class="meihua faa-parent animated-hover" onclick="toggleWinbox()" title="美化设置-自定义你的风格" id="meihua-button"><svg class="faa-tada icon" style="height:26px;width:26px;fill:currentColor;position:relative;top:8px" aria-hidden="true"><use xlink:href="#icon-tupian1"></use></svg></a><a class="sun_moon faa-parent animated-hover" onclick="switchNightMode()" title="浅色和深色模式转换" id="nightmode-button"><svg class="faa-tada" style="height:25px;width:25px;fill:currentColor;position:relative;top:7px" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon">       </use></svg></a><div id="toggle-menu"><a><i class="fas fa-bars fa-fw"></i></a></div></div></div></nav><div id="post-info"><h1 class="post-title">Redis八股</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><svg class="meta_icon post-meta-icon" style="width:30px;height:30px;position:relative;top:10px"><use xlink:href="#icon-rili"></use></svg><span class="post-meta-label">发表于 </span><time class="post-meta-date-created" datetime="2025-10-08T13:31:18.000Z" title="发表于 2025-10-08 21:31:18">2025-10-08</time><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-gengxin1"></use></svg><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-16T09:20:38.000Z" title="更新于 2026-03-16 17:20:38">2026-03-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-biaoqian"></use></svg><a class="post-meta-categories" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:8px"><use xlink:href="#icon-charuword"></use></svg><span class="post-meta-label">字数总计:</span><span class="word-count">4313</span><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:20px;height:20px;position:relative;top:5px"><use xlink:href="#icon-shizhong"></use></svg><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis八股"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:5px"><use xlink:href="#icon-eye"></use></svg><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Redis核心面试题"><a href="#Redis核心面试题" class="headerlink" title="Redis核心面试题"></a>Redis核心面试题</h1><h2 id="Redis基础知识"><a href="#Redis基础知识" class="headerlink" title="Redis基础知识"></a>Redis基础知识</h2><h3 id="Redis为什么快"><a href="#Redis为什么快" class="headerlink" title="Redis为什么快"></a>Redis为什么快</h3><ol>
+<li><strong>纯内存操作</strong>：数据全存内存，避免磁盘 IO（数据库慢的核心原因），内存读写速度比磁盘快万倍以上</li>
+<li><strong>单线程模型</strong>：无多线程上下文切换开销，也无需处理线程安全问题，减少性能损耗</li>
+<li><strong>高效数据结构</strong>：底层用跳表、哈希表等结构，查询/插入/删除效率均为 O(1) 或 O(logn)</li>
+<li><strong>IO模型优化</strong>：用 IO 多路复用（epoll/kqueue），单线程处理上万并发连接，无连接阻塞</li>
+<li><strong>轻量设计</strong>：代码简洁（核心代码仅几万行），无复杂逻辑，减少运行时资源占用</li>
+</ol>
+<h3 id="Redis的数据结构"><a href="#Redis的数据结构" class="headerlink" title="Redis的数据结构"></a>Redis的数据结构</h3><p><strong>String类型</strong>：二进制存储数据，比较安全，小字符串用embstr编码，大字符串使用raw编码。常用来存储token和简单数据。</p>
+<p><strong>Hash类型</strong>：存储键值对集合，元素较少时用压缩列表，较多时采用hashtable。常用来存用户信息和商品信息。</p>
+<p><strong>List类型</strong>：双向列表，短列表用压缩列表，长列表使用linkedlist双向列表。可以用作消息队列。</p>
+<p><strong>Set类型</strong>：无序不可重复集合，常用来去重复，整数集合使用intset，其他类型使用hashtable。</p>
+<p><strong>ZSet类型</strong>：有序集合，每个元素会带有一个score值用来排序，底层采用跳表+哈希表，小集合用压缩列表。</p>
+<h3 id="Redis的其他数据结构"><a href="#Redis的其他数据结构" class="headerlink" title="Redis的其他数据结构"></a>Redis的其他数据结构</h3><p>Redis还支持：</p>
+<ul>
+<li><strong>Bitmap</strong>：位图，用于状态统计</li>
+<li><strong>HyperLogLog</strong>：基数统计，用于去重计数</li>
+<li><strong>Geospatial</strong>：地理位置，用于附近的人等功能</li>
+</ul>
+<h2 id="缓存问题"><a href="#缓存问题" class="headerlink" title="缓存问题"></a>缓存问题</h2><h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p><strong>定义</strong>：查询一个不存在的数据，MySQL查询不到数据也不会直接写入缓存，就会导致每次请求都查数据库，有可能导致数据库压力增大而宕机。</p>
+<p><strong>解决方案</strong>：</p>
+<ol>
+<li><strong>缓存空数据</strong>：查询返回的数据为空，仍把这个空结果进行缓存<ul>
+<li>优点：简单</li>
+<li>缺点：消耗内存，当后面真正存储这个元素的时候，可能会发生不一致的问题</li>
+</ul>
+</li>
+<li><strong>布隆过滤器</strong>：在请求之前添加一个布隆过滤器，先判断这个值是否不存在，不存在直接拦截，存在才让它去redis或者数据库进行查询<ul>
+<li>优点：内存占用少，没有多余的key</li>
+<li>缺点：实现复杂，存在误判</li>
+</ul>
+</li>
+</ol>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p><strong>定义</strong>：对于设置了过期时间的Key，缓存在某个时间点过期的时候，恰好这个时间点对这个key有大量的并发请求过来，发现缓存过期，就会去数据库加载这些数据并回设到缓存中，这些大量的并发请求可能会瞬间压垮数据库。</p>
+<p><strong>解决方案</strong>：</p>
+<ol>
+<li><strong>互斥锁方案</strong>：当缓存失效的时候，不会立即去访问数据库，而是使用Redis的Setnx命令添加一个互斥锁，确保只有一个线程去查询数据库，其它线程等待加载完之后再从缓存中获取<ul>
+<li>优点：数据强一致性</li>
+<li>缺点：性能低，有可能产生死锁的问题</li>
+</ul>
+</li>
+<li><strong>逻辑过期方案</strong>：设置当前key的逻辑过期（高可用，性能高，但是数据同步做不到强一致性）<ul>
+<li>在设置key的时候，设置一个过期时间字段一起存入缓存，不对key设置过期时间</li>
+<li>当查询的时候，从Redis取出数据后判断是否过期</li>
+<li>如果过期，就开启另外一个线程进行数据同步，当前线程返回正常数据（这个数据可能不是最新的）</li>
+</ul>
+</li>
+</ol>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><strong>定义</strong>：在设置缓存的时候采用了相同的过期时间，导致某一时刻缓存全部失效，就全部去访问数据库，导致数据库压力增大而雪崩。</p>
+<p><strong>解决方案</strong>：在原有的失效时间基础上设置一个随机值，这样每个缓存的过期时间重复率降低，就很难引发集体失效的问题。</p>
+<h2 id="数据一致性"><a href="#数据一致性" class="headerlink" title="数据一致性"></a>数据一致性</h2><h3 id="Redis作为缓存，MySQL的数据如何与Redis进行同步"><a href="#Redis作为缓存，MySQL的数据如何与Redis进行同步" class="headerlink" title="Redis作为缓存，MySQL的数据如何与Redis进行同步"></a>Redis作为缓存，MySQL的数据如何与Redis进行同步</h3><p>数据不一致可能是因为：更新延迟、缓存失效、并发冲突、系统异常而导致的数据不一致。</p>
+<p><strong>解决方案</strong>：</p>
+<ol>
+<li><p><strong>旁路缓存模式</strong></p>
+<ul>
+<li><strong>读操作</strong>：先查询缓存，如果缓存命中，则返回数据；如果缓存未命中，则从数据库读取数据，并将数据写入缓存</li>
+<li><strong>写操作</strong>：先更新数据库，再删除缓存，确保缓存中的数据无效化</li>
+</ul>
+</li>
+<li><p><strong>双写一致</strong>：写操作同时更新数据库和缓存，读操作仅从缓存中获取数据</p>
+</li>
+<li><p><strong>延时双删策略</strong>：写删除缓存中的数据，然后更新数据库，经过一段时间再去删除缓存中的数据</p>
+</li>
+<li><p><strong>Binlog同步</strong>：数据库更新时产生Binlog，同步工具Canal实时解析BinLog将变更事件通知给缓存服务，缓存服务根据BinLog更新或删除缓存</p>
+</li>
+</ol>
+<h3 id="延时双删"><a href="#延时双删" class="headerlink" title="延时双删"></a>延时双删</h3><p>延时双删就是先删除缓存中的数据，然后更新数据库，最后延时删除缓存中的数据。这个问题就是我们不知道延时多久，在这个过程中可能会出现脏数据，无法保证数据的强制一致性。</p>
+<h3 id="先写数据库和先写缓存的问题"><a href="#先写数据库和先写缓存的问题" class="headerlink" title="先写数据库和先写缓存的问题"></a>先写数据库和先写缓存的问题</h3><ul>
+<li><strong>先写缓存再写数据库</strong>：假如在写数据库的时候失败了，缓存更新了，数据库是旧值，后续都命中缓存了，读到都是脏数据</li>
+<li><strong>先写数据库再写缓存</strong>：会有并发安全性的问题，比如线程1更新缓存100-200，线程2也过来了更新缓存为300，并强行修改数据库为300，后续线程1再更新数据库为200，那现在缓存是300，数据库是200</li>
+</ul>
+<h3 id="缓存一致性方案选择"><a href="#缓存一致性方案选择" class="headerlink" title="缓存一致性方案选择"></a>缓存一致性方案选择</h3><ul>
+<li>如果业务对于并发情况数据一致性要求并没有那么高，<strong>旁路缓存</strong>和<strong>延迟双删</strong>就够用了</li>
+<li>如果要保证强一致性，可以使用<strong>分布式锁</strong>，在读写操作之前必须要获取到锁才能操作</li>
+<li>最终一致性方案：使用阿里的<strong>Canal</strong>，订阅数据库的Binlog日志，优点是解耦了，缺点增加了运维成本</li>
+</ul>
+<h2 id="数据持久化"><a href="#数据持久化" class="headerlink" title="数据持久化"></a>数据持久化</h2><h3 id="Redis数据持久化方式"><a href="#Redis数据持久化方式" class="headerlink" title="Redis数据持久化方式"></a>Redis数据持久化方式</h3><p>Redis数据持久化有两种方式：<strong>RDB</strong>和<strong>AOF</strong></p>
+<p><strong>RDB（快照文件）</strong>：将redis内存存储的数据保存到磁盘上，当redis宕机后，就会从RDB快照文件中恢复数据。因为是二进制文件，保存的时候体积比较小，所以恢复数据比较快，但是可能会导致数据的丢失。</p>
+<p><strong>AOF（追加文件）</strong>：每次执行命令的时候会将命令追加到文件中，当redis宕机需要恢复数据，就会去文件中再次执行这个命令来恢复数据。虽然恢复的慢，但数据丢失的风险小很多。在AOF文件中可以设置刷盘策略，每秒批量写入一次命令。</p>
+<p><strong>混合持久化（Redis 4.0+）</strong>：融合RDB的”快速恢复”和AOF的”数据完整”优势，将全量数据用RDB以二进制存储，增量数据用AOF，以后统一放入AOF文件中，恢复先加载二进制的RDB再加载AOF。</p>
+<h2 id="过期策略和淘汰策略"><a href="#过期策略和淘汰策略" class="headerlink" title="过期策略和淘汰策略"></a>过期策略和淘汰策略</h2><h3 id="Redis的数据过期策略"><a href="#Redis的数据过期策略" class="headerlink" title="Redis的数据过期策略"></a>Redis的数据过期策略</h3><p>Redis的过期策略有两种方式：</p>
+<ol>
+<li><p><strong>惰性删除</strong>：在设置key的过期时间之后，不去管它，等到下一次再使用这个数据的时候，会判断这个key是否过期，如果过期就删除</p>
+</li>
+<li><p><strong>定期删除</strong>：定期检查key是否过期，过期就删除。定时删除又分为两种模式：</p>
+<ul>
+<li><strong>Slow模式</strong>：定时任务，执行频率是10hz，每次不超过25ms</li>
+<li><strong>Fast模式</strong>：执行频率不固定，每次事件循环尝试执行，间隔不低于2ms，不超过1ms</li>
+</ul>
+</li>
+</ol>
+<p>Redis过期删除策略是：<strong>惰性删除+定期删除配合使用</strong></p>
+<h3 id="Redis的数据淘汰策略"><a href="#Redis的数据淘汰策略" class="headerlink" title="Redis的数据淘汰策略"></a>Redis的数据淘汰策略</h3><p>Redis数据淘汰策略有8种，分为<strong>不进行数据淘汰的策略</strong>和<strong>进行数据淘汰的策略</strong></p>
+<p><strong>不进行数据淘汰的策略</strong>：</p>
+<ul>
+<li><strong>noeviction</strong>：redis默认的淘汰策略，当使用内存达到上限的时候，不淘汰数据，这时如果有新的数据写入，则会禁止写入。如果是单纯的查询或删除，则可以正常工作</li>
+</ul>
+<p><strong>进行数据淘汰的策略</strong>：</p>
+<p>在设置了过期时间的数据中淘汰：</p>
+<ul>
+<li><strong>volatile-random</strong>：随机淘汰设置了过期时间的任意键值</li>
+<li><strong>volatile-ttl</strong>：优先淘汰更早过期的键值</li>
+<li><strong>volatile-lru</strong>：淘汰设置了过期时间最久未使用的键值</li>
+<li><strong>volatile-lfu</strong>：淘汰设置了过期时间最少使用的键值</li>
+</ul>
+<p>所有数据范围内淘汰：</p>
+<ul>
+<li><strong>allkeys-random</strong>：随机淘汰任意键值</li>
+<li><strong>allkeys-lru</strong>：淘汰整个键值中最久未使用的键值</li>
+<li><strong>allkeys-lfu</strong>：淘汰整个键值中最少使用的键值</li>
+</ul>
+<h3 id="热点数据缓存策略"><a href="#热点数据缓存策略" class="headerlink" title="热点数据缓存策略"></a>热点数据缓存策略</h3><p>当数据库有1000w数据，Redis只能缓存20条时，如何保证Redis都是热点数据？可以采用<strong>allkeys-lru</strong>数据淘汰策略进行删除，挑选最近最少访问的数据删除，留下的就都是热点数据了。</p>
+<h2 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h2><h3 id="Redis分布式锁实现"><a href="#Redis分布式锁实现" class="headerlink" title="Redis分布式锁实现"></a>Redis分布式锁实现</h3><p>在Redis中提供了一个命令叫做SETNX(SET if not exists)。由于Redis是单线程的，用了这个命令之后，只能有一个客户端对某一个key设置值，当这个key没有过期或者被删除，其它客户端是不能对这个key进行操作的。</p>
+<h3 id="Redisson分布式锁原理"><a href="#Redisson分布式锁原理" class="headerlink" title="Redisson分布式锁原理"></a>Redisson分布式锁原理</h3><p>Redisson 分布式锁是基于 Redis 实现的高性能、高可用分布式锁方案，核心原理可概括为：利用 Redis 的单线程特性 + 原子命令 + Lua 脚本保证锁的安全性，通过可重入设计、自动续期、集群容错等机制解决分布式场景下的各种问题。</p>
+<h3 id="锁的有效时长控制-看门狗机制"><a href="#锁的有效时长控制-看门狗机制" class="headerlink" title="锁的有效时长控制 - 看门狗机制"></a>锁的有效时长控制 - 看门狗机制</h3><p>通过Redisson框架来实现，需要手动添加锁，并且能够控制锁的失效时间和控制时间。当一个业务还没有执行完之前，Redisson会引入一个<strong>看门狗机制</strong>，每间隔一段时间就会判断当前业务是否还持有锁，如果有，就会增加锁的持有时间。当业务执行完之后，需要使用释放锁就可以了。通过事件通知机制，能够在锁释放时就立即响应。</p>
+<h3 id="分布式锁的可重入性"><a href="#分布式锁的可重入性" class="headerlink" title="分布式锁的可重入性"></a>分布式锁的可重入性</h3><p>Redis实现的分布式锁是支持可重入的，这样做是为了避免死锁。其内部实现原理是：判断是否是当前线程持有的锁，如果是就会进行计数；释放锁时会在计数上减一。在存储数据的时候采用的是hash结构，大key可以根据业务逻辑指定，其中小key是当前线程的唯一标识，value是当前线程重入的次数。</p>
+<h2 id="主从复制和哨兵模式"><a href="#主从复制和哨兵模式" class="headerlink" title="主从复制和哨兵模式"></a>主从复制和哨兵模式</h2><h3 id="Redis的集群方案"><a href="#Redis的集群方案" class="headerlink" title="Redis的集群方案"></a>Redis的集群方案</h3><p>Redis集群有三种方式：</p>
+<ol>
+<li><strong>主从复制</strong>（一主多从）</li>
+<li><strong>哨兵模式</strong></li>
+<li><strong>Redis分片集群</strong></li>
+</ol>
+<h3 id="主从同步"><a href="#主从同步" class="headerlink" title="主从同步"></a>主从同步</h3><p>Redis单节点的并发能力是有上限的，所以为了进一步提高Redis的并发能力，我们可以搭建主从集群，实现读写分离，一般是一主多从。主节点负责写数据，从节点负责读数据。当主节点写入数据之后，就需要把数据同步到从节点。</p>
+<h3 id="主从同步流程"><a href="#主从同步流程" class="headerlink" title="主从同步流程"></a>主从同步流程</h3><p>主从同步分为两个阶段：<strong>全量同步</strong>和<strong>增量同步</strong></p>
+<ol>
+<li><p><strong>全量同步</strong>：当从节点首次连接主节点，或者从节点因为某些原因导致数据丢失，就会执行SYNC命令实现一次全量同步。具体流程：首先从节点会执行SYNC命令，向主节点发送请求开始同步。主节点接收到SYNC命令之后，会执行bgSave命令生成一个RDB快照文件，然后将RDB快照文件发送给从节点，从节点会清空之前的数据集，载入RDB快照文件中的数据。在RDB文件生成和发送期间，主服务器会记录所有接收到的写命令到replication backlog buff，一旦RDB文件传输完成，就会将里面的命令发送给从服务器，从服务器执行这些命令，来保证数据的一致性。</p>
+</li>
+<li><p><strong>增量同步</strong>：当从节点服务重启之后，数据与主节点不一致了，这个时候就会请求主节点同步数据，判断是不是第一次同步，如果不是就会获取从节点的offset值，然后主节点从命令日志中获取offset值之后的数据，发送给从节点进行数据同步。</p>
+</li>
+</ol>
+<h3 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h3><p>哨兵模式可以实现主从集群的故障恢复，里面包含了对主从服务的监控、自动故障恢复、通知。当master遇到故障，Sentinel就会选举一个slave作为新的master，并将新的master相关信息通知给slave和客户端。</p>
+<h4 id="哨兵机制的选主节点算法"><a href="#哨兵机制的选主节点算法" class="headerlink" title="哨兵机制的选主节点算法"></a>哨兵机制的选主节点算法</h4><p>哨兵机制的选主节点算法分为三个步骤：</p>
+<ol>
+<li><p><strong>故障节点主观下线</strong>：Sentinel集群的每一个Sentinel节点都会对Redis集群中的所有节点发心跳包检测该节点是否正常，如果没有在规定时间回复Sentinel节点的心跳包，那么该Redis节点就被该Sentinel认为是主观下线</p>
+</li>
+<li><p><strong>故障节点客观下线</strong>：当一个Sentinel节点认为该Redis节点主观下线后，该Sentinel节点会去询问其它Sentinel节点，如果超过一定数量的Sentinel节点认为该Redis节点主观下线，则该Redis节点被标记为客观下线</p>
+</li>
+<li><p><strong>Sentinel集群选举Leader</strong>：如果需要从Redis集群选举一个节点作为主节点，首先需要从Sentinel集群选举一个Sentinel节点作为Leader。每一个Sentinel节点都可以成为Leader，当一个Sentinel节点确认Redis集群的主节点主观下线后，会请求其他Sentinel节点要求将自己选举为Leader。被请求的Sentinel节点如果没有同意过其他Sentinel节点的选举请求，则同意该请求（选举票数+1），否则不同意。<strong>如果一个Sentinel节点获得的选举票数达到Leader最低票数（quorum和Sentinel节点数/2+1的最大值），则该Sentinel节点被选举为Leader</strong>；否则重新进行选举</p>
+</li>
+<li><p><strong>Sentinel Leader决定新主节点</strong>：当Sentinel集群选举出的Sentinel节点作为Leader后，由该Leader从Redis中选举一个节点作为master节点，选择标准如下：</p>
+<ul>
+<li>过滤故障的节点</li>
+<li>选择优先级slave-priority最大的从节点作为主节点</li>
+<li>选择复制偏移量最大的从节点作为主节点</li>
+<li>选择runid最小的从节点作为主节点</li>
+</ul>
+</li>
+</ol>
+<h3 id="集群脑裂问题"><a href="#集群脑裂问题" class="headerlink" title="集群脑裂问题"></a>集群脑裂问题</h3><p><strong>定义</strong>：Redis的集群脑裂是因为网络等原因出现的问题，导致Redis的主节点和从节点还有Sentinel处于不同的网络分区。使得哨兵没有能够心跳感知到主节点，所以会通过选举的方式选举一个slave作为新的主节点。这样就存在两个master，就像大脑分裂一样。这样会导致客户端在老的主节点那里写入数据，新主节点无法同步数据，当网络恢复，Sentinel会将老的主节点降为从节点，这时候再从新的主节点那里同步数据，会导致老的主节点丢失大量的数据。</p>
+<p><strong>解决方案</strong>：可以在Redis配置中设置：</p>
+<ol>
+<li>设置最少的slave节点个数。比如最少有一个从节点才会写入数据</li>
+<li>设置主从复制和同步的延时时间，如果达不到要求就不会写入数据，就避免了大量的数据丢失</li>
+</ol>
+<h2 id="分片集群"><a href="#分片集群" class="headerlink" title="分片集群"></a>分片集群</h2><h3 id="Redis分片集群的作用"><a href="#Redis分片集群的作用" class="headerlink" title="Redis分片集群的作用"></a>Redis分片集群的作用</h3><p>分片集群主要解决的是海量数据的存储问题。在集群中有多个master，每个master保存的是不同的数据。每个master可以设置多个slave节点。这样又增大了集群的高并发能力。同时每个master之间都通过ping来监测彼此的心跳。</p>
+<h3 id="分片集群的数据存储和读取"><a href="#分片集群的数据存储和读取" class="headerlink" title="分片集群的数据存储和读取"></a>分片集群的数据存储和读取</h3><p>Redis集群引入了哈希槽概念，有<strong>16384个哈希槽</strong>。集群中的主节点都绑定了一定范围的哈希槽范围。key通过CRC16校验之后对16384进行取模计算出存储的槽位，然后根据槽位找到存储在哪个节点。取值的逻辑也是一样的。</p>
+<h3 id="hash槽说明"><a href="#hash槽说明" class="headerlink" title="hash槽说明"></a>hash槽说明</h3><ul>
+<li>16384个槽对应16384个二进制位（bit），刚好是<strong>2048字节（2KB）</strong>（16384 ÷ 8 = 2048）</li>
+<li>16384个槽的设计是为了平衡内存占用和槽位管理的效率</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>Redis八股</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://u7u7.top/posts/RedisBG.html">https://u7u7.top/posts/RedisBG.html</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>U7's Blog🍋</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2025-10-08</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2026-03-16</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%AB%E8%82%A1%E6%96%87/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>八股文</a></div></div><link rel="stylesheet" href="/css/coin.css" media="defer" onload="this.media='all'"/><div class="post-reward"><button class="tip-button reward-button"><span class="tip-button__text">投喂作者</span><div class="coin-wrapper"><div class="coin"><div class="coin__middle"></div><div class="coin__back"></div><div class="coin__front"></div></div></div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></button></div><audio id="coinAudio" src="https://npm.elemecdn.com/akilar-candyassets@1.0.36/audio/aowu.m4a"></audio><script defer="defer" src="/js/coin.js"></script><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/java-basics-interview.html"><img class="prev-cover" src="https://img.u7u7.top/blogbackground/wallhaven-rqr5rq.webp" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java基础面试题</div></div></a></div><div class="next-post pull-right"><a href="/posts/mysqlBG.html"><img class="next-cover" src="https://img.u7u7.top/blogbackground/wallhaven-k8xw2q.webp" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mysql八股</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/MongoDB.html" title="MongoDB入门"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-6lozxw.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">MongoDB入门</div></div></a></div><div><a href="/posts/jvmMyself.html" title="JVM个人理解"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-6loe1l.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">JVM个人理解</div></div></a></div><div><a href="/posts/myIdea.html" title="个人理解篇"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-je3lj5.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">个人理解篇</div></div></a></div><div><a href="/posts/juc-interview.html" title="JUC八股"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-5dep91.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">JUC八股</div></div></a></div><div><a href="/posts/JVMBG.html" title="JVM八股"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-gw7xrq.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">JVM八股</div></div></a></div><div><a href="/posts/java-basics-interview.html" title="Java基础面试题"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-rqr5rq.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-03-16</div><div class="title">Java基础面试题</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><svg class="meta_icon" style="width:22px;height:22px;position:relative;top:5px"><use xlink:href="#icon-mulu1"></use></svg><span style="font-weight:bold">目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis%E6%A0%B8%E5%BF%83%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="toc-text">Redis核心面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">Redis基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB"><span class="toc-text">Redis为什么快</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">Redis的数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">Redis的其他数据结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%97%AE%E9%A2%98"><span class="toc-text">缓存问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text">缓存穿透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text">缓存击穿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text">缓存雪崩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text">数据一致性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E4%BD%9C%E4%B8%BA%E7%BC%93%E5%AD%98%EF%BC%8CMySQL%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%B8%8ERedis%E8%BF%9B%E8%A1%8C%E5%90%8C%E6%AD%A5"><span class="toc-text">Redis作为缓存，MySQL的数据如何与Redis进行同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%B6%E6%97%B6%E5%8F%8C%E5%88%A0"><span class="toc-text">延时双删</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%86%99%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E5%85%88%E5%86%99%E7%BC%93%E5%AD%98%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">先写数据库和先写缓存的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E4%B8%80%E8%87%B4%E6%80%A7%E6%96%B9%E6%A1%88%E9%80%89%E6%8B%A9"><span class="toc-text">缓存一致性方案选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-text">数据持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-text">Redis数据持久化方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5%E5%92%8C%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="toc-text">过期策略和淘汰策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E6%95%B0%E6%8D%AE%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5"><span class="toc-text">Redis的数据过期策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="toc-text">Redis的数据淘汰策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E6%95%B0%E6%8D%AE%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5"><span class="toc-text">热点数据缓存策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-text">分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">Redis分布式锁实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%8E%9F%E7%90%86"><span class="toc-text">Redisson分布式锁原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E7%9A%84%E6%9C%89%E6%95%88%E6%97%B6%E9%95%BF%E6%8E%A7%E5%88%B6-%E7%9C%8B%E9%97%A8%E7%8B%97%E6%9C%BA%E5%88%B6"><span class="toc-text">锁的有效时长控制 - 看门狗机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%8F%AF%E9%87%8D%E5%85%A5%E6%80%A7"><span class="toc-text">分布式锁的可重入性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%92%8C%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-text">主从复制和哨兵模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9A%84%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88"><span class="toc-text">Redis的集群方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5"><span class="toc-text">主从同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E6%B5%81%E7%A8%8B"><span class="toc-text">主从同步流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F"><span class="toc-text">哨兵模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%E7%9A%84%E9%80%89%E4%B8%BB%E8%8A%82%E7%82%B9%E7%AE%97%E6%B3%95"><span class="toc-text">哨兵机制的选主节点算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E8%84%91%E8%A3%82%E9%97%AE%E9%A2%98"><span class="toc-text">集群脑裂问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4"><span class="toc-text">分片集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">Redis分片集群的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%92%8C%E8%AF%BB%E5%8F%96"><span class="toc-text">分片集群的数据存储和读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hash%E6%A7%BD%E8%AF%B4%E6%98%8E"><span class="toc-text">hash槽说明</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">格言🧬</p><div class="bg-ad"><div>再看看那个光点，它就在这里，这是家园，这是我们 —— 你所爱的每一个人，你认识的一个人，你听说过的每一个人，曾经有过的每一个人，都在它上面度过他们的一生✨</div><div class="btn-xz-box"><a class="btn-xz" target="_blank" rel="noopener" href="https://stellarium.org/">点击开启星辰之旅</a></div></div></div><div class="t-t-r"><p class="ft-t t-l-t">猜你想看💡</p><ul class="ft-links"><li><a href="/comments/">留点什么</a><a href="/archives/">文章归档</a></li><li><a href="/categories/">文章分类</a><a href="/tags/">文章标签</a></li><li><a href="/box/Gallery/">我的画廊</a><a href="/personal/bb/">我的唠叨</a></li><li><a href="/site/time/">建设进程</a><a href="/site/census/">网站统计</a></li></ul></div></div></div><div class="ft-item-2"><p class="ft-t">推荐友链⌛</p><div class="ft-img-group"><div class="img-group-item"></div></div></div></div><div class="copyright"><span><b>&copy;2022-2026</b></span><span><b>&nbsp;&nbsp;By U7's Blog🍋</b></span></div><div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://icp.gov.moe/?keyword=20230913" style="margin-inline:5px" title="本站已加入萌ICP豪华套餐，萌ICP备20230913号"><img src="https://img.u7u7.top/blogbackground/20230913.svg" alt=""/></a></p></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="share" type="button" title="右键模式" onclick="changeMouseMode()"><i class="fas fa-mouse"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog right_side"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button class="share" type="button" title="分享链接" onclick="share()"><i class="fas fa-share-nodes"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i><span id="percent">0<span>%</span></span></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div class="js-pjax" id="rightMenu"><div class="rightMenu-group rightMenu-small"><a class="rightMenu-item" href="javascript:window.history.back();"><i class="fa fa-arrow-left"></i></a><a class="rightMenu-item" href="javascript:window.history.forward();"><i class="fa fa-arrow-right"></i></a><a class="rightMenu-item" href="javascript:window.location.reload();"><i class="fa fa-refresh"></i></a><a class="rightMenu-item" href="javascript:rmf.scrollToTop();"><i class="fa fa-arrow-up"></i></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-text"><a class="rightMenu-item" href="javascript:rmf.copySelect();"><i class="fa fa-copy"></i><span>复制</span></a><a class="rightMenu-item" href="javascript:window.open(&quot;https://www.baidu.com/s?wd=&quot;+window.getSelection().toString());window.location.reload();"><i class="fa fa-search"></i><span>百度搜索</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-too"><a class="rightMenu-item" href="javascript:window.open(window.getSelection().toString());window.location.reload();"><i class="fa fa-link"></i><span>转到链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-paste"><a class="rightMenu-item" href="javascript:rmf.paste()"><i class="fa fa-copy"></i><span>粘贴</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-post"><a class="rightMenu-item" href="#post-comment"><i class="fas fa-comment"></i><span>空降评论</span></a><a class="rightMenu-item" href="javascript:rmf.copyWordsLink()"><i class="fa fa-link"></i><span>复制本文地址</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-to"><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>新窗口打开</span></a><a class="rightMenu-item" id="menu-too" href="javascript:rmf.open()"><i class="fa fa-link"></i><span>转到链接</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-img"><a class="rightMenu-item" href="javascript:rmf.saveAs()"><i class="fa fa-download"></i><span>保存图片</span></a><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>在新窗口打开</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制图片链接</span></a></div><div class="rightMenu-group rightMenu-line"><a class="rightMenu-item" href="javascript:randomPost()"><i class="fa fa-paper-plane"></i><span>随便逛逛</span></a><a class="rightMenu-item" href="javascript:switchNightMode();"><i class="fa fa-moon"></i><span>昼夜切换</span></a><a class="rightMenu-item" href="javascript:rmf.switchReadMode();"><i class="fa fa-book"></i><span>阅读模式</span></a><a class="rightMenu-item" href="/personal/about/"><i class="fa fa-info-circle"></i><span>关于博客</span></a><a class="rightMenu-item" href="javascript:toggleWinbox();"><i class="fas fa-cog"></i><span>美化设置</span></a><a class="rightMenu-item" href="javascript:rmf.fullScreen();"><i class="fas fa-expand"></i><span>切换全屏</span></a><a class="rightMenu-item" href="javascript:window.print();"><i class="fa-solid fa-print"></i><span>打印页面</span></a></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())
+setTimeout(function(){preloader.endLoading();}, 5000);
+document.getElementById('loading-box').addEventListener('click',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: '',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: '',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.staticfile.org/twikoo/1.6.8/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script async src="https://cdn1.tianli0.top/npm/vue@2.6.14/dist/vue.min.js"></script><script async src="https://cdn1.tianli0.top/npm/element-ui@2.15.6/lib/index.js"></script><script async src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script async src="//npm.elemecdn.com/pace-js@1.2.4/pace.min.js"></script><script defer src="https://cdn1.tianli0.top/gh/nextapps-de/winbox/dist/winbox.bundle.min.js"></script><script async src="//at.alicdn.com/t/c/font_3586335_hsivh70x0fm.js"></script><script async src="//at.alicdn.com/t/c/font_3636804_gr02jmjr3y9.js"></script><script async src="//at.alicdn.com/t/c/font_3612150_kfv55xn3u2g.js"></script><script async src="https://cdn.wpon.cn/2022-sucai/Gold-ingot.js"></script><canvas id="universe"></canvas><canvas id="snow"></canvas><script defer src="/js/fomal.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show","#web_bg",".js-pjax","#bibi","body > title","#app","#tag-echarts","#posts-echart","#categories-echarts"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/学习笔记/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍡 U7の学习笔记 (22)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/杂项/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 U7のLife&Work杂项 (10)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/项目/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 U7の项目笔记 (7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/工作月总结/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍨 U7の工作月总结 (12)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/算法/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍟 U7の算法学习笔记 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/面试/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍥 U7の面试 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://u7u7.top/categories/" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #e9e9e9;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: var(--text-bg-hover)}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5g7ew7.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">面试题集</a><div class="blog-slider__text">常见面试题梳理</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5y7ro7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-18</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">面经记录</a><div class="blog-slider__text">群友、牛客、抖音等同学的面经分享——只有问题、记录在其他文件中，方便回头自己拷打自己</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/wallhaven-rd9ly1.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-15</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">MQ八股</a><div class="blog-slider__text">各种MQ的相关八股</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/20250728154351340.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-08-08</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">微服务SpringCloudAlibaba</a><div class="blog-slider__text">梳理的微服务重要知识点！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-g7vgkd.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">优探社交购云平台</a><div class="blog-slider__text">学习项目从0-1</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/20260604192557825.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2022-08-09</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt="">Markdown语法与外挂标签写法汇总</a><div class="blog-slider__text">🥧本文汇总Markdown格式以及外挂标签在网页端的渲染效果，可作为文档进行查询</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/2013454d.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax src="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('gitZone');
+      var item_html = '<div class="recent-post-item" id="gitcalendarBar" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 320px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('gitZone') && (location.pathname ==='/site/census/'|| '/site/census/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("/api?null",['#d9e0df', '#c6e0dc', '#a8dcd4', '#9adcd2', '#89ded1', '#77e0d0', '#5fdecb', '#47dcc6', '#39dcc3', '#1fdabe', '#00dab9'],'null')
+    }
+  </script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
