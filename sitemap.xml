@@ -56,6 +56,15 @@
   </url>
   
   <url>
+    <loc>https://u7u7.top/site/echarts/index.html</loc>
+    
+    <lastmod>2026-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://u7u7.top/site/census/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
@@ -74,34 +83,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/site/echarts/index.html</loc>
-    
-    <lastmod>2026-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/social/fcircle/index.html</loc>
-    
-    <lastmod>2026-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/life/games/index.html</loc>
-    
-    <lastmod>2026-06-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/life/movies/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
     
@@ -119,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/personal/bb/index.html</loc>
+    <loc>https://u7u7.top/life/games/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
     
@@ -146,6 +128,24 @@
   </url>
   
   <url>
+    <loc>https://u7u7.top/life/movies/index.html</loc>
+    
+    <lastmod>2026-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/personal/bb/index.html</loc>
+    
+    <lastmod>2026-06-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://u7u7.top/categories/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/box/gallery/index.html</loc>
+    <loc>https://u7u7.top/box/nav/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
     
@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/box/nav/index.html</loc>
+    <loc>https://u7u7.top/box/gallery/index.html</loc>
     
     <lastmod>2026-06-22</lastmod>
     
@@ -263,7 +263,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/java-learning-journey.html</loc>
+    <loc>https://u7u7.top/posts/Vm.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -272,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/goc00.html</loc>
+    <loc>https://u7u7.top/posts/Cpp.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -281,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/Goc.html</loc>
+    <loc>https://u7u7.top/posts/MongoDB.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -290,7 +290,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/ThreadPool.html</loc>
+    <loc>https://u7u7.top/posts/MQLow.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -299,7 +299,16 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/goc01.html</loc>
+    <loc>https://u7u7.top/posts/MQHigh.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/CloudAli.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -309,6 +318,24 @@
   
   <url>
     <loc>https://u7u7.top/posts/suanfa.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/leetcodeSF.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/ListNode.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -335,7 +362,52 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/ListNode.html</loc>
+    <loc>https://u7u7.top/posts/goc01.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/java-learning-journey.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/Goc.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/goc00.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/ThreadPool.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/KafkaByMyself.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -362,34 +434,16 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/leetcodeSF.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/KafkaByMyself.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/RocketMQByMyself.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/posts/RabbitMQByMyself.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/jvmMyself.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -407,7 +461,16 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/jvmMyself.html</loc>
+    <loc>https://u7u7.top/posts/RocketMQByMyself.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/medical-project.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -434,133 +497,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/java-basics-interview.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/posts/JVMBG.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/MQProblem.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/SpringBG.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/mysqlBG.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/interviewExperience.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/changjingBG.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/RedisBG.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/ms.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/medical-project.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/Cpp.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/dp.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/MongoDB.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/Vm.html</loc>
-    
-    <lastmod>2026-03-16</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/posts/MQHigh.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -578,7 +515,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/CloudAli.html</loc>
+    <loc>https://u7u7.top/posts/java-basics-interview.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -587,7 +524,70 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/posts/MQLow.html</loc>
+    <loc>https://u7u7.top/posts/MQProblem.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/RedisBG.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/SpringBG.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/changjingBG.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/interviewExperience.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/mysqlBG.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/dp.html</loc>
+    
+    <lastmod>2026-03-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/posts/ms.html</loc>
     
     <lastmod>2026-03-16</lastmod>
     
@@ -839,6 +839,69 @@
 
   
   <url>
+    <loc>https://u7u7.top/tags/Markdown/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Cpp/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E5%85%AB%E8%82%A1%E6%96%87/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Java/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/MQ/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Vue/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://u7u7.top/tags/%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -853,14 +916,210 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/Markdown/</loc>
+    <loc>https://u7u7.top/tags/AI/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/</loc>
+    <loc>https://u7u7.top/tags/Agent/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E6%8F%90%E6%95%88/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/OpenClaw/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E9%A3%9E%E4%B9%A6/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Claude-Code/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/RAG/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/MCP/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Skill/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Memory/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E4%BC%81%E4%B8%9A%E6%8F%90%E6%95%88/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Codex/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Workflow/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Superpowers/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Multi-Agent/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/DevSkill/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/JIRA/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Trace/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Harness/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E6%8E%92%E9%9A%9C/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Vibe-Working/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BF%86/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Python/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -937,13 +1196,6 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/Java/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://u7u7.top/tags/MybatPlus/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -952,202 +1204,6 @@
   
   <url>
     <loc>https://u7u7.top/tags/Spring/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Vue/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Python/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/AI/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Agent/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E6%8F%90%E6%95%88/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/OpenClaw/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E9%A3%9E%E4%B9%A6/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Claude-Code/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Workflow/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Skill/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Multi-Agent/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Codex/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/MCP/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/JIRA/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Trace/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Harness/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E6%8E%92%E9%9A%9C/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Superpowers/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Vibe-Working/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/DevSkill/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BF%86/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/RAG/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Memory/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E4%BC%81%E4%B8%9A%E6%8F%90%E6%95%88/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1168,21 +1224,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/LLM/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Cpp/</loc>
+    <loc>https://u7u7.top/tags/%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1190,13 +1232,6 @@
   
   <url>
     <loc>https://u7u7.top/tags/JUC/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1217,21 +1252,14 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://u7u7.top/tags/%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
+    <loc>https://u7u7.top/tags/LLM/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1239,62 +1267,6 @@
   
   <url>
     <loc>https://u7u7.top/tags/ES/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/MQ/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/%E5%85%AB%E8%82%A1%E6%96%87/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/JVM/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Redis/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Mybatis-plus/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Mybatis/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://u7u7.top/tags/Mysql/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1315,7 +1287,21 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</loc>
+    <loc>https://u7u7.top/tags/Mysql/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Redis/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/JVM/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1370,14 +1356,21 @@
     <priority>0.2</priority>
   </url>
   
-
-  
   <url>
-    <loc>https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E6%9C%88%E6%80%BB%E7%BB%93/</loc>
+    <loc>https://u7u7.top/tags/Mybatis-plus/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
+  
+  <url>
+    <loc>https://u7u7.top/tags/Mybatis/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
   
   <url>
     <loc>https://u7u7.top/categories/%E6%9D%82%E9%A1%B9/</loc>
@@ -1394,7 +1387,7 @@
   </url>
   
   <url>
-    <loc>https://u7u7.top/categories/%E9%A1%B9%E7%9B%AE/</loc>
+    <loc>https://u7u7.top/categories/%E5%B7%A5%E4%BD%9C%E6%9C%88%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1416,6 +1409,13 @@
   
   <url>
     <loc>https://u7u7.top/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://u7u7.top/categories/%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
