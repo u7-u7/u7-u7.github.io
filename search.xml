@@ -26,9 +26,9 @@
             
             <tag> Claude Code </tag>
             
-            <tag> Skill </tag>
-            
             <tag> Workflow </tag>
+            
+            <tag> Skill </tag>
             
             <tag> Codex </tag>
             
@@ -45,7 +45,7 @@
       <link href="/posts/dev-skill-repo-panorama-ai-infrastructure.html"/>
       <url>/posts/dev-skill-repo-panorama-ai-infrastructure.html</url>
       
-        <content type="html"><![CDATA[<h1 id="dev-skill：一个可公开分享的-DIY-Agent-Skills-工具箱">dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</h1><blockquote><p>项目地址：<a href="https://gitee.com/u7u7-sjh/dev-skill">Gitee · dev-skill</a></p></blockquote><p>我做这个项目的出发点很朴素：把自己在需求分析、开发、审查和测试里反复使用的方法，整理成能被 AI 工具识别、安装和组合调用的 Skill。</p><p>dev-skill 是一个个人维护、可以公开分享的轻量仓库。它不是提示词大杂烩，也不试图包装成万能的“AI 操作系统”；更像一个 DIY Agent Skills 工具箱：每个 Skill 有明确职责，既可以单独使用，也可以沿着一条研发工作流协作。</p><p>仓库源码、安装说明和每个 Skill 的具体约束，都以 <a href="https://gitee.com/u7u7-sjh/dev-skill">Gitee 仓库</a> 为准。</p><hr><h2 id="一、它想解决什么问题">一、它想解决什么问题</h2><p>很多 AI Coding 的经验最初都很零散：</p><ul><li>某个好用的提示词只留在聊天记录里；</li><li>同一套规则要在不同客户端重复配置；</li><li>需求、实现、审查之间缺少连续上下文；</li><li>工作流跑顺后，下一次又得从头解释一遍。</li></ul><p>dev-skill 想做的，是把这些一次性的经验变成可复用、可安装、可迭代的能力单元。你可以把它理解为：</p><blockquote><p>把“我平时怎么让 AI 帮我做研发”沉淀成一套能继续演进的项目资产。</p></blockquote><p>它更适合希望把个人工作流整理清楚的开发者；仓库刻意不包含组织专用集成、私有凭据或生产数据，文档示例也使用中性命名，方便阅读和分享。</p><hr><h2 id="二、一张图看懂项目结构">二、一张图看懂项目结构</h2><p>dev-skill 目前不是一个庞大的平台，而是一套围绕研发过程组织起来的 12 个 Skill。它们大致分成四层：先把需求想清楚，再把工程上下文找全，然后进入实现，最后用审查和测试把风险收住。</p><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart TB    subgraph DEV[&quot;Development：把需求变成可执行开发任务&quot;]        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清目标、约束和方案选择&quot;]        SCANNER[&quot;app-scanner&lt;br&#x2F;&gt;扫描多应用工作区，提取业务能力&quot;]        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;产出 requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;结对实现、修复、重构和验证&quot;]    end    subgraph REVIEW[&quot;Review：把改动变成可放心交付的结果&quot;]        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;审查单一作者最终态变更&quot;]        CODE[&quot;code-review&lt;br&#x2F;&gt;检查质量、安全、性能和架构风险&quot;]        TEST[&quot;integration-test&lt;br&#x2F;&gt;按风险生成集成测试用例&quot;]        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总代码审查、影响面和测试设计&quot;]        TEAM[&quot;team-cr&lt;br&#x2F;&gt;准备多人 CR 会议讨论清单&quot;]    end    subgraph VIS[&quot;Visualization：把复杂信息画清楚&quot;]        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;生成流程图、架构图、时序图、路线图&quot;]    end    subgraph PLATFORM[&quot;Platform：管理工作环境和使用统计&quot;]        WORKTREE[&quot;git-worktree&lt;br&#x2F;&gt;管理并行开发 worktree&quot;]        TRACKER[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用统计&quot;]    end    BRAIN --&gt; SDD    SCANNER --&gt; SDD    SDD --&gt; PAIR    PAIR --&gt; AUTHOR    AUTHOR --&gt; CODE    AUTHOR --&gt; TEST    CODE --&gt; FULL    TEST --&gt; FULL    FULL --&gt; TEAM    DIAGRAM -. &quot;可插入任意阶段&quot; .-&gt; SDD    WORKTREE -. &quot;隔离分支环境&quot; .-&gt; PAIR    TRACKER -. &quot;记录每次 Skill 调用&quot; .-&gt; BRAIN  </pre></div><p>这张图可以先当成项目地图：Development 负责把“我要做什么”变成“我知道怎么做”；Review 负责把“做完了”变成“风险可解释”；Visualization 和 Platform 则是横向能力，一个负责表达复杂关系，一个负责让工具链可维护。</p><hr><h2 id="三、12-个-Skill-分别做什么">三、12 个 Skill 分别做什么</h2><p>为了让读者不用跳到仓库里翻目录，下面按真实仓库中的 Skill 逐个说明。</p><table><thead><tr><th>分类</th><th>Skill</th><th>适合什么时候用</th><th>主要产物</th></tr></thead><tbody><tr><td>Development</td><td><code>brainstorming</code></td><td>需求还不够清楚，或者有多个方案需要取舍</td><td>经确认的目标、边界和设计方向</td></tr><tr><td>Development</td><td><code>app-scanner</code></td><td>工作区里有多个前后端应用，需要先摸清业务能力和依赖关系</td><td>应用能力清单、API / 数据模型 / 外部依赖概览</td></tr><tr><td>Development</td><td><code>sdd-dev-workflow</code></td><td>已有原始需求、PRD 或想法，需要整理成可开发任务</td><td><code>requirements.md</code>、<code>design.md</code>、<code>plan.md</code>、<code>tasks.md</code></td></tr><tr><td>Development</td><td><code>ai-pair-programmer</code></td><td>已经明确要写代码、改 bug、重构或补测试</td><td>符合项目风格的代码改动和验证结果</td></tr><tr><td>Review</td><td><code>author-final-review</code></td><td>想审查某个作者在一个范围内的最终代码状态</td><td>面向 Bug 和风险的最终态审查结果</td></tr><tr><td>Review</td><td><code>code-review</code></td><td>需要系统检查代码质量、安全、性能、架构和兼容性</td><td>结构化代码审查报告</td></tr><tr><td>Review</td><td><code>integration-test</code></td><td>Java Dubbo 变更需要补集成测试设计</td><td>P0 / P1 测试用例、入参、预期输出和覆盖追溯</td></tr><tr><td>Review</td><td><code>full-review</code></td><td>希望一次性拿到审查、影响面和测试设计的完整报告</td><td>完整审查报告与风险覆盖结果</td></tr><tr><td>Review</td><td><code>team-cr</code></td><td>多人、多模块改动要开集体 CR</td><td>按风险等级和模块分组的会议讨论清单</td></tr><tr><td>Visualization</td><td><code>diagram-creation</code></td><td>文字讲不清流程、架构、时序或学习路线</td><td>Mermaid、PlantUML 等图表源码</td></tr><tr><td>Platform</td><td><code>git-worktree</code></td><td>多分支并行开发，或者需要隔离工作目录</td><td>标准化 worktree 目录和迁移建议</td></tr><tr><td>Platform</td><td><code>skill-usage-tracker</code></td><td>执行技能前记录使用，或查看本地统计</td><td>写入 <code>~/usage_stats.json</code> 的技能使用数据</td></tr></tbody></table><p>每个 Skill 都放在 <code>skills/&lt;分类&gt;/&lt;skill 名&gt;/</code> 下，以 <code>SKILL.md</code> 说明触发条件、输入输出和执行边界；需要时还会携带脚本、参考资料或模板。这样的结构让“能力说明”和“实际工具”留在同一个可追溯的位置。</p><hr><h2 id="四、开发中哪些环节可以用到这些-Skill">四、开发中哪些环节可以用到这些 Skill</h2><p>光看 Skill 名字还不够直观，我们换成一个真实开发例子：<strong>给订单系统增加“优惠券抵扣”能力</strong>。</p><p>这类需求通常不会直接进入编码。它会经历需求澄清、影响面扫描、方案拆解、代码实现、测试设计、代码审查和团队评审几个阶段。dev-skill 的价值，就是把这些阶段拆开，每一步用合适的 Skill 接住。</p><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart TD    START[&quot;需求例子&lt;br&#x2F;&gt;订单系统支持优惠券抵扣&quot;]    subgraph PHASE1[&quot;阶段 1：想清楚要做什么&quot;]        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清优惠券规则、边界和验收口径&quot;]        OUT1[&quot;产物&lt;br&#x2F;&gt;哪些券可用、如何叠加、异常怎么处理&quot;]    end    subgraph PHASE2[&quot;阶段 2：找到会被影响的代码&quot;]        SCAN[&quot;app-scanner&lt;br&#x2F;&gt;多应用场景下扫描订单、营销、支付等应用&quot;]        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;结合真实代码证据整理方案&quot;]        OUT2[&quot;产物&lt;br&#x2F;&gt;requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]    end    subgraph PHASE3[&quot;阶段 3：隔离环境并开始实现&quot;]        WT[&quot;git-worktree&lt;br&#x2F;&gt;为优惠券需求创建独立工作区&quot;]        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;修改接口、领域逻辑、测试和配置&quot;]        OUT3[&quot;产物&lt;br&#x2F;&gt;可运行的代码改动与验证结果&quot;]    end    subgraph PHASE4[&quot;阶段 4：把风险收住&quot;]        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;先审查本次作者最终态变更&quot;]        CODE[&quot;code-review&lt;br&#x2F;&gt;检查兼容性、金额计算、安全和性能风险&quot;]        TEST[&quot;integration-test&lt;br&#x2F;&gt;生成 P0 &#x2F; P1 集成测试用例&quot;]        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总审查结论、影响面和测试覆盖&quot;]    end    subgraph PHASE5[&quot;阶段 5：准备协作交付&quot;]        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;画调用链、状态流转或优惠券计算流程&quot;]        TEAM[&quot;team-cr&lt;br&#x2F;&gt;整理多人 CR 会议讨论清单&quot;]        TRACK[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用，沉淀本地统计&quot;]    end    START --&gt; BRAIN --&gt; OUT1 --&gt; SCAN --&gt; SDD --&gt; OUT2    OUT2 --&gt; WT --&gt; PAIR --&gt; OUT3    OUT3 --&gt; AUTHOR --&gt; CODE --&gt; TEST --&gt; FULL    FULL --&gt; DIAGRAM --&gt; TEAM    BRAIN -. &quot;每次调用前记录&quot; .-&gt; TRACK    PAIR -. &quot;每次调用前记录&quot; .-&gt; TRACK    FULL -. &quot;每次调用前记录&quot; .-&gt; TRACK    classDef demand fill:#34495E,stroke:#2C3E50,color:#FFFFFF,stroke-width:2px    classDef discover fill:#E3F2FD,stroke:#1976D2,color:#0D47A1,stroke-width:2px    classDef build fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20,stroke-width:2px    classDef review fill:#FFF3E0,stroke:#F57C00,color:#E65100,stroke-width:2px    classDef collab fill:#F3E5F5,stroke:#8E24AA,color:#4A148C,stroke-width:2px    classDef output fill:#FAFAFA,stroke:#757575,color:#212121,stroke-width:1px    class START demand    class BRAIN,SCAN,SDD discover    class WT,PAIR build    class AUTHOR,CODE,TEST,FULL review    class DIAGRAM,TEAM,TRACK collab    class OUT1,OUT2,OUT3 output  </pre></div><p>这张图背后的使用方式可以再翻译成大白话：</p><table><thead><tr><th>开发环节</th><th>可以用的 Skill</th><th>它帮你解决什么</th></tr></thead><tbody><tr><td>需求刚来</td><td><code>brainstorming</code></td><td>不急着写代码，先问清规则、边界、验收标准</td></tr><tr><td>需求涉及多个应用</td><td><code>app-scanner</code></td><td>找出订单、营销、支付等应用分别负责什么</td></tr><tr><td>准备进入开发</td><td><code>sdd-dev-workflow</code></td><td>把需求、代码证据、技术方案和任务拆分整理出来</td></tr><tr><td>多分支并行</td><td><code>git-worktree</code></td><td>给当前需求隔离一个干净工作区</td></tr><tr><td>正式编码</td><td><code>ai-pair-programmer</code></td><td>在明确授权后改代码、补测试、跑验证</td></tr><tr><td>自查或交付前</td><td><code>author-final-review</code>、<code>code-review</code></td><td>找出最终态代码里的 Bug、兼容性和架构风险</td></tr><tr><td>测试设计</td><td><code>integration-test</code></td><td>根据风险点生成优先级测试用例</td></tr><tr><td>汇总交付</td><td><code>full-review</code></td><td>把审查、影响面、测试覆盖整理成完整报告</td></tr><tr><td>讲给别人听</td><td><code>diagram-creation</code>、<code>team-cr</code></td><td>画流程图，准备集体 CR 的重点讨论项</td></tr></tbody></table><p>这里有一个我很看重的边界：<strong>实现不是自动越权发生的。</strong> 前面的 Skill 负责弄清需求、建立事实和产出方案；只有用户明确授权后，才进入代码修改与验证。</p><p>对开发者来说，这比“让 AI 一次性写完”更可控：每一步都有对应的上下文、检查点和产物。</p><hr><h2 id="五、如何安装并开始体验">五、如何安装并开始体验</h2><p>项目通过 profile 管理默认安装清单。macOS / Linux 用户在仓库根目录依次执行：</p><pre><code>make audit-skillsmake install-dry-runmake install</code></pre><ul><li>make audit-skills：检查 Skill 数量、重名和职责重叠；</li><li>make install-dry-run：预览同步计划，不修改任何文件；</li><li>make install：正式同步 config/profiles/diy.skills 中定义的 Skill。</li></ul><p>Windows PowerShell 5.1+ 可执行：</p><pre><code>powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 previewpowershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 install</code></pre><p>安装器会检查每个 Skill 的 <a href="http://SKILL.md">SKILL.md</a>、补齐其 depends_on 依赖，并只处理当前机器上实际检测到的 Cursor、Claude Code 与 Codex 客户端。未安装的客户端会被安全跳过。</p><hr><h2 id="六、为什么更新能保持一致">六、为什么更新能保持一致</h2><p>仓库只维护一份 Skill 源码，客户端通过链接引用它：</p><ul><li>macOS / Linux 使用软链接；</li><li>Windows 使用 Junction；</li><li>修改仓库内的 Skill 后，已链接的客户端可以直接读到新版本。</li></ul><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart LR    A[&quot;skills&#x2F;&lt;分类&gt;&#x2F;&lt;skill&gt;&lt;br&#x2F;&gt;唯一源码&quot;] --&gt; B[&quot;安装器&quot;]    C[&quot;config&#x2F;profiles&#x2F;diy.skills&lt;br&#x2F;&gt;默认安装清单&quot;] --&gt; B    B --&gt; D[&quot;Cursor&quot;]    B --&gt; E[&quot;Claude Code&quot;]    B --&gt; F[&quot;Codex&quot;]  </pre></div><p>这避免了把同一份内容复制到多个工具目录后逐渐失控的问题。安装时若遇到同名冲突，也可以选择跳过、重命名或确认后覆盖；卸载只会移除该仓库创建的链接，不会删除 Skill 源码。</p><hr><h2 id="七、给想深入的人：它如何治理自己">七、给想深入的人：它如何治理自己</h2><p>一个 Skill 仓库能否长期维护，不只取决于写了多少能力，还取决于有没有把质量和边界放进流程。</p><ul><li>scripts/audit-skills 用于审计数量、重名与功能重叠；</li><li>skill-usage-tracker 将本地使用统计写入 ~/usage_stats.json，可配合看板查看；</li><li>任何 Skill 执行前都要先记录使用，避免统计只靠人工回忆；</li><li>强制覆盖和删除源码属于高风险操作，推荐先使用 dry-run 核对影响范围。</li></ul><p>我目前采用的安全同步顺序很简单：</p><pre><code>审计 → dry-run → 处理冲突 → 安装 → 检查链接</code></pre><p>这套流程不复杂，但能让工具箱在持续增加 Skill 时，仍保持来源清晰、更新可控、问题可回退。</p><hr><h2 id="八、从哪里开始">八、从哪里开始</h2><p>如果你第一次打开这个项目，建议这样浏览：</p><ol><li>先读 <a href="https://gitee.com/u7u7-sjh/dev-skill">README</a>，了解项目定位和安装方式；</li><li>再看 skills/README.md，了解不同 Skill 的职责；</li><li>选一个真实场景，再阅读对应 Skill 的 <a href="http://SKILL.md">SKILL.md</a>。</li></ol><p>这篇文章讲的是项目本身；如果你想先理解 Skill 为什么不只是“提示词补丁”，可以继续读：</p><ul><li><a href="/posts/skill-literacy-dev-skill-workflow.html">Skill扫盲：从提示词补丁到AI工作流，我如何用dev-skill把经验沉淀成能力系统</a></li><li><a href="/posts/superpowers-guide-coding-agent-workflow.html">Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent</a></li></ul><p>也欢迎直接从 <a href="https://gitee.com/u7u7-sjh/dev-skill">dev-skill Gitee 仓库</a> 开始，按自己的工作流挑一个 Skill 试用。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="dev-skill：一个可公开分享的-DIY-Agent-Skills-工具箱"><a href="#dev-skill：一个可公开分享的-DIY-Agent-Skills-工具箱" class="headerlink" title="dev-skill：一个可公开分享的 DIY Agent Skills 工具箱"></a>dev-skill：一个可公开分享的 DIY Agent Skills 工具箱</h1><blockquote><p>项目地址：<a href="https://gitee.com/u7u7-sjh/dev-skill">Gitee · dev-skill</a></p></blockquote><p>我做这个项目的出发点很朴素：把自己在需求分析、开发、审查和测试里反复使用的方法，整理成能被 AI 工具识别、安装和组合调用的 Skill。</p><p>dev-skill 是一个个人维护、可以公开分享的轻量仓库。它不是提示词大杂烩，也不试图包装成万能的“AI 操作系统”；更像一个 DIY Agent Skills 工具箱：每个 Skill 有明确职责，既可以单独使用，也可以沿着一条研发工作流协作。</p><p>仓库源码、安装说明和每个 Skill 的具体约束，都以 <a href="https://gitee.com/u7u7-sjh/dev-skill">Gitee 仓库</a> 为准。</p><hr><h2 id="一、它想解决什么问题"><a href="#一、它想解决什么问题" class="headerlink" title="一、它想解决什么问题"></a>一、它想解决什么问题</h2><p>很多 AI Coding 的经验最初都很零散：</p><ul><li>某个好用的提示词只留在聊天记录里；</li><li>同一套规则要在不同客户端重复配置；</li><li>需求、实现、审查之间缺少连续上下文；</li><li>工作流跑顺后，下一次又得从头解释一遍。</li></ul><p>dev-skill 想做的，是把这些一次性的经验变成可复用、可安装、可迭代的能力单元。你可以把它理解为：</p><blockquote><p>把“我平时怎么让 AI 帮我做研发”沉淀成一套能继续演进的项目资产。</p></blockquote><p>它更适合希望把个人工作流整理清楚的开发者；仓库刻意不包含组织专用集成、私有凭据或生产数据，文档示例也使用中性命名，方便阅读和分享。</p><hr><h2 id="二、一张图看懂项目结构"><a href="#二、一张图看懂项目结构" class="headerlink" title="二、一张图看懂项目结构"></a>二、一张图看懂项目结构</h2><p>dev-skill 目前不是一个庞大的平台，而是一套围绕研发过程组织起来的 12 个 Skill。它们大致分成四层：先把需求想清楚，再把工程上下文找全，然后进入实现，最后用审查和测试把风险收住。</p><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart TB    subgraph DEV[&quot;Development：把需求变成可执行开发任务&quot;]        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清目标、约束和方案选择&quot;]        SCANNER[&quot;app-scanner&lt;br&#x2F;&gt;扫描多应用工作区，提取业务能力&quot;]        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;产出 requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;结对实现、修复、重构和验证&quot;]    end    subgraph REVIEW[&quot;Review：把改动变成可放心交付的结果&quot;]        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;审查单一作者最终态变更&quot;]        CODE[&quot;code-review&lt;br&#x2F;&gt;检查质量、安全、性能和架构风险&quot;]        TEST[&quot;integration-test&lt;br&#x2F;&gt;按风险生成集成测试用例&quot;]        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总代码审查、影响面和测试设计&quot;]        TEAM[&quot;team-cr&lt;br&#x2F;&gt;准备多人 CR 会议讨论清单&quot;]    end    subgraph VIS[&quot;Visualization：把复杂信息画清楚&quot;]        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;生成流程图、架构图、时序图、路线图&quot;]    end    subgraph PLATFORM[&quot;Platform：管理工作环境和使用统计&quot;]        WORKTREE[&quot;git-worktree&lt;br&#x2F;&gt;管理并行开发 worktree&quot;]        TRACKER[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用统计&quot;]    end    BRAIN --&gt; SDD    SCANNER --&gt; SDD    SDD --&gt; PAIR    PAIR --&gt; AUTHOR    AUTHOR --&gt; CODE    AUTHOR --&gt; TEST    CODE --&gt; FULL    TEST --&gt; FULL    FULL --&gt; TEAM    DIAGRAM -. &quot;可插入任意阶段&quot; .-&gt; SDD    WORKTREE -. &quot;隔离分支环境&quot; .-&gt; PAIR    TRACKER -. &quot;记录每次 Skill 调用&quot; .-&gt; BRAIN  </pre></div><p>这张图可以先当成项目地图：Development 负责把“我要做什么”变成“我知道怎么做”；Review 负责把“做完了”变成“风险可解释”；Visualization 和 Platform 则是横向能力，一个负责表达复杂关系，一个负责让工具链可维护。</p><hr><h2 id="三、12-个-Skill-分别做什么"><a href="#三、12-个-Skill-分别做什么" class="headerlink" title="三、12 个 Skill 分别做什么"></a>三、12 个 Skill 分别做什么</h2><p>为了让读者不用跳到仓库里翻目录，下面按真实仓库中的 Skill 逐个说明。</p><div class="table-container"><table><thead><tr><th>分类</th><th>Skill</th><th>适合什么时候用</th><th>主要产物</th></tr></thead><tbody><tr><td>Development</td><td><code>brainstorming</code></td><td>需求还不够清楚，或者有多个方案需要取舍</td><td>经确认的目标、边界和设计方向</td></tr><tr><td>Development</td><td><code>app-scanner</code></td><td>工作区里有多个前后端应用，需要先摸清业务能力和依赖关系</td><td>应用能力清单、API / 数据模型 / 外部依赖概览</td></tr><tr><td>Development</td><td><code>sdd-dev-workflow</code></td><td>已有原始需求、PRD 或想法，需要整理成可开发任务</td><td><code>requirements.md</code>、<code>design.md</code>、<code>plan.md</code>、<code>tasks.md</code></td></tr><tr><td>Development</td><td><code>ai-pair-programmer</code></td><td>已经明确要写代码、改 bug、重构或补测试</td><td>符合项目风格的代码改动和验证结果</td></tr><tr><td>Review</td><td><code>author-final-review</code></td><td>想审查某个作者在一个范围内的最终代码状态</td><td>面向 Bug 和风险的最终态审查结果</td></tr><tr><td>Review</td><td><code>code-review</code></td><td>需要系统检查代码质量、安全、性能、架构和兼容性</td><td>结构化代码审查报告</td></tr><tr><td>Review</td><td><code>integration-test</code></td><td>Java Dubbo 变更需要补集成测试设计</td><td>P0 / P1 测试用例、入参、预期输出和覆盖追溯</td></tr><tr><td>Review</td><td><code>full-review</code></td><td>希望一次性拿到审查、影响面和测试设计的完整报告</td><td>完整审查报告与风险覆盖结果</td></tr><tr><td>Review</td><td><code>team-cr</code></td><td>多人、多模块改动要开集体 CR</td><td>按风险等级和模块分组的会议讨论清单</td></tr><tr><td>Visualization</td><td><code>diagram-creation</code></td><td>文字讲不清流程、架构、时序或学习路线</td><td>Mermaid、PlantUML 等图表源码</td></tr><tr><td>Platform</td><td><code>git-worktree</code></td><td>多分支并行开发，或者需要隔离工作目录</td><td>标准化 worktree 目录和迁移建议</td></tr><tr><td>Platform</td><td><code>skill-usage-tracker</code></td><td>执行技能前记录使用，或查看本地统计</td><td>写入 <code>~/usage_stats.json</code> 的技能使用数据</td></tr></tbody></table></div><p>每个 Skill 都放在 <code>skills/&lt;分类&gt;/&lt;skill 名&gt;/</code> 下，以 <code>SKILL.md</code> 说明触发条件、输入输出和执行边界；需要时还会携带脚本、参考资料或模板。这样的结构让“能力说明”和“实际工具”留在同一个可追溯的位置。</p><hr><h2 id="四、开发中哪些环节可以用到这些-Skill"><a href="#四、开发中哪些环节可以用到这些-Skill" class="headerlink" title="四、开发中哪些环节可以用到这些 Skill"></a>四、开发中哪些环节可以用到这些 Skill</h2><p>光看 Skill 名字还不够直观，我们换成一个真实开发例子：<strong>给订单系统增加“优惠券抵扣”能力</strong>。</p><p>这类需求通常不会直接进入编码。它会经历需求澄清、影响面扫描、方案拆解、代码实现、测试设计、代码审查和团队评审几个阶段。dev-skill 的价值，就是把这些阶段拆开，每一步用合适的 Skill 接住。</p><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart TD    START[&quot;需求例子&lt;br&#x2F;&gt;订单系统支持优惠券抵扣&quot;]    subgraph PHASE1[&quot;阶段 1：想清楚要做什么&quot;]        BRAIN[&quot;brainstorming&lt;br&#x2F;&gt;澄清优惠券规则、边界和验收口径&quot;]        OUT1[&quot;产物&lt;br&#x2F;&gt;哪些券可用、如何叠加、异常怎么处理&quot;]    end    subgraph PHASE2[&quot;阶段 2：找到会被影响的代码&quot;]        SCAN[&quot;app-scanner&lt;br&#x2F;&gt;多应用场景下扫描订单、营销、支付等应用&quot;]        SDD[&quot;sdd-dev-workflow&lt;br&#x2F;&gt;结合真实代码证据整理方案&quot;]        OUT2[&quot;产物&lt;br&#x2F;&gt;requirements &#x2F; design &#x2F; plan &#x2F; tasks&quot;]    end    subgraph PHASE3[&quot;阶段 3：隔离环境并开始实现&quot;]        WT[&quot;git-worktree&lt;br&#x2F;&gt;为优惠券需求创建独立工作区&quot;]        PAIR[&quot;ai-pair-programmer&lt;br&#x2F;&gt;修改接口、领域逻辑、测试和配置&quot;]        OUT3[&quot;产物&lt;br&#x2F;&gt;可运行的代码改动与验证结果&quot;]    end    subgraph PHASE4[&quot;阶段 4：把风险收住&quot;]        AUTHOR[&quot;author-final-review&lt;br&#x2F;&gt;先审查本次作者最终态变更&quot;]        CODE[&quot;code-review&lt;br&#x2F;&gt;检查兼容性、金额计算、安全和性能风险&quot;]        TEST[&quot;integration-test&lt;br&#x2F;&gt;生成 P0 &#x2F; P1 集成测试用例&quot;]        FULL[&quot;full-review&lt;br&#x2F;&gt;汇总审查结论、影响面和测试覆盖&quot;]    end    subgraph PHASE5[&quot;阶段 5：准备协作交付&quot;]        DIAGRAM[&quot;diagram-creation&lt;br&#x2F;&gt;画调用链、状态流转或优惠券计算流程&quot;]        TEAM[&quot;team-cr&lt;br&#x2F;&gt;整理多人 CR 会议讨论清单&quot;]        TRACK[&quot;skill-usage-tracker&lt;br&#x2F;&gt;记录技能使用，沉淀本地统计&quot;]    end    START --&gt; BRAIN --&gt; OUT1 --&gt; SCAN --&gt; SDD --&gt; OUT2    OUT2 --&gt; WT --&gt; PAIR --&gt; OUT3    OUT3 --&gt; AUTHOR --&gt; CODE --&gt; TEST --&gt; FULL    FULL --&gt; DIAGRAM --&gt; TEAM    BRAIN -. &quot;每次调用前记录&quot; .-&gt; TRACK    PAIR -. &quot;每次调用前记录&quot; .-&gt; TRACK    FULL -. &quot;每次调用前记录&quot; .-&gt; TRACK    classDef demand fill:#34495E,stroke:#2C3E50,color:#FFFFFF,stroke-width:2px    classDef discover fill:#E3F2FD,stroke:#1976D2,color:#0D47A1,stroke-width:2px    classDef build fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20,stroke-width:2px    classDef review fill:#FFF3E0,stroke:#F57C00,color:#E65100,stroke-width:2px    classDef collab fill:#F3E5F5,stroke:#8E24AA,color:#4A148C,stroke-width:2px    classDef output fill:#FAFAFA,stroke:#757575,color:#212121,stroke-width:1px    class START demand    class BRAIN,SCAN,SDD discover    class WT,PAIR build    class AUTHOR,CODE,TEST,FULL review    class DIAGRAM,TEAM,TRACK collab    class OUT1,OUT2,OUT3 output  </pre></div><p>这张图背后的使用方式可以再翻译成大白话：</p><div class="table-container"><table><thead><tr><th>开发环节</th><th>可以用的 Skill</th><th>它帮你解决什么</th></tr></thead><tbody><tr><td>需求刚来</td><td><code>brainstorming</code></td><td>不急着写代码，先问清规则、边界、验收标准</td></tr><tr><td>需求涉及多个应用</td><td><code>app-scanner</code></td><td>找出订单、营销、支付等应用分别负责什么</td></tr><tr><td>准备进入开发</td><td><code>sdd-dev-workflow</code></td><td>把需求、代码证据、技术方案和任务拆分整理出来</td></tr><tr><td>多分支并行</td><td><code>git-worktree</code></td><td>给当前需求隔离一个干净工作区</td></tr><tr><td>正式编码</td><td><code>ai-pair-programmer</code></td><td>在明确授权后改代码、补测试、跑验证</td></tr><tr><td>自查或交付前</td><td><code>author-final-review</code>、<code>code-review</code></td><td>找出最终态代码里的 Bug、兼容性和架构风险</td></tr><tr><td>测试设计</td><td><code>integration-test</code></td><td>根据风险点生成优先级测试用例</td></tr><tr><td>汇总交付</td><td><code>full-review</code></td><td>把审查、影响面、测试覆盖整理成完整报告</td></tr><tr><td>讲给别人听</td><td><code>diagram-creation</code>、<code>team-cr</code></td><td>画流程图，准备集体 CR 的重点讨论项</td></tr></tbody></table></div><p>这里有一个我很看重的边界：<strong>实现不是自动越权发生的。</strong> 前面的 Skill 负责弄清需求、建立事实和产出方案；只有用户明确授权后，才进入代码修改与验证。</p><p>对开发者来说，这比“让 AI 一次性写完”更可控：每一步都有对应的上下文、检查点和产物。</p><hr><h2 id="五、如何安装并开始体验"><a href="#五、如何安装并开始体验" class="headerlink" title="五、如何安装并开始体验"></a>五、如何安装并开始体验</h2><p>项目通过 profile 管理默认安装清单。macOS / Linux 用户在仓库根目录依次执行：</p><pre><code>make audit-skillsmake install-dry-runmake install</code></pre><ul><li>make audit-skills：检查 Skill 数量、重名和职责重叠；</li><li>make install-dry-run：预览同步计划，不修改任何文件；</li><li>make install：正式同步 config/profiles/diy.skills 中定义的 Skill。</li></ul><p>Windows PowerShell 5.1+ 可执行：</p><pre><code>powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 previewpowershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 install</code></pre><p>安装器会检查每个 Skill 的 SKILL.md、补齐其 depends_on 依赖，并只处理当前机器上实际检测到的 Cursor、Claude Code 与 Codex 客户端。未安装的客户端会被安全跳过。</p><hr><h2 id="六、为什么更新能保持一致"><a href="#六、为什么更新能保持一致" class="headerlink" title="六、为什么更新能保持一致"></a>六、为什么更新能保持一致</h2><p>仓库只维护一份 Skill 源码，客户端通过链接引用它：</p><ul><li>macOS / Linux 使用软链接；</li><li>Windows 使用 Junction；</li><li>修改仓库内的 Skill 后，已链接的客户端可以直接读到新版本。</li></ul><div class="mermaid-wrap"><pre class="mermaid-src" hidden>  flowchart LR    A[&quot;skills&#x2F;&lt;分类&gt;&#x2F;&lt;skill&gt;&lt;br&#x2F;&gt;唯一源码&quot;] --&gt; B[&quot;安装器&quot;]    C[&quot;config&#x2F;profiles&#x2F;diy.skills&lt;br&#x2F;&gt;默认安装清单&quot;] --&gt; B    B --&gt; D[&quot;Cursor&quot;]    B --&gt; E[&quot;Claude Code&quot;]    B --&gt; F[&quot;Codex&quot;]  </pre></div><p>这避免了把同一份内容复制到多个工具目录后逐渐失控的问题。安装时若遇到同名冲突，也可以选择跳过、重命名或确认后覆盖；卸载只会移除该仓库创建的链接，不会删除 Skill 源码。</p><hr><h2 id="七、给想深入的人：它如何治理自己"><a href="#七、给想深入的人：它如何治理自己" class="headerlink" title="七、给想深入的人：它如何治理自己"></a>七、给想深入的人：它如何治理自己</h2><p>一个 Skill 仓库能否长期维护，不只取决于写了多少能力，还取决于有没有把质量和边界放进流程。</p><ul><li>scripts/audit-skills 用于审计数量、重名与功能重叠；</li><li>skill-usage-tracker 将本地使用统计写入 ~/usage_stats.json，可配合看板查看；</li><li>任何 Skill 执行前都要先记录使用，避免统计只靠人工回忆；</li><li>强制覆盖和删除源码属于高风险操作，推荐先使用 dry-run 核对影响范围。</li></ul><p>我目前采用的安全同步顺序很简单：</p><pre><code>审计 → dry-run → 处理冲突 → 安装 → 检查链接</code></pre><p>这套流程不复杂，但能让工具箱在持续增加 Skill 时，仍保持来源清晰、更新可控、问题可回退。</p><hr><h2 id="八、从哪里开始"><a href="#八、从哪里开始" class="headerlink" title="八、从哪里开始"></a>八、从哪里开始</h2><p>如果你第一次打开这个项目，建议这样浏览：</p><ol><li>先读 <a href="https://gitee.com/u7u7-sjh/dev-skill">README</a>，了解项目定位和安装方式；</li><li>再看 skills/README.md，了解不同 Skill 的职责；</li><li>选一个真实场景，再阅读对应 Skill 的 SKILL.md。</li></ol><p>这篇文章讲的是项目本身；如果你想先理解 Skill 为什么不只是“提示词补丁”，可以继续读：</p><ul><li><a href="/posts/skill-literacy-dev-skill-workflow.html">Skill扫盲：从提示词补丁到AI工作流，我如何用dev-skill把经验沉淀成能力系统</a></li><li><a href="/posts/superpowers-guide-coding-agent-workflow.html">Superpowers使用指南：把Claude Code和Codex变成真正会按流程工作的开发Agent</a></li></ul><p>也欢迎直接从 <a href="https://gitee.com/u7u7-sjh/dev-skill">dev-skill Gitee 仓库</a> 开始，按自己的工作流挑一个 Skill 试用。</p>]]></content>
       
       
       <categories>
@@ -61,9 +61,9 @@
             
             <tag> Claude Code </tag>
             
-            <tag> Skill </tag>
-            
             <tag> Workflow </tag>
+            
+            <tag> Skill </tag>
             
             <tag> Codex </tag>
             
@@ -160,15 +160,15 @@
             
             <tag> Agent </tag>
             
-            <tag> MCP </tag>
-            
             <tag> Claude Code </tag>
-            
-            <tag> Skill </tag>
             
             <tag> Workflow </tag>
             
+            <tag> Skill </tag>
+            
             <tag> Codex </tag>
+            
+            <tag> MCP </tag>
             
         </tags>
       
@@ -199,9 +199,9 @@
             
             <tag> Claude Code </tag>
             
-            <tag> Skill </tag>
-            
             <tag> Workflow </tag>
+            
+            <tag> Skill </tag>
             
             <tag> Multi-Agent </tag>
             
@@ -236,9 +236,9 @@
             
             <tag> JIRA </tag>
             
-            <tag> DevSkill </tag>
-            
             <tag> Vibe Working </tag>
+            
+            <tag> DevSkill </tag>
             
             <tag> 项目记忆 </tag>
             
@@ -294,15 +294,15 @@
             
             <tag> AI </tag>
             
-            <tag> RAG </tag>
-            
             <tag> Agent </tag>
-            
-            <tag> MCP </tag>
             
             <tag> Claude Code </tag>
             
             <tag> Skill </tag>
+            
+            <tag> MCP </tag>
+            
+            <tag> RAG </tag>
             
             <tag> Memory </tag>
             
@@ -474,11 +474,11 @@
             
             <tag> AI </tag>
             
-            <tag> RAG </tag>
-            
             <tag> Agent </tag>
             
             <tag> MCP </tag>
+            
+            <tag> RAG </tag>
             
         </tags>
       
@@ -503,9 +503,9 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> 项目 </tag>
+            
+            <tag> 微服务 </tag>
             
             <tag> 性能优化 </tag>
             
@@ -534,13 +534,13 @@
       
         <tags>
             
-            <tag> Java </tag>
+            <tag> 大数据 </tag>
             
-            <tag> MQ </tag>
+            <tag> Java </tag>
             
             <tag> 个人理解 </tag>
             
-            <tag> 大数据 </tag>
+            <tag> MQ </tag>
             
         </tags>
       
@@ -565,13 +565,13 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
             
-            <tag> MQ </tag>
+            <tag> 微服务 </tag>
             
             <tag> 个人理解 </tag>
+            
+            <tag> MQ </tag>
             
         </tags>
       
@@ -596,11 +596,11 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> 项目 </tag>
             
             <tag> 个人理解 </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -650,9 +650,9 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> JUC </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -677,9 +677,9 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> Java </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -804,11 +804,11 @@
       
         <tags>
             
-            <tag> 个人理解 </tag>
+            <tag> JUC </tag>
             
             <tag> 多线程 </tag>
             
-            <tag> JUC </tag>
+            <tag> 个人理解 </tag>
             
         </tags>
       
@@ -862,9 +862,9 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> 个人理解 </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -889,9 +889,9 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> MQ </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -916,11 +916,11 @@
       
         <tags>
             
-            <tag> 八股文 </tag>
-            
             <tag> Java </tag>
             
             <tag> 个人理解 </tag>
+            
+            <tag> 八股文 </tag>
             
         </tags>
       
@@ -945,13 +945,13 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
             
-            <tag> 个人理解 </tag>
+            <tag> 微服务 </tag>
             
             <tag> ES </tag>
+            
+            <tag> 个人理解 </tag>
             
         </tags>
       
@@ -976,13 +976,13 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
             
-            <tag> MQ </tag>
+            <tag> 微服务 </tag>
             
             <tag> 个人理解 </tag>
+            
+            <tag> MQ </tag>
             
         </tags>
       
@@ -1007,9 +1007,9 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
+            
+            <tag> 微服务 </tag>
             
             <tag> MQ </tag>
             
@@ -1036,9 +1036,9 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
+            
+            <tag> 微服务 </tag>
             
             <tag> MQ </tag>
             
@@ -1065,11 +1065,11 @@
       
         <tags>
             
-            <tag> 微服务 </tag>
-            
             <tag> Java </tag>
             
             <tag> 项目 </tag>
+            
+            <tag> 微服务 </tag>
             
             <tag> 个人理解 </tag>
             
@@ -1127,11 +1127,11 @@
             
             <tag> Java </tag>
             
+            <tag> JUC </tag>
+            
             <tag> 项目 </tag>
             
             <tag> 多线程 </tag>
-            
-            <tag> JUC </tag>
             
             <tag> 调优 </tag>
             
@@ -1158,11 +1158,11 @@
       
         <tags>
             
+            <tag> SpringBoot </tag>
+            
             <tag> Java </tag>
             
             <tag> 项目 </tag>
-            
-            <tag> SpringBoot </tag>
             
             <tag> Redis </tag>
             
@@ -1195,11 +1195,11 @@
       
         <tags>
             
+            <tag> SpringBoot </tag>
+            
             <tag> Java </tag>
             
             <tag> 项目 </tag>
-            
-            <tag> SpringBoot </tag>
             
             <tag> Redis </tag>
             
@@ -1232,11 +1232,11 @@
       
         <tags>
             
-            <tag> Cpp </tag>
-            
             <tag> Java </tag>
             
             <tag> Python </tag>
+            
+            <tag> Cpp </tag>
             
             <tag> 算法 </tag>
             
@@ -1477,10 +1477,6 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
-            <tag> Vue </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -1490,6 +1486,10 @@
             <tag> 大数据 </tag>
             
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> Vue </tag>
             
             <tag> Python </tag>
             
@@ -1543,11 +1543,11 @@
       
         <tags>
             
-            <tag> Cpp </tag>
-            
             <tag> Java </tag>
             
             <tag> Python </tag>
+            
+            <tag> Cpp </tag>
             
             <tag> 算法 </tag>
             
@@ -1599,10 +1599,6 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
-            <tag> Vue </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -1612,6 +1608,10 @@
             <tag> 大数据 </tag>
             
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> Vue </tag>
             
             <tag> Python </tag>
             
@@ -1708,8 +1708,6 @@
       
         <tags>
             
-            <tag> Vue </tag>
-            
             <tag> Scala </tag>
             
             <tag> Spark </tag>
@@ -1721,6 +1719,8 @@
             <tag> 大数据 </tag>
             
             <tag> 月笔记 </tag>
+            
+            <tag> Vue </tag>
             
         </tags>
       
@@ -1770,11 +1770,11 @@
       
         <tags>
             
+            <tag> SpringBoot </tag>
+            
             <tag> Java </tag>
             
             <tag> 项目 </tag>
-            
-            <tag> SpringBoot </tag>
             
             <tag> Redis </tag>
             
@@ -1830,11 +1830,11 @@
       
         <tags>
             
+            <tag> SpringBoot </tag>
+            
             <tag> Java </tag>
             
             <tag> 项目 </tag>
-            
-            <tag> SpringBoot </tag>
             
             <tag> Redis </tag>
             
@@ -1973,8 +1973,6 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> 月笔记 </tag>
             
             <tag> Maven </tag>
@@ -1984,6 +1982,8 @@
             <tag> SSM框架 </tag>
             
             <tag> SpringBoot </tag>
+            
+            <tag> Java </tag>
             
             <tag> MybatPlus </tag>
             
@@ -2238,9 +2238,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
@@ -2265,9 +2265,9 @@
       
         <tags>
             
-            <tag> Java </tag>
-            
             <tag> 月笔记 </tag>
+            
+            <tag> Java </tag>
             
         </tags>
       
