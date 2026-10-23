@@ -1,0 +1,544 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><div id="myscoll"></div><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Redis 8.4 之后，缓存和检索引擎的边界已经消失 | U7's Blog🍋</title><meta name="keywords" content="Redis,缓存,向量检索,架构"><meta name="author" content="U7's Blog🍋"><meta name="copyright" content="U7's Blog🍋"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Redis 8.4 把 FT.HYBRID 做进内核，缓存与检索边界开始模糊。本文核对官方版本与已知限制，给出检索入 Redis 的分界线。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 8.4 之后，缓存和检索引擎的边界已经消失">
+<meta property="og:url" content="https://u7u7.top/posts/redis-8-4-boundary.html">
+<meta property="og:site_name" content="U7&#39;s Blog🍋">
+<meta property="og:description" content="Redis 8.4 把 FT.HYBRID 做进内核，缓存与检索边界开始模糊。本文核对官方版本与已知限制，给出检索入 Redis 的分界线。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.u7u7.top/blognoteImg/20260604192344675.png">
+<meta property="article:published_time" content="2026-10-15T00:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-23T10:25:17.419Z">
+<meta property="article:author" content="U7&#39;s Blog🍋">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="缓存">
+<meta property="article:tag" content="向量检索">
+<meta property="article:tag" content="架构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.u7u7.top/blognoteImg/20260604192344675.png"><link rel="shortcut icon" href="/"><link rel="canonical" href="https://u7u7.top/posts/redis-8-4-boundary"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/flickr-justified-gallery/2.1.2/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Redis 8.4 之后，缓存和检索引擎的边界已经消失',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-10-23 18:25:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn1.tianli0.top/npm/element-ui@2.15.6/packages/theme-chalk/lib/index.css"><style id="themeColor"></style><style id="rightSide"></style><style id="transPercent"></style><style id="blurNum"></style><style id="settingStyle"></style><span id="fps"></span><style id="defineBg"></style><style id="menu_shadow"></style><script src="https://cdn.jsdelivr.net/npm/echarts@6/dist/echarts.min.js"></script><svg aria-hidden="true" style="position:absolute; overflow:hidden; width:0; height:0"><symbol id="icon-sun" viewBox="0 0 1024 1024"><path d="M960 512l-128 128v192h-192l-128 128-128-128H192v-192l-128-128 128-128V192h192l128-128 128 128h192v192z" fill="#FFD878" p-id="8420"></path><path d="M736 512a224 224 0 1 0-448 0 224 224 0 1 0 448 0z" fill="#FFE4A9" p-id="8421"></path><path d="M512 109.248L626.752 224H800v173.248L914.752 512 800 626.752V800h-173.248L512 914.752 397.248 800H224v-173.248L109.248 512 224 397.248V224h173.248L512 109.248M512 64l-128 128H192v192l-128 128 128 128v192h192l128 128 128-128h192v-192l128-128-128-128V192h-192l-128-128z" fill="#4D5152" p-id="8422"></path><path d="M512 320c105.888 0 192 86.112 192 192s-86.112 192-192 192-192-86.112-192-192 86.112-192 192-192m0-32a224 224 0 1 0 0 448 224 224 0 0 0 0-448z" fill="#4D5152" p-id="8423"></path></symbol><symbol id="icon-moon" viewBox="0 0 1024 1024"><path d="M611.370667 167.082667a445.013333 445.013333 0 0 1-38.4 161.834666 477.824 477.824 0 0 1-244.736 244.394667 445.141333 445.141333 0 0 1-161.109334 38.058667 85.077333 85.077333 0 0 0-65.066666 135.722666A462.08 462.08 0 1 0 747.093333 102.058667a85.077333 85.077333 0 0 0-135.722666 65.024z" fill="#FFB531" p-id="11345"></path><path d="M329.728 274.133333l35.157333-35.157333a21.333333 21.333333 0 1 0-30.165333-30.165333l-35.157333 35.157333-35.114667-35.157333a21.333333 21.333333 0 0 0-30.165333 30.165333l35.114666 35.157333-35.114666 35.157334a21.333333 21.333333 0 1 0 30.165333 30.165333l35.114667-35.157333 35.157333 35.157333a21.333333 21.333333 0 1 0 30.165333-30.165333z" fill="#030835" p-id="11346"></path></symbol></svg><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="U7's Blog🍋" type="application/atom+xml">
+</head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/avatar.webp" onerror="onerror=null;src='/assets/r1.jpg'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">86</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">98</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">U7's Blog🍋</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-home"></use></svg><span class="menu_word" style="font-size:17px"> 首页</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--article"></use></svg><span class="menu_word" style="font-size:17px"> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-guidang1">                   </use></svg><span class="menu_word" style="font-size:17px"> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-sekuaibiaoqian">                   </use></svg><span class="menu_word" style="font-size:17px"> 标签</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-fenlei">                   </use></svg><span class="menu_word" style="font-size:17px"> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pinweishenghuo"></use></svg><span class="menu_word" style="font-size:17px"> 休闲</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/life/music/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-yinle">                   </use></svg><span class="menu_word" style="font-size:17px"> 八音盒</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/movies/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-dianying1">                   </use></svg><span class="menu_word" style="font-size:17px"> 影院</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/life/games/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-youxishoubing">                   </use></svg><span class="menu_word" style="font-size:17px"> 游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xiangzi"></use></svg><span class="menu_word" style="font-size:17px"> 八宝箱</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/box/gallery/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-tubiaozhizuomoban">                   </use></svg><span class="menu_word" style="font-size:17px"> 画廊</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/animation/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-nvwumao">                   </use></svg><span class="menu_word" style="font-size:17px"> 动画</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/box/nav/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-zhifengche">                   </use></svg><span class="menu_word" style="font-size:17px"> 网址导航</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shejiaoxinxi"></use></svg><span class="menu_word" style="font-size:17px"> 社交</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/social/fcircle/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-pengyouquan">                   </use></svg><span class="menu_word" style="font-size:17px"> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-liuyan">                   </use></svg><span class="menu_word" style="font-size:17px"> 留言板</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/social/link/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-lianjie">                   </use></svg><span class="menu_word" style="font-size:17px"> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-wangye"></use></svg><span class="menu_word" style="font-size:17px"> 网站</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/site/census/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon--tongjibiao">                   </use></svg><span class="menu_word" style="font-size:17px"> 网站统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/echarts/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-shujutongji1">                   </use></svg><span class="menu_word" style="font-size:17px"> 文章统计</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/site/time/"><svg class="menu_icon faa-tada" aria-hidden="true" style="width:1.30em;height:1.30em;vertical-align:-0.15em;fill:currentColor;overflow:hidden;"><use xlink:href="#icon-xianxingshalou">                   </use></svg><span class="menu_word" style="font-size:17px"> 旧时光</span></a></li></ul></div></div><center id="name-container"><a id="page-name" href="javascript:scrollToTop()">PAGE_NAME</a></center><div id="nav-right"><div id="search-button"><a class="search faa-parent animated-hover" title="检索站内任何你想要的信息"><svg class="faa-tada icon" style="height:24px;width:24px;fill:currentColor;position:relative;top:6px" aria-hidden="true"><use xlink:href="#icon-valentine_-search-love-find-heart"></use></svg><span> 搜索</span></a></div><a class="meihua faa-parent animated-hover" onclick="toggleWinbox()" title="美化设置-自定义你的风格" id="meihua-button"><svg class="faa-tada icon" style="height:26px;width:26px;fill:currentColor;position:relative;top:8px" aria-hidden="true"><use xlink:href="#icon-tupian1"></use></svg></a><a class="sun_moon faa-parent animated-hover" onclick="switchNightMode()" title="浅色和深色模式转换" id="nightmode-button"><svg class="faa-tada" style="height:25px;width:25px;fill:currentColor;position:relative;top:7px" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon">       </use></svg></a><div id="toggle-menu"><a><i class="fas fa-bars fa-fw"></i></a></div></div></div></nav><div id="post-info"><h1 class="post-title">Redis 8.4 之后，缓存和检索引擎的边界已经消失</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><svg class="meta_icon post-meta-icon" style="width:30px;height:30px;position:relative;top:10px"><use xlink:href="#icon-rili"></use></svg><span class="post-meta-label">发表于 </span><time class="post-meta-date-created" datetime="2026-10-15T00:30:00.000Z" title="发表于 2026-10-15 08:30:00">2026-10-15</time><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-gengxin1"></use></svg><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-23T10:25:17.419Z" title="更新于 2026-10-23 18:25:17">2026-10-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:18px;height:18px;position:relative;top:5px"><use xlink:href="#icon-biaoqian"></use></svg><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:8px"><use xlink:href="#icon-charuword"></use></svg><span class="post-meta-label">字数总计:</span><span class="word-count">4142</span><span class="post-meta-separator">|</span><svg class="meta_icon post-meta-icon" style="width:20px;height:20px;position:relative;top:5px"><use xlink:href="#icon-shizhong"></use></svg><span class="post-meta-label">阅读时长:</span><span>14分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis 8.4 之后，缓存和检索引擎的边界已经消失"><svg class="meta_icon post-meta-icon" style="width:25px;height:25px;position:relative;top:5px"><use xlink:href="#icon-eye"></use></svg><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Redis-8-4-之后，缓存和检索引擎的边界已经消失">Redis 8.4 之后，缓存和检索引擎的边界已经消失</h1>
+<p>先给一个可能让你不舒服的结论：把向量检索塞进 Redis，2026 年真正的风险已经不是「性能够不够」，而是「你以为它解决了延迟问题，其实它主要解决的是运维拓扑问题」。延迟那一层，它当然有帮助，但帮助幅度远小于宣传口径；真正被改变的是你少维护一套系统、少一条同步链路、少一次「缓存与索引不一致」的排障。</p>
+<p>这篇文章只做三件事：把 8.4 到底改了什么核清楚、把「什么情况下该塞、什么情况下是灾难」画出一条可执行的分界线、以及把我在真实项目里踩到的坑摆出来。</p>
+<h2 id="一、先把-8-4-到底改了什么核清楚">一、先把 8.4 到底改了什么核清楚</h2>
+<p>Redis 8.4 是 <strong>GA</strong>，不是 RC：<code>v8.4.0</code>，发布日期为 2025 年 11 月 18 日（官方 00-RELEASENOTES）。往前一版是 8.4-RC1（<code>v8.3.240</code>，2025 年 11 月 4 日），官方在 RC 的说明里明确写着「RC 是功能完整的预发布版，不适合生产使用」。所以如果你在某个公众号上看到 11 月就把 8.4-RC1 的数字当 GA 数字引用，那是不严谨的。</p>
+<p>相对 8.2，和检索直接相关的变更只有这么几条，我按官方原文整理：</p>
+<table>
+<thead>
+<tr>
+<th>变更</th>
+<th>官方描述里的关键限定</th>
+<th>我的解读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FT.HYBRID</code></td>
+<td>混合检索与融合打分，支持 RRF 与 LINEAR 两种合并方式</td>
+<td>关键词召回与向量召回在服务端一次完成，不用应用层自己 merge</td>
+</tr>
+<tr>
+<td>查询引擎 I/O 线程</td>
+<td>FT.* 命令获得吞吐提升，未给单一百分比</td>
+<td>提升了并发能力，不等于单条查询变快</td>
+</tr>
+<tr>
+<td>通用 I/O 线程</td>
+<td>示例条件是「缓存场景 10% SET / 90% GET、4 核」，吞吐提升大于 30%</td>
+<td>这是缓存读写场景的数字，不是检索场景的数字</td>
+</tr>
+<tr>
+<td>JSON 同构数组</td>
+<td>内存最多下降 91%</td>
+<td>只对同构数组成立，异构数组不适用</td>
+</tr>
+<tr>
+<td><code>search-on-oom</code></td>
+<td>IGNORE / FAIL / RETURN 三值，默认 RETURN</td>
+<td>默认实现是「部分节点 OOM 就返回部分结果」，不报错</td>
+</tr>
+<tr>
+<td><code>search-default-scorer</code></td>
+<td>默认打分器改为 BM25STD</td>
+<td>升级后相关性排序会变，线上要做 A/B</td>
+</tr>
+</tbody>
+</table>
+<p>版本状态还有一层必须说清楚：本文写作时间是 2026 年 10 月，此时 Redis 已经有 <strong>8.6 GA</strong>（2026 年 2 月 10 日）、<strong>8.8 GA</strong>（2026 年 5 月 25 日）、<strong>8.10 GA</strong>（2026 年 7 月 29 日），最新补丁是 8.10.2（2026 年 9 月 17 日）。所以「8.4 之后」不是修辞手法，是事实。8.6 把向量集的 8bit 量化与二值距离计算做了 SIMD 向量化；8.8 给 <code>FT.HYBRID</code> 补上了 <code>FT.PROFILE</code> 支持，并新增「每分片少取候选」的 KNN 参数。这几条我只核到了 release notes 的条目，<strong>没有做性能复现</strong>，标为未复现，请不要引用成基准数据。</p>
+<h2 id="二、演化线：从「附挂模块」到「内核能力」">二、演化线：从「附挂模块」到「内核能力」</h2>
+<p>要理解边界为什么消失，得把 8.0 和 8.4 连起来看。</p>
+<p>Redis 8.0（<code>v8.0.0</code>，2025 年 5 月）做的是<strong>归属</strong>上的合并：RediSearch、RedisJSON、RedisTimeSeries、RedisBloom 不再是独立模块，代码并入主仓库，许可改成 RSALv2 / SSPLv1 / AGPLv3 三选一，查询引擎第一次具备水平与垂直扩展能力。注意一个容易被忽略的细节：8.0 里 <strong>Vector set 是 beta</strong>，官方就是这么标的。</p>
+<p>8.4 做的是<strong>能力</strong>上的合并：<code>FT.HYBRID</code> 把「一次查询里同时做关键词召回和向量召回，再融合打分」这件事搬进了服务端。这才是边界真正模糊的那一步——在此之前，混合检索的 RRF 融合是应用层的活，你得发两次 <code>FT.SEARCH</code>、拿两份结果、在自己代码里按位次算分、再截断。那不是架构问题，是一段谁都不愿意维护的胶水代码。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  stateDiagram-v2
+    [*] --&gt; 纯缓存
+    纯缓存 --&gt; 外挂模块 : 需要全文与向量检索
+    外挂模块 --&gt; 内核一体 : Redis 8 合并模块
+    内核一体 --&gt; 混合检索 : 8.4 提供 FT.HYBRID
+    混合检索 --&gt; 检索引擎分家 : 内存成本或一致性越界
+    检索引擎分家 --&gt; 纯缓存 : 检索迁出 只留缓存
+  </pre></div>
+<p>这张图想让你看见的是：这条演化线不是单向的，最后一条边是我加的，也是真实会发生的——当内存成本或者一致性要求越界时，团队会把检索迁回 Elasticsearch 或者 Postgres，Redis 退回纯缓存。我在两个团队里都见过这个回退，而且回退的成本比当初「顺手加一个索引」高得多，因为那时业务已经在依赖 Redis 的相关性排序了。</p>
+<h2 id="三、我的判断：分界线在哪里">三、我的判断：分界线在哪里</h2>
+<p>我的判断是：把检索放进 Redis 是否成立，只由一条不等式决定——<strong>向量与索引常驻内存的规模，必须显著小于实例内存预算</strong>。我用的阈值是 30%，超过就该重新设计。</p>
+<p>先算清楚量级，不要凭感觉。768 维 float32 单条向量是 768 × 4 = 3072 字节，约 3KB；这还没算哈希表头、文档正文、倒排索引和 HNSW 图结构。所以：</p>
+<ul>
+<li>10 万条文档向量 ≈ 0.3GB 裸向量，加上文档与索引开销，实际按 0.6-1GB 估</li>
+<li>100 万条 ≈ 3GB 裸向量，实际按 6-10GB 估</li>
+<li>1000 万条 ≈ 30GB 裸向量，实际按 60GB 以上估</li>
+</ul>
+<p>最后一行就是分界线。如果你的实例是 16GB 或 32GB，1000 万条 768 维全精度向量根本放不进去，唯一的出路是量化到 8bit（把每维 4 字节压到 1 字节，size 降到四分之一）或者二值量化，代价是召回率要重新调参。这里我不太同意「先上，不行再扩」的做法：向量索引的扩容和普通缓存的扩容不是一回事，主从全量同步、RDB 加载、索引重建这几步都是内存峰值场景，线上被打到 <code>search-on-oom</code> 的默认 RETURN 语义，你拿到的就是部分结果而不是错误——这种「安静的错误」比超时难查得多。</p>
+<p>所以我把结论写成两条清单。</p>
+<p><strong>适合塞进 Redis 的情形</strong></p>
+<ol>
+<li>P99 要求 10ms 级别，且查询形态是「前置过滤 + top-k」，没有复杂排序</li>
+<li>向量条数在百万级以内，或愿意接受 8bit 量化并重新评估召回</li>
+<li>embedding 模型只有 1-3 个，维度固定，不需要频繁重建索引</li>
+<li>数据可以接受最终一致：索引更新滞后几百毫秒对业务无感</li>
+<li>团队规模小，少一套 ES 集群带来的运维收益大于功能损失</li>
+</ol>
+<p><strong>不适合的情形</strong></p>
+<ol>
+<li>需要多字段相关性调权、复杂聚合、跨索引 join：这是 Elasticsearch 的地盘，不是 Redis 的地盘</li>
+<li>写入强一致、要求「写完立刻能精确查到」：Redis 的索引更新和主从复制不提供这个保证</li>
+<li>数据量超过内存预算且必须全量在线：量化是缓兵之计，不是解决方案</li>
+<li>中文分词与词库治理需求重：查询引擎能分词，但自定义词典、同义词、停用词那一套工程化程度远不如 ES</li>
+<li>需要多租户隔离、细粒度权限、审计：这些是搜索平台的能力，不是缓存的能力</li>
+</ol>
+<h2 id="四、一段能跑起来的代码，比十页-PPT-有用">四、一段能跑起来的代码，比十页 PPT 有用</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 约定：$VEC 是序列化后的 768 维 float32 向量二进制，实际用客户端库或 redis-cli -x 传入</span></span><br><span class="line"><span class="comment"># 1. 建索引：文本字段 + 向量字段同文档，ON HASH</span></span><br><span class="line">redis-cli FT.CREATE doc_idx ON HASH PREFIX 1 doc: SCHEMA \</span><br><span class="line">  title TEXT WEIGHT 2.0 \</span><br><span class="line">  tag TAG SEPARATOR , \</span><br><span class="line">  emb VECTOR HNSW 6 TYPE FLOAT32 DIM 768 DISTANCE_METRIC COSINE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 纯向量召回：KNN 走 HNSW，必须 DIALECT 2</span></span><br><span class="line">redis-cli FT.SEARCH doc_idx <span class="string">&#x27;*=&gt;[KNN 10 @emb $vec AS score]&#x27;</span> \</span><br><span class="line">  PARAMS 2 vec <span class="string">&quot;<span class="variable">$VEC</span>&quot;</span> SORTBY score DIALECT 2 RETURN 2 title score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 带前置过滤的召回：过滤写在查询里，不是拿回来再筛</span></span><br><span class="line">redis-cli FT.SEARCH doc_idx <span class="string">&#x27;(@tag:&#123;cache|redis&#125;)=&gt;[KNN 10 @emb $vec AS score]&#x27;</span> \</span><br><span class="line">  PARAMS 2 vec <span class="string">&quot;<span class="variable">$VEC</span>&quot;</span> SORTBY score DIALECT 2 LIMIT 0 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 聚合：能算，但别指望它替代 OLAP</span></span><br><span class="line">redis-cli FT.AGGREGATE doc_idx <span class="string">&quot;*&quot;</span> LOAD 2 <span class="string">&quot;@price&quot;</span> <span class="string">&quot;@stock&quot;</span> \</span><br><span class="line">  APPLY <span class="string">&quot;@price*@stock&quot;</span> AS amount \</span><br><span class="line">  GROUPBY 1 <span class="string">&quot;@tag&quot;</span> REDUCE SUM 1 <span class="string">&quot;@amount&quot;</span> AS total \</span><br><span class="line">  SORTBY 2 <span class="string">&quot;@total&quot;</span> DESC LIMIT 0 10 DIALECT 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># redis.conf 里和这条边界直接相关的四项</span><br><span class="line">io-threads 4</span><br><span class="line">search-on-oom RETURN</span><br><span class="line">search-default-scorer BM25STD</span><br><span class="line">lookahead 16</span><br></pre></td></tr></table></figure>
+<p>这段代码在说明什么：第一段把「文档」和「向量」放在同一个 Hash 里，这才是「缓存与检索边界消失」的物理形态——一次写入、一份内存、一个 TTL，不需要再维护一条缓存到索引的同步链路。第二段和第三段的区别是关键：<code>*</code> 开头的纯 KNN 是全库召回再排序，而 <code>(@tag:&#123;...&#125;)=&gt;[KNN ...]</code> 是<strong>先过滤再召回</strong>，两者的召回质量和延迟差一个量级，很多人只写了第二种却以为自己在用第一种。第四段是边界提醒：<code>FT.AGGREGATE</code> 能做出 GROUPBY 和 APPLY，说明它「能算」，但它的执行模型是单机内存聚合，遇到高基数分组和多重 REDUCE 就会把内存打上去，别拿它替 OLAP。</p>
+<p>那四行配置也各有代价：<code>io-threads</code> 调大提升吞吐但增加上下文切换，官方给的大于 30% 是在 4 核、10% SET / 90% GET 的缓存场景测的，检索场景别直接套用；<code>search-on-oom RETURN</code> 是默认值，它意味着宁可给部分结果也不报错，对检索场景我倾向于改成 <code>FAIL</code>，让错误显式暴露；<code>search-default-scorer BM25STD</code> 是 8.4 改的新默认值，升级后相关性排序会漂移；<code>lookahead</code> 默认 16，是命令解析预取深度。</p>
+<h2 id="五、写路径和读路径到底长什么样">五、写路径和读路径到底长什么样</h2>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  flowchart LR
+    subgraph WP[写路径]
+        A[业务写入] --&gt; B[文档键 与 向量字段]
+        B --&gt; C[索引增量更新]
+        C --&gt; D[全文倒排]
+        C --&gt; E[向量 HNSW 图]
+    end
+    subgraph RP[读路径]
+        F[查询请求] --&gt; G[关键词召回]
+        F --&gt; H[向量 KNN 召回]
+        G --&gt; I[融合打分 RRF 或 LINEAR]
+        H --&gt; I
+        I --&gt; J[前置过滤 排序 分页]
+        J --&gt; K[结果回写热点缓存]
+    end
+    D -.-&gt; G
+    E -.-&gt; H
+    K -.-&gt; B
+    M[内存预算] -.-&gt; D
+    M -.-&gt; E
+  </pre></div>
+<p>这张图想让你看见什么：写路径只有一次写内存，读路径却分成两条召回再融合，而下面那个「内存预算」节点同时约束倒排和 HNSW 两份结构——<strong>你要付的是两份索引的内存</strong>，不是一份。很多容量评估漏掉的正是这里：算向量算得很仔细，忘了倒排索引在高基数字段上的膨胀，最后 OOM 的是文本索引而不是向量。</p>
+<h2 id="六、Redis-8-4-Elasticsearch-pgvector-四个维度对比">六、Redis 8.4 / Elasticsearch / pgvector 四个维度对比</h2>
+<p>先声明：下面不是同机 benchmark，是量级判断加成本结构判断。任何让你「一个数字定生死」的对比表都不可信。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Redis 8.4</th>
+<th>Elasticsearch</th>
+<th>pgvector</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>延迟</td>
+<td>亚毫秒到个位数毫秒，进程内无网络跳数</td>
+<td>十毫秒级起，取决于分片与段合并状态</td>
+<td>毫秒级，受 Postgres 连接池与 HNSW ef_search 影响</td>
+</tr>
+<tr>
+<td>内存成本</td>
+<td>全量常驻内存，最贵的一档</td>
+<td>堆内存加堆外段缓存，磁盘为主，可接受冷数据</td>
+<td>索引落盘，靠 shared_buffers 缓存，最便宜</td>
+</tr>
+<tr>
+<td>查询能力</td>
+<td>过滤加 top-k 很强，复杂聚合弱，无跨索引 join</td>
+<td>最强，聚合、相关性调权、分词治理齐全</td>
+<td>SQL 全能力加向量，复杂排序交给优化器</td>
+</tr>
+<tr>
+<td>运维复杂度</td>
+<td>最低，一套集群两种用途</td>
+<td>最高，分片、映射、段合并、JVM 调优</td>
+<td>最低之一，复用现有 Postgres 运维体系</td>
+</tr>
+</tbody>
+</table>
+<p>我的理解是：这张表里真正稀缺的不是延迟，是「一致性模型」这一列没人写。Redis 给你的是最终一致加部分结果语义，ES 给你的是近实时（默认 1 秒刷新）加可调一致性，pgvector 给你的是事务级强一致。选型时先问「写入后多久必须精确可见」，这一问通常直接淘汰掉两个选项，比对比延迟有用得多。</p>
+<p>顺带把两家的能力事实也核一下，避免用老印象选型：Elastic Stack 9.0 起，float 的 <code>dense_vector</code> 字段一律按 <code>int8_hnsw</code> 索引，<code>bbq_disk</code> 这类二值量化可以把大向量集的内存压下来，官方给的磁盘开销是 int8 约 25%、int4 约 12.5%、bbq 约 3.1%；pgvector 从 0.8.0（2024 年 10 月 30 日）起支持 iterative index scans，并改进了「带过滤条件时的代价估算与索引选择」——这一条恰好就是 Redis 里「前置过滤」问题的 Postgres 版答案。</p>
+<h2 id="七、我踩过的坑，和一处我不太同意的地方">七、我踩过的坑，和一处我不太同意的地方</h2>
+<p>我踩过的坑是 <code>FT.HYBRID</code> 的已知限制。官方在 8.4 的 release notes 里列得很直白：<code>FT.HYBRID</code> 的指标不出现在 <code>FT.INFO</code> 和 <code>INFO</code> 里；<code>EXPLAINSCORE</code>、<code>SHARD_K_RATIO</code>、<code>YIELD_DISTANCE_AS</code>、<code>WITHCURSOR</code> 在 <code>FT.HYBRID</code> 上不可用；<code>COMBINE</code> 之后用 <code>FILTER</code> 做后置过滤不可用；默认响应只给 <code>key_id</code> 和 <code>score</code>。这几条合起来意味着两件事：第一，你没法用 profile 定位一个慢的混合查询，只能靠二分法砍子句；第二，过滤必须前置到 <code>SEARCH</code> 和 <code>VSIM</code> 子句里，如果你按「先融合、再过滤」的直觉写，它会直接报不支持——而在 8.8 之前连 profile 都不给你。我第一次接这个命令时以为是语法写错，改了半天才在 release notes 的 known limitations 里找到答案。教训很朴素：<strong>新命令先读 known limitations，再读语法</strong>。</p>
+<p>这里我不太同意「一个 Redis 顶掉 ES 加向量库」这类说法。它成立的前提是把检索需求压缩成「前置过滤加 top-k」，而这个压缩在真实业务里经常失败。反例很具体：商品搜索要按销量、好评、库存、上下架做多因子加权，还要支持类目聚合和价格区间统计，这类查询在 Redis 里要么写不出来，要么写出来是十几行 <code>FT.AGGREGATE</code> 的意大利面，改一次需求调一次分。更隐蔽的反例是内存——ES 允许你只把热数据放进内存、冷数据留在段文件里，Redis 不允许，你必须为全量数据付内存钱，而内存的单价是磁盘的几十倍。所以「边界消失」正确的说法是：<strong>边界从系统之间搬到了你的容量预算和一致性要求里</strong>，它没有消失，只是换了个地方收钱。</p>
+<h2 id="八、可以马上做的事">八、可以马上做的事</h2>
+<ol>
+<li>先在 release notes 里核对你要用的版本状态和 known limitations，特别是 <code>FT.HYBRID</code> 那一串不支持项</li>
+<li>用「向量条数 × 维度 × 4 字节」粗算裸向量内存，再乘 2 当作含索引的估算值，和实例内存比一比，超过 30% 就准备量化方案</li>
+<li>把所有检索查询改成「前置过滤 + KNN」的写法，别用「全库 KNN 再筛」，两者召回率不是一个量级</li>
+<li>生产环境把 <code>search-on-oom</code> 从默认的 RETURN 改成 FAIL，让 OOM 显式暴露而不是返回部分结果</li>
+<li>升级到 8.4 之后，因为默认打分器变成 BM25STD，要做一次线上相关性 A/B，别默认「排序没变」</li>
+<li>给混合检索留一条退路：把「关键词召回」和「向量召回」的接口抽象出来，将来迁到 ES 或 pgvector 时只换实现</li>
+</ol>
+<h2 id="参考来源">参考来源</h2>
+<ul>
+<li>Redis Open Source 8.4 release notes（8.4 GA 与 8.4-RC1 日期、变更、known limitations）：<a target="_blank" rel="noopener" href="https://github.com/redis/redis/blob/8.4.0/00-RELEASENOTES">https://github.com/redis/redis/blob/8.4.0/00-RELEASENOTES</a></li>
+<li>Redis Open Source 8.0 release notes（模块合并、三许可、Vector set beta）：<a target="_blank" rel="noopener" href="https://github.com/redis/redis/blob/8.0.0/00-RELEASENOTES">https://github.com/redis/redis/blob/8.0.0/00-RELEASENOTES</a></li>
+<li>Redis 8.6 / 8.8 / 8.10 release notes（后续版本日期与 FT.HYBRID 增强）：<a target="_blank" rel="noopener" href="https://github.com/redis/redis/releases">https://github.com/redis/redis/releases</a></li>
+<li><code>FT.HYBRID</code> 命令参数结构（SEARCH / VSIM / COMBINE RRF 与 LINEAR）：<a target="_blank" rel="noopener" href="https://redis.io/docs/latest/commands/ft.hybrid/">https://redis.io/docs/latest/commands/ft.hybrid/</a></li>
+<li>Elasticsearch <code>dense_vector</code> 与量化（9.0 起 float 按 int8_hnsw 索引、bbq 磁盘开销）：<a target="_blank" rel="noopener" href="https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/dense-vector">https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/dense-vector</a></li>
+<li>pgvector 0.8.0 changelog（iterative index scans、过滤时代价估算）：<a target="_blank" rel="noopener" href="https://api.pgxn.org/src/vector/vector-0.8.0/CHANGELOG.md">https://api.pgxn.org/src/vector/vector-0.8.0/CHANGELOG.md</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>Redis 8.4 之后，缓存和检索引擎的边界已经消失</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://u7u7.top/posts/redis-8-4-boundary.html">https://u7u7.top/posts/redis-8-4-boundary.html</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>U7's Blog🍋</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2026-10-15</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2026-10-23</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Redis/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>Redis</a><a class="post-meta__tags" href="/tags/%E7%BC%93%E5%AD%98/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>缓存</a><a class="post-meta__tags" href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>向量检索</a><a class="post-meta__tags" href="/tags/%E6%9E%B6%E6%9E%84/"><div class="tags-punctuation"><svg class="faa-tada icon" style="height:1.1em;width:1.1em;fill:currentColor;position:relative;top:2px;margin-right:3px" aria-hidden="true"><use xlink:href="#icon-sekuaibiaoqian"></use></svg></div>架构</a></div></div><link rel="stylesheet" href="/css/coin.css" media="defer" onload="this.media='all'"/><div class="post-reward"><button class="tip-button reward-button"><span class="tip-button__text">投喂作者</span><div class="coin-wrapper"><div class="coin"><div class="coin__middle"></div><div class="coin__back"></div><div class="coin__front"></div></div></div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://img.u7u7.top/blognoteImg/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="https://img.u7u7.top/blognoteImg/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></button></div><audio id="coinAudio" src="https://npm.elemecdn.com/akilar-candyassets@1.0.36/audio/aowu.m4a"></audio><script defer="defer" src="/js/coin.js"></script><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/backend-agent-harness-2026.html"><img class="prev-cover" src="https://img.u7u7.top/blognoteImg/20260604192312042.png" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">为什么 2026 是后端工程师做 Agent 的主场：从 Prompt 到 Harness</div></div></a></div><div class="next-post pull-right"><a href="/posts/pg19-async-io.html"><img class="next-cover" src="https://img.u7u7.top/blognoteImg/20260604192534325.png" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">PostgreSQL 19 的异步 IO：数据库开始吃满 NVMe 之后</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/es-9-5-columnar-vector.html" title="Elasticsearch 9.5 的列式存储与向量检索：搜索栈正在和向量库合并"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192545011.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-10-23</div><div class="title">Elasticsearch 9.5 的列式存储与向量检索：搜索栈正在和向量库合并</div></div></a></div><div><a href="/posts/ms.html" title="面试题集"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-5g7ew7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-09-14</div><div class="title">面试题集</div></div></a></div><div><a href="/posts/a1e1aa91.html" title="瑞吉外卖"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-28mkg9_2560x1440.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2023-03-11</div><div class="title">瑞吉外卖</div></div></a></div><div><a href="/posts/ea7374cf.html" title="瑞吉外卖优化"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-6oe337.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2023-03-10</div><div class="title">瑞吉外卖优化</div></div></a></div><div><a href="/posts/dp.html" title="优探社交购云平台"><img class="cover" src="https://img.u7u7.top/blogbackground/wallhaven-g7vgkd.webp" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-09-14</div><div class="title">优探社交购云平台</div></div></a></div><div><a href="/posts/pg19-async-io.html" title="PostgreSQL 19 的异步 IO：数据库开始吃满 NVMe 之后"><img class="cover" src="https://img.u7u7.top/blognoteImg/20260604192534325.png" alt="cover"><div class="content is-center"><div class="date"><i class="fas fa-history fa-fw"></i> 2026-10-23</div><div class="title">PostgreSQL 19 的异步 IO：数据库开始吃满 NVMe 之后</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><svg class="meta_icon" style="width:22px;height:22px;position:relative;top:5px"><use xlink:href="#icon-mulu1"></use></svg><span style="font-weight:bold">目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-8-4-%E4%B9%8B%E5%90%8E%EF%BC%8C%E7%BC%93%E5%AD%98%E5%92%8C%E6%A3%80%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E8%BE%B9%E7%95%8C%E5%B7%B2%E7%BB%8F%E6%B6%88%E5%A4%B1"><span class="toc-text">Redis 8.4 之后，缓存和检索引擎的边界已经消失</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A-8-4-%E5%88%B0%E5%BA%95%E6%94%B9%E4%BA%86%E4%BB%80%E4%B9%88%E6%A0%B8%E6%B8%85%E6%A5%9A"><span class="toc-text">一、先把 8.4 到底改了什么核清楚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%BC%94%E5%8C%96%E7%BA%BF%EF%BC%9A%E4%BB%8E%E3%80%8C%E9%99%84%E6%8C%82%E6%A8%A1%E5%9D%97%E3%80%8D%E5%88%B0%E3%80%8C%E5%86%85%E6%A0%B8%E8%83%BD%E5%8A%9B%E3%80%8D"><span class="toc-text">二、演化线：从「附挂模块」到「内核能力」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%91%E7%9A%84%E5%88%A4%E6%96%AD%EF%BC%9A%E5%88%86%E7%95%8C%E7%BA%BF%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-text">三、我的判断：分界线在哪里</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E6%AE%B5%E8%83%BD%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%AF%94%E5%8D%81%E9%A1%B5-PPT-%E6%9C%89%E7%94%A8"><span class="toc-text">四、一段能跑起来的代码，比十页 PPT 有用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%86%99%E8%B7%AF%E5%BE%84%E5%92%8C%E8%AF%BB%E8%B7%AF%E5%BE%84%E5%88%B0%E5%BA%95%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-text">五、写路径和读路径到底长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Redis-8-4-Elasticsearch-pgvector-%E5%9B%9B%E4%B8%AA%E7%BB%B4%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="toc-text">六、Redis 8.4 &#x2F; Elasticsearch &#x2F; pgvector 四个维度对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%88%91%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91%EF%BC%8C%E5%92%8C%E4%B8%80%E5%A4%84%E6%88%91%E4%B8%8D%E5%A4%AA%E5%90%8C%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">七、我踩过的坑，和一处我不太同意的地方</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%8F%AF%E4%BB%A5%E9%A9%AC%E4%B8%8A%E5%81%9A%E7%9A%84%E4%BA%8B"><span class="toc-text">八、可以马上做的事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%9D%A5%E6%BA%90"><span class="toc-text">参考来源</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div id="ft"><div class="ft-item-1"><div class="t-top"><div class="t-t-l"><p class="ft-t t-l-t">格言🧬</p><div class="bg-ad"><div>再看看那个光点，它就在这里，这是家园，这是我们 —— 你所爱的每一个人，你认识的一个人，你听说过的每一个人，曾经有过的每一个人，都在它上面度过他们的一生✨</div><div class="btn-xz-box"><a class="btn-xz" target="_blank" rel="noopener" href="https://stellarium.org/">点击开启星辰之旅</a></div></div></div><div class="t-t-r"><p class="ft-t t-l-t">猜你想看💡</p><ul class="ft-links"><li><a href="/comments/">留点什么</a><a href="/archives/">文章归档</a></li><li><a href="/categories/">文章分类</a><a href="/tags/">文章标签</a></li><li><a href="/box/Gallery/">我的画廊</a><a href="/personal/bb/">我的唠叨</a></li><li><a href="/site/time/">建设进程</a><a href="/site/census/">网站统计</a></li></ul></div></div></div><div class="ft-item-2"><p class="ft-t">推荐友链⌛</p><div class="ft-img-group"><div class="img-group-item"></div></div></div></div><div class="copyright"><span><b>&copy;2022-2026</b></span><span><b>&nbsp;&nbsp;By U7's Blog🍋</b></span></div><div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://icp.gov.moe/?keyword=20230913" style="margin-inline:5px" title="本站已加入萌ICP豪华套餐，萌ICP备20230913号"><img src="https://img.u7u7.top/blogbackground/20230913.svg" alt=""/></a></p></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><a class="icon-V hidden" onclick="switchNightMode()" title="浅色和深色模式转换"><svg width="25" height="25" viewBox="0 0 1024 1024"><use id="modeicon" xlink:href="#icon-moon"></use></svg></a><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="share" type="button" title="右键模式" onclick="changeMouseMode()"><i class="fas fa-mouse"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog right_side"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button class="share" type="button" title="分享链接" onclick="share()"><i class="fas fa-share-nodes"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i><span id="percent">0<span>%</span></span></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div class="js-pjax" id="rightMenu"><div class="rightMenu-group rightMenu-small"><a class="rightMenu-item" href="javascript:window.history.back();"><i class="fa fa-arrow-left"></i></a><a class="rightMenu-item" href="javascript:window.history.forward();"><i class="fa fa-arrow-right"></i></a><a class="rightMenu-item" href="javascript:window.location.reload();"><i class="fa fa-refresh"></i></a><a class="rightMenu-item" href="javascript:rmf.scrollToTop();"><i class="fa fa-arrow-up"></i></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-text"><a class="rightMenu-item" href="javascript:rmf.copySelect();"><i class="fa fa-copy"></i><span>复制</span></a><a class="rightMenu-item" href="javascript:window.open(&quot;https://www.baidu.com/s?wd=&quot;+window.getSelection().toString());window.location.reload();"><i class="fa fa-search"></i><span>百度搜索</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-too"><a class="rightMenu-item" href="javascript:window.open(window.getSelection().toString());window.location.reload();"><i class="fa fa-link"></i><span>转到链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-paste"><a class="rightMenu-item" href="javascript:rmf.paste()"><i class="fa fa-copy"></i><span>粘贴</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-post"><a class="rightMenu-item" href="#post-comment"><i class="fas fa-comment"></i><span>空降评论</span></a><a class="rightMenu-item" href="javascript:rmf.copyWordsLink()"><i class="fa fa-link"></i><span>复制本文地址</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-to"><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>新窗口打开</span></a><a class="rightMenu-item" id="menu-too" href="javascript:rmf.open()"><i class="fa fa-link"></i><span>转到链接</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制链接</span></a></div><div class="rightMenu-group rightMenu-line hide" id="menu-img"><a class="rightMenu-item" href="javascript:rmf.saveAs()"><i class="fa fa-download"></i><span>保存图片</span></a><a class="rightMenu-item" href="javascript:rmf.openWithNewTab()"><i class="fa fa-window-restore"></i><span>在新窗口打开</span></a><a class="rightMenu-item" href="javascript:rmf.copyLink()"><i class="fa fa-copy"></i><span>复制图片链接</span></a></div><div class="rightMenu-group rightMenu-line"><a class="rightMenu-item" href="javascript:randomPost()"><i class="fa fa-paper-plane"></i><span>随便逛逛</span></a><a class="rightMenu-item" href="javascript:switchNightMode();"><i class="fa fa-moon"></i><span>昼夜切换</span></a><a class="rightMenu-item" href="/personal/about/"><i class="fa fa-info-circle"></i><span>关于博客</span></a><a class="rightMenu-item" href="javascript:toggleWinbox();"><i class="fas fa-cog"></i><span>美化设置</span></a><a class="rightMenu-item" href="javascript:rmf.fullScreen();"><i class="fas fa-expand"></i><span>切换全屏</span></a><a class="rightMenu-item" href="javascript:window.print();"><i class="fa-solid fa-print"></i><span>打印页面</span></a></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.staticfile.org/fancyapps-ui/4.0.31/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())
+setTimeout(function(){preloader.endLoading();}, 5000);
+document.getElementById('loading-box').addEventListener('click',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.2/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: '',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: '',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.staticfile.org/twikoo/1.6.8/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script async src="https://cdn1.tianli0.top/npm/vue@2.6.14/dist/vue.min.js"></script><script async src="https://cdn1.tianli0.top/npm/element-ui@2.15.6/lib/index.js"></script><script async src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script async src="//npm.elemecdn.com/pace-js@1.2.4/pace.min.js"></script><script defer src="/js/vendor/winbox.bundle.min.js"></script><script async src="//at.alicdn.com/t/c/font_3586335_hsivh70x0fm.js"></script><script async src="//at.alicdn.com/t/c/font_3636804_gr02jmjr3y9.js"></script><script async src="//at.alicdn.com/t/c/font_3612150_kfv55xn3u2g.js"></script><script async src="https://cdn.wpon.cn/2022-sucai/Gold-ingot.js"></script><canvas id="universe"></canvas><canvas id="snow"></canvas><script defer src="/js/fomal.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/aplayer/1.10.1/APlayer.min.js"></script><script src="https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js"></script><script src="https://lib.baomitu.com/pjax/0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show","#web_bg",".js-pjax","#bibi","body > title","#app","#tag-echarts","#posts-echart","#categories-echarts"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/学习笔记/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍡 U7の学习笔记 (22)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/杂项/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍼 U7のLife&Work杂项 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/项目/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍉 U7の项目笔记 (7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/工作月总结/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍨 U7の工作月总结 (14)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/算法/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍟 U7の算法学习笔记 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://u7u7.top/categories/面试/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🍥 U7の面试 (12)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://u7u7.top/categories/" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #e9e9e9;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: var(--text-bg-hover)}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5y7ro7.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-18</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">面经记录</a><div class="blog-slider__text">群友、牛客、抖音等同学的面经分享——只有问题、记录在其他文件中，方便回头自己拷打自己</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/interviewExperience.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-5g7ew7.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">面试题集</a><div class="blog-slider__text">常见面试题梳理</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/ms.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/wallhaven-rd9ly1.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-09-15</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">MQ八股</a><div class="blog-slider__text">各种MQ的相关八股</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/MQProblem.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blognoteImg/20250728154351340.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-08-08</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">微服务SpringCloudAlibaba</a><div class="blog-slider__text">梳理的微服务重要知识点！</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/CloudAli.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src="https://img.u7u7.top/blogbackground/wallhaven-g7vgkd.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2025-07-28</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">优探社交购云平台</a><div class="blog-slider__text">学习项目从0-1</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;posts/dp.html&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper@1.0.12/lib/swiper_init.js"></script><script data-pjax src="https://npm.elemecdn.com/hexo-filter-gitcalendar/lib/gitcalendar.js"></script><script data-pjax>
+  function gitcalendar_injector_config(){
+      var parent_div_git = document.getElementById('gitZone');
+      var item_html = '<div class="recent-post-item" id="gitcalendarBar" style="width:100%;height:auto;padding:10px;"><style>#git_container{min-height: 320px}@media screen and (max-width:650px) {#git_container{min-height: 0px}}</style><div id="git_loading" style="width:10%;height:100%;margin:0 auto;display: block;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animatetransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animatetransform></path></svg><style>#git_container{display: none;}</style></div><div id="git_container"></div></div>';
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      console.log('已挂载gitcalendar')
+      }
+
+    if( document.getElementById('gitZone') && (location.pathname ==='/site/census/'|| '/site/census/' ==='all')){
+        gitcalendar_injector_config()
+        GitCalendarInit("/api?null",['#d9e0df', '#c6e0dc', '#a8dcd4', '#9adcd2', '#89ded1', '#77e0d0', '#5fdecb', '#47dcc6', '#39dcc3', '#1fdabe', '#00dab9'],'null')
+    }
+  </script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
